@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Post from '../../post';
+import Post from './post';
 import Grid from '@material-ui/core/Grid';
 const url = "https://jsonplaceholder.typicode.com/photos";
 function ImageListShow(){

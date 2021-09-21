@@ -1,5 +1,5 @@
 import React from 'react';
-import Data from '';
+import Data from './components/allPostsShow/ImageListShow';
 
 function App(){
     return ( <Data/>);
