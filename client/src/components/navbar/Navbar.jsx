@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     },
 },
  innertab: {
-     fontFamily: 'Rajdhani',
+    fontFamily: 'Rajdhani',
     color: "#22577A",
     fontSize: "1.1rem",
     textTransform: "none",
