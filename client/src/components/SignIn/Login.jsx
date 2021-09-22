@@ -1,22 +1,13 @@
 import React from "react";
-import {
-  Grid,
-  TextField,
-  Typography,
-  Button,
-  InputAdornment,
-} from "@material-ui/core";
-// import GoogleButton from "react-google-button";
-// import { AccountCircle, LockRounded } from "@material-ui/icons";
-// import clsx from "clsx";
-// // @material-ui/core components
-// import { makeStyles } from "@material-ui/core/styles";
-// import Box from "@material-ui/core/Box";
-// import IconButton from "@material-ui/core/IconButton";
+import { Grid, TextField, Typography, Button } from "@material-ui/core";
+import Link from "@material-ui/core/Link";
+import facebook from "./facebook.png";
+import google from "./search.png";
+import "./Login.scss";
 
 export default function Login() {
   return (
-    <div style={{ margin: "0" }}>
+    <div className="Login">
       <Grid
         container
         style={{
@@ -25,35 +16,31 @@ export default function Login() {
         }}
       >
         <Grid item xs={12} sm={6} style={{ backgroundColor: "#22577A" }}>
-          {/* left side  or side nav */}
           <img
             src="https://cdn-icons-png.flaticon.com/512/2970/2970785.png"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            className="main"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
             alt="brand"
           />
-          {/* <div style={{ margin: "20% 40% 0% 0%" }}>
-            <Typography
-              variant="h2"
-              style={{
-                fontFamily: "Allison",
-                fontStyle: "cursive",
-                fontSize: "12vh",
-                color: "#FEFBF3"
-              }}
-            >
-            
-              Designare
-            </Typography>
-            <Typography
-              variant="h2"
-              style={{
-                fontFamily: "Lato",
-                fontSize: "4vh",
-                color: "#FEFBF3",
-                width: "400px"
-              }}
-            ></Typography>
-          </div> */}
+          <Typography
+            variant="h2"
+            className="addOn"
+            style={{
+              fontFamily: "Allison",
+              fontStyle: "cursive",
+              fontSize: "12vh",
+              color: "#152D35",
+              textAlign: "center",
+              margin: "0",
+              visibility: "hidden",
+            }}
+          >
+            Designare
+          </Typography>
         </Grid>
         <Grid
           container
@@ -66,6 +53,7 @@ export default function Login() {
           direction="column"
         >
           <div style={{ height: "20px" }} />
+
           <div
             style={{
               display: "flex",
@@ -74,74 +62,107 @@ export default function Login() {
               maxWidth: 400,
             }}
           >
-            <Grid container justify="center">
-              {/* logo here */}
+            <Grid container justify="center" style={{ marginBottom: "5%" }}>
+              <Typography
+                variant="h2"
+                className="heading"
+                style={{
+                  fontFamily: "Josefin Sans",
+                  fontSize: "2.75rem",
+                  fontWeight: "700",
+                  color: "#22577A",
+                }}
+              >
+                Sign in to Designare
+              </Typography>
+              <div style={{ marginTop: "5%" }}>
+                <a href="/auth/google">
+                  <Button
+                    style={{
+                      display: "inline-block",
+                      cursor: "pointer",
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "50%",
+                      backgroundColor: "#f5f5f5",
+                      marginRight: "25px",
+                    }}
+                    variant="outlined"
+                  >
+                    <img
+                      src={google}
+                      style={{ fontSize: "35px", paddingTop: 10 }}
+                      alt="google"
+                    ></img>
+                  </Button>
+                </a>
+                <a href="/auth/facebook">
+                  <Button
+                    style={{
+                      display: "inline-block",
+                      cursor: "pointer",
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "50%",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                    variant="outlined"
+                  >
+                    <img
+                      src={facebook}
+                      style={{ fontSize: "35px", paddingTop: 10 }}
+                      alt="facebook"
+                    ></img>
+                  </Button>
+                </a>
+              </div>
             </Grid>
-            <Typography
-              variant="h2"
-              style={{
-                fontFamily: ["Acme"].join(","),
-                fontSize: "6",
-                fontWeight: "500",
-                color: "#22577A",
-                marginBottom: "5%",
-              }}
+            <hr className="divider" style={{ width: "100%" }}></hr>
+            <TextField label="Username" margin="normal"/>
+            <TextField label="Password" margin="normal"/>
+            <Link
+              href="#"
+              style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
+              underline="none"
             >
-              <a href="/auth/google">
-                <Button variant="outlined">
-                  <i class="fab fa-google"></i>
-                </Button>
-              </a>
-              <hr />
-              Sign in to Designare
-            </Typography>
-            <TextField
-              label="Username"
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="end">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              label="Password"
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="end">
-                    <LockRounded />
-                  </InputAdornment>
-                ),
-              }}
-            />
+              Forget Password ?
+            </Link>
             <div style={{ height: "20px" }}></div>
             <Button
-              style={{ backgroundColor: "#22577A", color: "white" }}
+              style={{
+                backgroundColor: "#22577A",
+                textTransform: "none",
+                fontSize: "2.5vh",
+                color: "white",
+              }}
               variant="contained"
             >
               Sign In
             </Button>
             <div style={{ height: "20px" }}></div>
-            <Button
-              color="info"
-              style={{ textTransform: "none", color: "#22577A" }}
-              variant=""
+            <Typography
+              variant="paragraph"
+              className="bottom"
+              style={{
+                fontFamily: "Josefin Sans",
+                fontSize: "3vh",
+                fontWeight: "500",
+                color: "black",
+                marginBottom: "5%",
+                textAlign: "center",
+              }}
             >
-              Want to Design ?
-            </Button>
+              Want to Design?
+              <Link
+                href="#"
+                style={{ color: "#22577A", marginLeft: "5px" }}
+                underline="none"
+              >
+                Join us Now
+              </Link>
+            </Typography>
           </div>
-          <Grid>
-            <Grid item>
-              <Button
-                color="info"
-                style={{ color: "#22577A" }}
-                variant=""
-              ></Button>
-            </Grid>
-          </Grid>
+          <div style={{ height: "20px" }} />
         </Grid>
       </Grid>
     </div>
