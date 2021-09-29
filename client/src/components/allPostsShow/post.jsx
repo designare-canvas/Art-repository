@@ -2,7 +2,6 @@ import React from "react";
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-
 import CardActions from '@material-ui/core/CardActions';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
@@ -24,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     color: blue[100],
     backgroundColor: red[500],
   },
@@ -59,12 +58,12 @@ function Post(props) {
 
         <div className="container">
 
-          <img className="image" src={props.imgurl} alt="image" />
+          <img className="image" src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg" alt="image" />
           <div className="middle" >
 
             {/* <div className="text"> */}
             <CardActions  style={{justifyContent:'space-evenly'}}>
-              <span style={{ color: 'grey', fontSize: "20px" }}>
+              <span style={{ color: 'grey', fontSize: "20px", marginLeft:"10px" }}>
                 {title}
               </span>
               <ButtonGroup className="left" size="medium" >
