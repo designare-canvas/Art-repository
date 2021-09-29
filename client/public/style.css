@@ -1,0 +1,9 @@
+*{
+  margin:0;
+}
+.container1{
+  width: 95% !important;
+  text-align: center !important;
+  /* background-color: black; */
+  margin: auto !important;
+}

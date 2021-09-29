@@ -84,8 +84,9 @@ export default function Login() {
                       width: "64px",
                       height: "64px",
                       borderRadius: "50%",
-                      backgroundColor: "#f5f5f5",
-                      marginRight: "25px",
+                      backgroundColor: "none",
+                      border: "none",
+                      marginRight: "5px",
                     }}
                     variant="outlined"
                   >
@@ -104,7 +105,8 @@ export default function Login() {
                       width: "64px",
                       height: "64px",
                       borderRadius: "50%",
-                      backgroundColor: "#f5f5f5",
+                      backgroundColor: "none",
+                      border: "none",
                     }}
                     variant="outlined"
                   >
@@ -118,8 +120,8 @@ export default function Login() {
               </div>
             </Grid>
             <hr className="divider" style={{ width: "100%" }}></hr>
-            <TextField label="Username" margin="normal"/>
-            <TextField label="Password" margin="normal"/>
+            <TextField label="Username" margin="normal" />
+            <TextField label="Password" margin="normal" />
             <Link
               href="#"
               style={{ color: "#22577A", fontFamily: "Josefin Sans" }}

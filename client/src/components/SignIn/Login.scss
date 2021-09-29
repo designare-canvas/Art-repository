@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Ubuntu+Mono&display=swap");
-body {
+
+.Login {
   margin: 0 !important;
   padding: 0 !important;
   overflow-x: hidden;
   overflow-y: hidden;
-}
-.Login {
+
   hr.divider:after {
-    content: "OR";
+    content: "Or";
     display: inline-block;
     position: relative;
     top: -11px;
@@ -19,7 +19,7 @@ body {
     padding: 0;
     overflow: visible;
     border: none;
-    border-top: 1px solid #070000;
+    border-top: 1px solid rgb(83, 82, 82);
     color: #6e6d7a;
     text-align: center;
   }
@@ -29,6 +29,7 @@ body {
     }
     hr {
       width: 90% !important;
+      margin: auto;
     }
     .main {
       display: none;
@@ -47,6 +48,7 @@ body {
     }
     hr {
       width: 90% !important;
+      margin: auto;
     }
 
     .bottom {

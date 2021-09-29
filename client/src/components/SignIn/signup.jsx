@@ -114,8 +114,9 @@ export default function Login() {
                       width: "64px",
                       height: "64px",
                       borderRadius: "50%",
-                      backgroundColor: "#f5f5f5",
-                      marginRight: "25px",
+                      backgroundColor: "none",
+                      border: "none",
+                      marginRight: "15px",
                     }}
                     variant="outlined"
                   >
@@ -134,7 +135,8 @@ export default function Login() {
                       width: "64px",
                       height: "64px",
                       borderRadius: "50%",
-                      backgroundColor: "#f5f5f5",
+                      backgroundColor: "none",
+                      border: "none",
                     }}
                     variant="outlined"
                   >
