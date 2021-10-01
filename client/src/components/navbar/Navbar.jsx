@@ -10,24 +10,24 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
-import { makeStyles, useTheme , alpha } from "@material-ui/core/styles";
-// import {Link } from "react-router-dom";
+import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 // IMPORTING ICONS
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from "@material-ui/icons/Search";
+import InputBase from "@material-ui/core/InputBase";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginLeft: theme.spacing(2),
-    display: 'none',
+    display: "none",
     [theme.breakpoints.down(1001)]: {
-        display: 'block',
+      display: "block",
     },
   },
   title: {
@@ -38,18 +38,18 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   tab: {
-    fontFamily: 'Rajdhani',
+    fontFamily: "Rajdhani",
     color: "#FEFBF3",
     fontSize: "1.1rem",
     textTransform: "none",
-    fontWeight:550,
-    minWidth: 1
+    fontWeight: 550,
+    minWidth: 1,
   },
   tabs: {
     flexGrow: 1,
-    display: 'block',
+    display: "block",
     [theme.breakpoints.down(1001)]: {
-      display: 'none',
+      display: "none",
     },
   },
   search: {
@@ -57,16 +57,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25)
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-        marginLeft: theme.spacing(3),
-        width: "auto%",
+    marginLeft: theme.spacing(3),
+    width: "auto%",
     [theme.breakpoints.down(1001)]: {
       marginLeft: theme.spacing(3),
-        width: "50%",
+      width: "50%",
     },
     [theme.breakpoints.down(600)]: {
-      display:'none'
+      display: "none",
     },
   },
   searchIcon: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "inherit",
-    fontFamily: 'Rajdhani'
+    fontFamily: "Rajdhani",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -91,27 +91,27 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(600)]: {
       width: "12ch",
       "&:focus": {
-        width: "20ch"
-      }
-    }
-  },
-  auth:{
-    display: 'block',
-    [theme.breakpoints.down(600)]: {
-      display: 'none',
+        width: "20ch",
+      },
     },
-},
- innertab: {
-     fontFamily: 'Rajdhani',
+  },
+  auth: {
+    display: "block",
+    [theme.breakpoints.down(600)]: {
+      display: "none",
+    },
+  },
+  innertab: {
+    fontFamily: "Rajdhani",
     color: "#22577A",
     fontSize: "1.1rem",
     textTransform: "none",
-    fontWeight:550,
-    minWidth: 1 
+    fontWeight: 550,
+    minWidth: 1,
   },
   usage: {
-        justifyContent:'space-between',
-  }
+    justifyContent: "space-between",
+  },
 }));
 
 export default function ButtonAppBar() {
@@ -137,132 +137,163 @@ export default function ButtonAppBar() {
           </Typography>
           {isMobile ? (
             <>
-                <div className={classes.search} >
-                    <div className={classes.searchIcon}>
-                    <SearchIcon  />
-                    </div>
-                        <InputBase 
-                        placeholder="Search…"
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput
-                        }}
-                        inputProps={{ "aria-label": "search" }}
-                        />
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
                 </div>
-                <IconButton
-                        edge="end"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={handleMenu}
-                        >
-                        <MenuIcon />
-                </IconButton>
-                <Menu
-                    id="menu-appbar"
-                    anchorEl={anchor}
-                    anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right"
-                    }}
-                    KeepMountedtransformOrigin={{
-                        vertical: "top",
-                        horizontal: "right"
-                    }}
-                    open={open}
-                    >
-                    <MenuItem
-                    //   onClick={() => setAnchor(null)}
-                    //   component={Link}
-                    //   to="/"
-                    >
-                    <Typography className ={classes.innertab} variant="h6"> Home</Typography>
-                    </MenuItem>
-                    <MenuItem
-                    //   onClick={() => setAnchor(null)}
-                    //   component={Link}
-                    //   to="/College"
-                    >
-                    <Typography className ={classes.innertab} variant="h6"> Explore </Typography>
-                    </MenuItem>
-                    <MenuItem
-                    //   onClick={() => setAnchor(null)}
-                    //   component={Link}
-                    //   to="/About"
-                    >
-                    <Typography className ={classes.innertab} variant="h6"> Designs</Typography>
-                    </MenuItem>
-                    <MenuItem
-                    //   onClick={() => setAnchor(null)}
-                    //   component={Link}
-                    //   to="/designs"
-                    >
-                    <Typography className ={classes.innertab} variant="h6"> What'sNew </Typography>
-                    </MenuItem>
-                    <MenuItem
-                    //   onClick={() => setAnchor(null)}
-                    //   component={Link}
-                    //   to="/signup"
-                    >
-                    <Typography className ={classes.innertab} variant="h6"> Sign In </Typography>
-                
-                    </MenuItem>
-                    <MenuItem
-                    //   onClick={() => setAnchor(null)}
-                    //   component={Link}
-                    //   to="/signin"
-                    >
-                    <Typography className ={classes.innertab} variant="h6"> Sign Up </Typography>
-                    </MenuItem>
-                         
-                </Menu>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </div>
+              <IconButton
+                edge="end"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={handleMenu}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchor}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                KeepMountedtransformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={open}
+              >
+                <MenuItem
+                //   onClick={() => setAnchor(null)}
+                //   component={Link}
+                //   to="/"
+                >
+                  <Typography className={classes.innertab} variant="h6">
+                    {" "}
+                    Home
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                //   onClick={() => setAnchor(null)}
+                //   component={Link}
+                //   to="/College"
+                >
+                  <Typography className={classes.innertab} variant="h6">
+                    {" "}
+                    Explore{" "}
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                //   onClick={() => setAnchor(null)}
+                //   component={Link}
+                //   to="/About"
+                >
+                  <Typography className={classes.innertab} variant="h6">
+                    {" "}
+                    Designs
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                //   onClick={() => setAnchor(null)}
+                //   component={Link}
+                //   to="/designs"
+                >
+                  <Typography className={classes.innertab} variant="h6">
+                    {" "}
+                    What'sNew{" "}
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                //   onClick={() => setAnchor(null)}
+                //   component={Link}
+                //   to="/signup"
+                >
+                  <Typography className={classes.innertab} variant="h6">
+                    {" "}
+                    Sign In{" "}
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                //   onClick={() => setAnchor(null)}
+                //   component={Link}
+                //   to="/signin"
+                >
+                  <Typography className={classes.innertab} variant="h6">
+                    {" "}
+                    Sign Up{" "}
+                  </Typography>
+                </MenuItem>
+              </Menu>
             </>
-          ):( 
+          ) : (
             <>
               <Tabs
                 className={classes.tabs}
                 value={value}
                 onChange={handleChange}
                 TabIndicatorProps={{
-                style: {
-                    display: "none"
-                }
+                  style: {
+                    display: "none",
+                  },
                 }}
-            >
-            <Tab label="Home" onMouseEnter={(e) => { e.target.style.color = "#A1CEF7" }} onMouseLeave={(e)=>{
-            e.target.style.color = "#FEFBF3" }} className={classes.tab} />
-                  
-            <Tab label="Explore" className={classes.tab} />
-            <Tab label="Designs" className={classes.tab} />
-            <Tab label="What'sNew" className={classes.tab} />
-          </Tabs>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-        <div className={classes.auth}>
-         <Button className={classes.tab} color="primary" variant="">
-            Sign In
-          </Button>
-          <Button
-            style={{ color: "#B1FFFD" }}
-            className={classes.tab}
-            color="primary"
-            variant=""
-          >
-            Sign Up
-          </Button></div>
-        </>
+              >
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <Tab
+                    label="Home"
+                    onMouseEnter={(e) => {
+                      e.target.style.color = "#A1CEF7";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.color = "#FEFBF3";
+                    }}
+                    className={classes.tab}
+                  />
+                </Link>
+
+                <Tab label="Explore" className={classes.tab} />
+                <Tab label="Designs" className={classes.tab} />
+                <Tab label="What'sNew" className={classes.tab} />
+              </Tabs>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </div>
+              <div className={classes.auth}>
+                <Link to="/Signin" style={{ textDecoration: "none" }}>
+                  <Button className={classes.tab} color="primary" variant="">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/Signup" style={{ textDecoration: "none" }}>
+                  <Button
+                    style={{ color: "#B1FFFD" }}
+                    className={classes.tab}
+                    color="primary"
+                    variant=""
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            </>
           )}
         </Toolbar>
       </AppBar>
