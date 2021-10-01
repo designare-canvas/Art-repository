@@ -1,81 +1,79 @@
 import React from "react";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-
-import CardActions from '@material-ui/core/CardActions';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+import Avatar from "@material-ui/core/Avatar";
+import { makeStyles } from "@material-ui/core/styles";
 import { blue, red } from "@material-ui/core/colors";
-import './post.scss'
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import "./post.scss";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 const useStyles = makeStyles((theme) => ({
-
   root: {
-    display: 'flex',
-    '& > *': {
+    display: "flex",
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
 
   small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     color: blue[100],
     backgroundColor: red[500],
   },
   left: {
-    justifyContent:"space-evenly",
-    padding:"0px",
-    marginTop:"8px",
+    justifyContent: "space-evenly",
+    padding: "0px",
+    marginTop: "8px",
   },
   noshadow: {
-    boxShadow: "none"
-
+    boxShadow: "none",
   },
   shadow: {
     // boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
     borderRadius: "10px",
-
-  }
+  },
 }));
 function Post(props) {
   const classes = useStyles();
   var title = props.title.substr(0, 7);
-  title += '...';
-  console.log(title)
-  
+  title += "...";
+  console.log(title);
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
-      <Card className={classes.noshadow}
-
-
-        id={props.id}>
-
+      <Card className={classes.noshadow} id={props.id}>
         <div className="container">
-
-          <img className="image" src={props.imgurl} alt="post" />
-          <div className="middle" >
-
+          <img
+            className="image"
+            src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
+            alt="post_img"
+          />
+          <div className="middle">
             {/* <div className="text"> */}
-            <CardActions  style={{justifyContent:'space-evenly'}}>
-              <span style={{ color: 'grey', fontSize: "20px" }}>
+            <CardActions style={{ justifyContent: "space-evenly" }}>
+              <span
+                style={{ color: "grey", fontSize: "20px", marginLeft: "10px" }}
+              >
                 {title}
               </span>
-              <ButtonGroup className="left" size="medium" >
-              <div>
-              </div>
-                <IconButton aria-label="add to favorites" style={{ backgroundColor: 'transparent' }}>
-
+              <ButtonGroup className="left" size="medium">
+                <div></div>
+                <IconButton
+                  aria-label="add to favorites"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <FavoriteIcon fontSize="large" className="favicon" />
-
                 </IconButton>
-                <IconButton aria-label="share" style={{ backgroundColor: 'transparent' }}>
+                <IconButton
+                  aria-label="share"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <ShareIcon fontSize="large" className="favicon" />
                 </IconButton>
               </ButtonGroup>
@@ -85,27 +83,37 @@ function Post(props) {
           </div>
         </div>
 
-
-        <CardActions className={classes.left} >
-          <Avatar color="primary" className={classes.small}>{props.title[0]}</Avatar>
-          <Button size="small" color="primary" fontSize="small" style={{marginRight:"auto"}}>
+        <CardActions className={classes.left}>
+          <Avatar color="primary" className={classes.small}>
+            {props.title[0]}
+          </Avatar>
+          <Button
+            size="small"
+            color="primary"
+            fontSize="small"
+            style={{ marginRight: "auto" }}
+          >
             Username
           </Button>
-          <ButtonGroup  size="small" >
-            <IconButton aria-label="add to favorites" style={{ backgroundColor: 'transparent' }}>
+          <ButtonGroup size="small">
+            <IconButton
+              aria-label="add to favorites"
+              style={{ backgroundColor: "transparent" }}
+            >
               <FavoriteIcon fontSize="small" className="favicon" />
               {20}
             </IconButton>
-            <IconButton aria-label="share" style={{ backgroundColor: 'transparent' }}>
+            <IconButton
+              aria-label="share"
+              style={{ backgroundColor: "transparent" }}
+            >
               <ShareIcon fontSize="small" className="favicon" />
             </IconButton>
           </ButtonGroup>
         </CardActions>
-
       </Card>
-
-    </Grid>)
-
+    </Grid>
+  );
 }
 
-export default Post
+export default Post;
