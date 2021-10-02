@@ -1,0 +1,21 @@
+.Post-page{
+    display: flex;
+    padding:20px 10px;
+    font-family: "Rajdhani";
+
+    .image-area{
+        width:75%;
+    }
+
+    .sidebar{
+        width:25%;
+        padding:20px;
+    }
+
+    .icons{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
