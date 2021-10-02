@@ -6,19 +6,25 @@ import {
   Typography,
   useMediaQuery,
   Button,
-  Menu,
-  MenuItem,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@material-ui/core";
-
 import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 // IMPORTING ICONS
 import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
+import ExploreIcon from "@material-ui/icons/Explore";
+import BrushIcon from "@material-ui/icons/Brush";
+import FiberNewIcon from "@material-ui/icons/FiberNew";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Drawer from "@material-ui/core/Drawer";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -62,11 +68,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
     width: "auto%",
     [theme.breakpoints.down(1001)]: {
-      marginLeft: theme.spacing(3),
+      marginLeft: theme.spacing(0),
       width: "50%",
     },
     [theme.breakpoints.down(600)]: {
-      display: "none",
+      marginLeft: theme.spacing(0),
+      width: "50%",
     },
   },
   searchIcon: {
@@ -93,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
       "&:focus": {
         width: "20ch",
       },
+      marginLeft: theme.spacing(3),
     },
   },
   auth: {
@@ -115,18 +123,55 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
-  const [anchor, setAnchor] = React.useState(null);
-  const open = Boolean(anchor);
+  const classes = useStyles();
   const [value, setValue] = React.useState();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1001));
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const handleMenu = (event) => {
-    setAnchor(event.currentTarget);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
-  const classes = useStyles();
+  const drawerWidth = "50%";
+  const drawer = (
+    <div>
+      <>
+        <div style={{ height: "20px" }} />
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon style={{ color: "#22577A" }} />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ "aria-label": "search" }}
+          />
+        </div>
+
+        <List>
+          {["Home", "Explore ", "Designs", "WhatsNew"].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon style={{ color: "#22577A" }}>
+                {index === 0 ? <HomeIcon /> : " "}
+                {index === 1 ? <ExploreIcon /> : " "}
+                {index === 2 ? <BrushIcon /> : " "}
+                {index === 3 ? <FiberNewIcon /> : " "}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </>
+    </div>
+  );
+
+  // const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
@@ -137,102 +182,34 @@ export default function ButtonAppBar() {
           </Typography>
           {isMobile ? (
             <>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </div>
               <IconButton
-                edge="end"
-                className={classes.menuButton}
                 color="inherit"
-                aria-label="menu"
-                onClick={handleMenu}
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
               >
                 <MenuIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchor}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+              <Drawer
+                // container={container}
+                variant="temporary"
+                anchor="right"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
                 }}
-                KeepMountedtransformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  "& .MuiDrawer-paper": {
+                    boxSizing: "border-box",
+                    width: drawerWidth,
+                  },
                 }}
-                open={open}
               >
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Home
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/College"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Explore{" "}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/About"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Designs
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/designs"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    What'sNew{" "}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/signup"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Sign In{" "}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/signin"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Sign Up{" "}
-                  </Typography>
-                </MenuItem>
-              </Menu>
+                {drawer}
+              </Drawer>
             </>
           ) : (
             <>
