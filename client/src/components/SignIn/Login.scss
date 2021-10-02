@@ -23,6 +23,11 @@
     color: #6e6d7a;
     text-align: center;
   }
+  .Grid_top {
+    background-image: url("https://image.freepik.com/free-vector/flat-minimal-geometric-background_52683-61878.jpg");
+    background-size: cover;
+  }
+
   @media screen and (max-width: 700px) {
     .heading {
       font-size: 1.85rem !important;
@@ -31,12 +36,14 @@
       width: 90% !important;
       margin: auto;
     }
-    .main {
-      display: none;
-    }
     .addOn {
-      visibility: visible !important;
-      background-image: url("./paint-palette.png");
+      margin-top: 0% !important;
+    }
+    .Grid_top {
+      height: fit-content;
+    }
+    .Grid_mid {
+      justify-content: flex-start;
     }
     .bottom {
       font-size: 0.8rem !important;
@@ -49,6 +56,73 @@
     hr {
       width: 90% !important;
       margin: auto;
+    }
+
+    .bottom {
+      font-size: 1.2rem !important;
+    }
+  }
+}
+.Register {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  hr.divider:after {
+    content: "Or";
+    display: inline-block;
+    position: relative;
+    top: -11px;
+    padding: 0 16px;
+    background: #fff;
+  }
+  hr.divider {
+    margin-bottom: 5px;
+    padding: 0;
+    overflow: visible;
+    border: none;
+    border-top: 1px solid rgb(83, 82, 82);
+    color: #6e6d7a;
+    text-align: center;
+  }
+  .Grid_top_signup {
+    background-image: url("https://image.freepik.com/free-vector/geometric-flat-abstract-background_52683-66803.jpg");
+    background-size: cover;
+  }
+  @media screen and (max-width: 700px) {
+    .heading {
+      font-size: 1.85rem !important;
+    }
+    hr {
+      width: 90% !important;
+      margin: auto;
+    }
+    .addOn {
+      margin-top: 0% !important;
+    }
+    .Grid_top_signup {
+      height: fit-content;
+    }
+    .Grid_mid {
+      justify-content: flex-start;
+    }
+    .bottom {
+      font-size: 0.8rem !important;
+    }
+    
+  }
+  @media (min-width: 700px) and (max-width: 900px) {
+    .heading {
+      font-size: 2rem !important;
+    }
+    hr {
+      width: 90% !important;
+      margin: auto;
+    }
+    .name{
+      display:block;
+      width:100%;
     }
 
     .bottom {
