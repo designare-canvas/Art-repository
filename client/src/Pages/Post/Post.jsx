@@ -3,23 +3,15 @@ import ShareIcon from '@mui/icons-material/Share';
 import Divider from '@mui/material/Divider';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import Navbar from '../../components/navbar/Navbar';
 import InfoIcon from '@mui/icons-material/Info';
 import Button from '@mui/material/Button';
-import { grey } from '@mui/material/colors';
 import Comment from '../../components/comment/comment.jsx';
 import { IconButton } from '@material-ui/core';
+import Footer from '../../components/footer/footer'
 import './Post.scss';
 
 function Post() {
-
-    const theme = useTheme();
-
-    const useStyles = makeStyles((theme) => ({
-    }));
-
-    const classes= useStyles();
 
     return (
         <>
@@ -42,7 +34,7 @@ function Post() {
                         </IconButton>
                         </div>
                         <div>
-                            <Button variant="outlined" startIcon={<InfoIcon />} className={classes.icons} style={{color:"rgba(0,0,0,0.54)", borderColor:"rgba(0,0,0,0.54)"}} >
+                            <Button variant="outlined" startIcon={<InfoIcon />} style={{color:"rgba(0,0,0,0.54)", borderColor:"rgba(0,0,0,0.54)"}} >
                                 Details
                             </Button>
                         </div>
@@ -89,6 +81,7 @@ function Post() {
                       />
                 </div>
             </div>
+            <Footer />
         </>
     )
 }
