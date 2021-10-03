@@ -5,10 +5,7 @@ import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  DatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 // import Box from '@material-ui/core/Box';
 import IconButton from "@material-ui/core/IconButton";
@@ -159,18 +156,17 @@ export default function Login() {
                 label="First Name"
                 className="name"
                 variant="standard"
-                style={{ display: "inline-block", marginRight: "10px" }}
               />
               <TextField
                 required
                 id="standard-required"
                 label="Last Name"
-                bel="First Name"
+                fullWidth
                 className="name"
                 variant="standard"
               />
             </div>
-            <TextField label="Username" margin="normal" />
+            <TextField label="Username" margin="none" />
             <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
               <InputLabel htmlFor="standard-adornment-password">
                 Password
@@ -203,7 +199,10 @@ export default function Login() {
                   onChange={handleDateChange}
                 />
               </MuiPickersUtilsProvider>
+              <TextField label="City" margin="none" />
+              <TextField label="Country" margin="none" />
             </FormControl>
+
             <div style={{ height: "20px" }}></div>
             <Button
               style={{
