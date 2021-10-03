@@ -4,6 +4,9 @@ import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+
 // import Box from '@material-ui/core/Box';
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
@@ -21,7 +24,7 @@ export default function Login() {
     password: "",
     showPassword: false,
   });
-
+  const [selectedDate, handleDateChange] = React.useState(new Date());
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -37,7 +40,7 @@ export default function Login() {
     event.preventDefault();
   };
   return (
-    <div className="Login">
+    <div className="Register">
       <Grid
         container
         style={{
@@ -45,17 +48,13 @@ export default function Login() {
           maxWidth: "150vh",
         }}
       >
-        <Grid item xs={12} sm={6} style={{ backgroundColor: "#22577A" }}>
-          <img
-            src="https://img-premium.flaticon.com/png/512/2946/premium/2946892.png?token=exp=1632268100~hmac=5247bf30ac0c6cce22a58ba8682eb0a0"
-            className="main"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-            alt="brand"
-          />
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          style={{ backgroundColor: "" }}
+          className="Grid_top_signup"
+        >
           <Typography
             variant="h2"
             className="addOn"
@@ -65,8 +64,7 @@ export default function Login() {
               fontSize: "12vh",
               color: "#152D35",
               textAlign: "center",
-              margin: "0",
-              visibility: "hidden",
+              marginTop: "50%",
             }}
           >
             Designare
@@ -153,20 +151,22 @@ export default function Login() {
             <div>
               <TextField
                 required
+                fullWidth
                 id="standard-required"
                 label="First Name"
+                className="name"
                 variant="standard"
-                style={{ display: "inline-block", marginRight: "10px" }}
               />
               <TextField
                 required
                 id="standard-required"
                 label="Last Name"
+                fullWidth
+                className="name"
                 variant="standard"
-                style={{ display: "inline-block" }}
               />
             </div>
-            <TextField label="Username" margin="normal" />
+            <TextField label="Username" margin="none" />
             <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
               <InputLabel htmlFor="standard-adornment-password">
                 Password
@@ -188,7 +188,21 @@ export default function Login() {
                   </InputAdornment>
                 }
               />
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker
+                  disableFuture
+                  openTo="year"
+                  format="dd/MM/yyyy"
+                  label="Date of birth"
+                  views={["year", "month", "date"]}
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                />
+              </MuiPickersUtilsProvider>
+              <TextField label="City" margin="none" />
+              <TextField label="Country" margin="none" />
             </FormControl>
+
             <div style={{ height: "20px" }}></div>
             <Button
               style={{
