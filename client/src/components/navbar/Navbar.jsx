@@ -171,8 +171,6 @@ export default function ButtonAppBar() {
     </div>
   );
 
-  // const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ background: "#22577A" }}>
