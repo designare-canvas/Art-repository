@@ -4,7 +4,7 @@ import './comment.scss';
 function comment(props) {
     return (
         <div className="comment">
-            <img src={props.imgUrl} className="profileImg" />
+            <img src={props.imgUrl} className="profileImg" alt="profileImg" />
             <div className="commentText">
                 <h3>{props.name}</h3>
                 <p> {props.comment} </p>
