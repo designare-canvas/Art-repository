@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { blue, red } from "@material-ui/core/colors";
 import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,40 +49,46 @@ function Post(props) {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
-        <div className="container">
-          <img
-            className="image"
-            src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
-            alt="post_img"
-          />
-          <div className="middle">
-            {/* <div className="text"> */}
-            <CardActions style={{ justifyContent: "space-evenly" }}>
-              <span
-                style={{ color: "grey", fontSize: "20px", marginLeft: "10px" }}
-              >
-                {title}
-              </span>
-              <ButtonGroup className="left" size="medium">
-                <div></div>
-                <IconButton
-                  aria-label="add to favorites"
-                  style={{ backgroundColor: "transparent" }}
+        <Link to="/Post" style={{ textDecoration: "none" }}>
+          <div className="container">
+            <img
+              className="image"
+              src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
+              alt="post_img"
+            />
+            <div className="middle">
+              {/* <div className="text"> */}
+              <CardActions style={{ justifyContent: "space-evenly" }}>
+                <span
+                  style={{
+                    color: "grey",
+                    fontSize: "20px",
+                    marginLeft: "10px",
+                  }}
                 >
-                  <FavoriteIcon fontSize="large" className="favicon" />
-                </IconButton>
-                <IconButton
-                  aria-label="share"
-                  style={{ backgroundColor: "transparent" }}
-                >
-                  <ShareIcon fontSize="large" className="favicon" />
-                </IconButton>
-              </ButtonGroup>
-            </CardActions>
-            {/* </div> */}
-            {/* <div className="text">John Doe</div> */}
+                  {title}
+                </span>
+                <ButtonGroup className="left" size="medium">
+                  <div></div>
+                  <IconButton
+                    aria-label="add to favorites"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    <FavoriteIcon fontSize="large" className="favicon" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="share"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    <ShareIcon fontSize="large" className="favicon" />
+                  </IconButton>
+                </ButtonGroup>
+              </CardActions>
+              {/* </div> */}
+              {/* <div className="text">John Doe</div> */}
+            </div>
           </div>
-        </div>
+        </Link>
 
         <CardActions className={classes.left}>
           <Avatar color="primary" className={classes.small}>

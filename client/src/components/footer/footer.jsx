@@ -23,95 +23,104 @@ function Footer() {
 
   return (
     <div className="footer">
-    <div className="top">
-
+      <div className="top">
         <div className="logo">
-        <Link to="/">
-          <Typography variant="h2" className={classes.title}>
-            Designare
-          </Typography>
+          <Link to="/">
+            <Typography
+              variant="h2"
+              className={classes.title}
+              style={{
+                fontFamily: "Allison",
+                fontStyle: "cursive",
+                fontSize: "7vh",
+                marginTop:"0"
+              }}
+            >
+              designare
+            </Typography>
           </Link>
-          <p className="tagline" >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <p className="tagline">
+            Creative fuels design. Design fuels creativity. Be here for more. Are you in love with a creative? It’s never too early to show it. 
           </p>
           <div className="icons">
-          <Link to="https://facebook.com/">
-            <FacebookIcon />
+            <Link to="https://facebook.com/">
+              <FacebookIcon />
             </Link>
             <Link to="https://twitter.com/">
-            <TwitterIcon />
+              <TwitterIcon />
             </Link>
             <Link to="https://instagram.com/">
-            <InstagramIcon />
+              <InstagramIcon />
             </Link>
           </div>
         </div>
-      <div className="lists">
-        <div className="designers">
+        <div className="lists">
+          <div className="designers">
             <h4>For designers</h4>
             <Link to="/">
-            <p>Explore design work</p>
+              <p>Explore design work</p>
             </Link>
             <Link to="/">
-            <p>Design blog</p>
+              <p>Design blog</p>
             </Link>
             <Link to="/">
-            <p>Code of conduct</p>
+              <p>Code of conduct</p>
             </Link>
-        </div>
-        <div className="hire-designer">
+          </div>
+          <div className="hire-designer">
             <h4>Hire designers</h4>
             <Link to="/">
-            <p>Post a job opening</p>
+              <p>Post a job opening</p>
             </Link>
             <Link to="/">
-            <p>Post a freelance porject</p>
+              <p>Post a freelance porject</p>
             </Link>
             <Link to="/">
-            <p>Search for designers</p>
+              <p>Search for designers</p>
             </Link>
-        </div>
-        <div className="company">
+          </div>
+          <div className="company">
             <h4>Company</h4>
             <Link to="/">
-            <p>About</p>
+              <p>About</p>
             </Link>
             <Link to="/">
-            <p>Testimonials</p>
+              <p>Testimonials</p>
             </Link>
             <Link to="/">
-            <p>Support</p>
+              <p>Support</p>
             </Link>
             <Link to="/">
-            <p>Privacy policy</p>
+              <p>Privacy policy</p>
             </Link>
             <Link to="/">
-            <p>Terms of service</p>
+              <p>Terms of service</p>
             </Link>
-        </div>
-        <div className="directories">
+          </div>
+          <div className="directories">
             <h4>Directories</h4>
             <Link to="/">
-            <p>Tags</p>
+              <p>Tags</p>
             </Link>
             <Link to="/">
-            <p>Places</p>
+              <p>Places</p>
             </Link>
-        </div>
-        <div className="design-resources">
+          </div>
+          <div className="design-resources">
             <h4>Design resources</h4>
             <Link to="/">
-            <p>Freelancing</p>
-            </Link>            
-            <Link to="/">
-            <p>Design Hiring</p>
+              <p>Freelancing</p>
             </Link>
+            <Link to="/">
+              <p>Design Hiring</p>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
       <hr />
-      <p style={{color:"rgba(256,256,256,0.56)"}}>&#9400; &ensp; {dateToday.getFullYear()} Designare. All rights reserved.</p>
+      <p style={{ color: "rgba(256,256,256,0.56)" }}>
+        &#9400; &ensp; {dateToday.getFullYear()} Designare. All rights reserved.
+      </p>
     </div>
   );
 }
