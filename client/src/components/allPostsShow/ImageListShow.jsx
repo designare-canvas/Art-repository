@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Post from './post';
 import Grid from '@material-ui/core/Grid';
-import {Link} from 'react-router-dom';
 const url = "https://jsonplaceholder.typicode.com/photos";
 function ImageListShow(){
     const [data ,getdata]= useState([]);

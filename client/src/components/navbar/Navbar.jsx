@@ -15,6 +15,8 @@ import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 // IMPORTING ICONS
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import LoginIcon from "@mui/icons-material/Login";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import ExploreIcon from "@material-ui/icons/Explore";
@@ -162,17 +164,64 @@ export default function ButtonAppBar() {
         </div>
 
         <List>
-          {["Home", "Explore ", "Designs", "WhatsNew"].map((text, index) => (
-            <ListItem button key={text}>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="Home">
               <ListItemIcon style={{ color: "#22577A" }}>
-                {index === 0 ? <HomeIcon /> : " "}
-                {index === 1 ? <ExploreIcon /> : " "}
-                {index === 2 ? <BrushIcon /> : " "}
-                {index === 3 ? <FiberNewIcon /> : " "}
+                <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary="Home" />
             </ListItem>
-          ))}
+          </Link>
+          <ListItem button key="Explore">
+            <ListItemIcon style={{ color: "#22577A" }}>
+              <ExploreIcon />
+            </ListItemIcon>
+            <ListItemText primary="Explore" />
+          </ListItem>
+          <ListItem button key="Designs">
+            <ListItemIcon style={{ color: "#22577A" }}>
+              <BrushIcon />
+            </ListItemIcon>
+            <ListItemText primary="Designs" />
+          </ListItem>
+          <ListItem button key="What'sNew">
+            <ListItemIcon style={{ color: "#22577A" }}>
+              <FiberNewIcon />
+            </ListItemIcon>
+            <ListItemText primary="What'sNew" />
+          </ListItem>
+          <Link to="/Signin" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="SignIn">
+              <ListItemIcon style={{ color: "#22577A" }}>
+                <LoginIcon />
+              </ListItemIcon>
+              <ListItemText primary="SignIn" />
+            </ListItem>
+          </Link>
+          <Link to="/Signup" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="SignUp">
+              <ListItemIcon style={{ color: "#22577A" }}>
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary="SignUp" />
+            </ListItem>
+          </Link>
+
+          {/* {["Home", "Explore ", "Designs", "WhatsNew", "SignIn", "SignUp"].map(
+            (text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon style={{ color: "#22577A" }}>
+                  {index === 0 ? <HomeIcon /> : " "}
+                  {index === 1 ? <ExploreIcon /> : " "}
+                  {index === 2 ? <BrushIcon /> : " "}
+                  {index === 3 ? <FiberNewIcon /> : " "}
+                  {index === 4 ? <LoginIcon /> : " "}
+                  {index === 5 ? <AccountBoxIcon /> : " "}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            )
+          )} */}
         </List>
       </>
     </div>
@@ -182,9 +231,16 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static" style={{ background: "#22577A" }}>
         <Toolbar className={classes.usage}>
-          <Typography variant="h2" className={classes.title}>
-            Designare
-          </Typography>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <Typography
+              variant="h2"
+              className={classes.title}
+              style={{ paddingBottom: "13%", fontWeight: 500 }}
+            >
+              designare
+            </Typography>
+          </Link>
+
           {isMobile ? (
             <>
               <IconButton
@@ -228,18 +284,16 @@ export default function ButtonAppBar() {
                   },
                 }}
               >
-                <Link to="/" style={{ textDecoration: "none" }}>
-                  <Tab
-                    label="Home"
-                    onMouseEnter={(e) => {
-                      e.target.style.color = "#A1CEF7";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.color = "#FEFBF3";
-                    }}
-                    className={classes.tab}
-                  />
-                </Link>
+                <Tab
+                  label="Home"
+                  // onMouseEnter={(e) => {
+                  //   e.target.style.color = "#F9F871";
+                  // }}
+                  // onMouseLeave={(e) => {
+                  //   e.target.style.color = "#FEFBF3";
+                  // }}
+                  className={classes.tab}
+                />
 
                 <Tab label="Explore" className={classes.tab} />
                 <Tab label="Designs" className={classes.tab} />

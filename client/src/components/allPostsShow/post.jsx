@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { blue, red } from "@material-ui/core/colors";
 import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { grey } from '@mui/material/colors';
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +49,7 @@ function Post(props) {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
+      <Link to="/Post" style={{ textDecoration: "none" }}>
         <div className="container">
           <img
             className="image"
@@ -82,7 +83,8 @@ function Post(props) {
             {/* </div> */}
             {/* <div className="text">John Doe</div> */}
           </div>
-        </div>
+          </div>
+        </Link>
 
         <CardActions className={classes.left}>
           <Avatar color="primary" className={classes.small}>
