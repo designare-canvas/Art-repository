@@ -61,13 +61,13 @@ export default function Login() {
             style={{
               fontFamily: "Allison",
               fontStyle: "cursive",
-              fontSize: "12vh",
+              fontSize: "18vh",
               color: "#152D35",
               textAlign: "center",
               marginTop: "50%",
             }}
           >
-            Designare
+            designare
           </Typography>
         </Grid>
         <Grid
@@ -221,7 +221,7 @@ export default function Login() {
               className="bottom"
               style={{
                 fontFamily: "Josefin Sans",
-                fontSize: "1rem",
+                fontSize: "1.3rem",
                 fontWeight: "500",
                 color: "black",
                 marginBottom: "5%",
@@ -230,7 +230,7 @@ export default function Login() {
             >
               Already a Designer?
               <Link
-                href="#"
+                href="/Signin"
                 style={{ color: "#22577A", marginLeft: "5px" }}
                 underline="none"
               >
