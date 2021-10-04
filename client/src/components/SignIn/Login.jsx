@@ -4,10 +4,11 @@ import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
-
+// import Navbar from "../navbar/Navbar";
 export default function Login() {
   return (
     <div className="Login">
+      {/* <Navbar /> */}
       <Grid
         container
         style={{
@@ -31,10 +32,10 @@ export default function Login() {
               fontSize: "18vh",
               color: "#152D35",
               textAlign: "center",
-              marginTop:"50%",
+              marginTop: "50%",
             }}
           >
-            Designare
+            designare
           </Typography>
         </Grid>
         <Grid
@@ -152,7 +153,7 @@ export default function Login() {
             >
               Want to Design?
               <Link
-                href="#"
+                href="/Signup"
                 style={{ color: "#22577A", marginLeft: "5px" }}
                 underline="none"
               >
