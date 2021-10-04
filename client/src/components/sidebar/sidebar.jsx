@@ -70,6 +70,8 @@ function Sidebar() {
             </Button>
           </div>
         </div>
+        <br />
+        <h2>Feedback</h2>
         {temp.map((data) => {
           return (
             <Comment
