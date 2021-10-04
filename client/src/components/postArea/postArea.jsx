@@ -60,7 +60,7 @@ function PostArea(props) {
         </div>
       </div>
       <div className="postImg">
-          <img src={props.postImgUrl} alt="post-image" style={{width:"63.8vw", borderRadius:"10px"}} />
+          <img src={props.postImgUrl} alt="post-image" style={{width:"50vw", borderRadius:"10px"}} />
       </div>
       <p className="postDescription">
           {props.postDescription}
