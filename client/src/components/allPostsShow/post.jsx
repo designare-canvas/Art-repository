@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   small: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+    width: theme.spacing(2.5),
+    height: theme.spacing(2.5),
     color: blue[100],
     backgroundColor: red[500],
   },
@@ -49,44 +49,40 @@ function Post(props) {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
-        <Link to="/Post" style={{ textDecoration: "none" }}>
-          <div className="container">
-            <img
-              className="image"
-              src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
-              alt="post_img"
-            />
-            <div className="middle">
-              {/* <div className="text"> */}
-              <CardActions style={{ justifyContent: "space-evenly" }}>
-                <span
-                  style={{
-                    color: "grey",
-                    fontSize: "20px",
-                    marginLeft: "10px",
-                  }}
+      <Link to="/Post" style={{ textDecoration: "none" }}>
+        <div className="container">
+          <img
+            className="image"
+            src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
+            alt="post_img"
+          />
+          <div className="middle">
+            {/* <div className="text"> */}
+            <CardActions style={{ justifyContent: "space-evenly" }}>
+              <span
+                style={{ color: "white", fontSize: "20px", marginLeft: "10px" }}
+              >
+                {title}
+              </span>
+              <ButtonGroup className="left" size="medium">
+                <div></div>
+                <IconButton
+                  aria-label="add to favorites"
+                  style={{ backgroundColor: "transparent" }}
                 >
-                  {title}
-                </span>
-                <ButtonGroup className="left" size="medium">
-                  <div></div>
-                  <IconButton
-                    aria-label="add to favorites"
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    <FavoriteIcon fontSize="large" className="favicon" />
-                  </IconButton>
-                  <IconButton
-                    aria-label="share"
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    <ShareIcon fontSize="large" className="favicon" />
-                  </IconButton>
-                </ButtonGroup>
-              </CardActions>
-              {/* </div> */}
-              {/* <div className="text">John Doe</div> */}
-            </div>
+                  <FavoriteIcon fontSize="middle" className="favicon" />
+                </IconButton>
+                <IconButton
+                  aria-label="share"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <ShareIcon fontSize="middle" color="white" className="favicon" />
+                </IconButton>
+              </ButtonGroup>
+            </CardActions>
+            {/* </div> */}
+            {/* <div className="text">John Doe</div> */}
+          </div>
           </div>
         </Link>
 
