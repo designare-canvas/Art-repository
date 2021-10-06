@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { blue, red } from "@material-ui/core/colors";
 import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   small: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+    width: theme.spacing(2.5),
+    height: theme.spacing(2.5),
     color: blue[100],
     backgroundColor: red[500],
   },
@@ -48,6 +49,7 @@ function Post(props) {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
+      <Link to="/Post" style={{ textDecoration: "none" }}>
         <div className="container">
           <img
             className="image"
@@ -58,7 +60,7 @@ function Post(props) {
             {/* <div className="text"> */}
             <CardActions style={{ justifyContent: "space-evenly" }}>
               <span
-                style={{ color: "grey", fontSize: "20px", marginLeft: "10px" }}
+                style={{ color: "white", fontSize: "20px", marginLeft: "10px" }}
               >
                 {title}
               </span>
@@ -68,20 +70,21 @@ function Post(props) {
                   aria-label="add to favorites"
                   style={{ backgroundColor: "transparent" }}
                 >
-                  <FavoriteIcon fontSize="large" className="favicon" />
+                  <FavoriteIcon fontSize="middle" className="favicon" />
                 </IconButton>
                 <IconButton
                   aria-label="share"
                   style={{ backgroundColor: "transparent" }}
                 >
-                  <ShareIcon fontSize="large" className="favicon" />
+                  <ShareIcon fontSize="middle" color="white" className="favicon" />
                 </IconButton>
               </ButtonGroup>
             </CardActions>
             {/* </div> */}
             {/* <div className="text">John Doe</div> */}
           </div>
-        </div>
+          </div>
+        </Link>
 
         <CardActions className={classes.left}>
           <Avatar color="primary" className={classes.small}>

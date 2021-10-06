@@ -4,10 +4,11 @@ import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
-
+// import Navbar from "../navbar/Navbar";
 export default function Login() {
   return (
     <div className="Login">
+      {/* <Navbar /> */}
       <Grid
         container
         style={{
@@ -15,31 +16,26 @@ export default function Login() {
           maxWidth: "150vh",
         }}
       >
-        <Grid item xs={12} sm={6} style={{ backgroundColor: "#22577A" }}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2970/2970785.png"
-            className="main"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-            alt="brand"
-          />
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          style={{ backgroundColor: "#22577A" }}
+          className="Grid_top"
+        >
           <Typography
             variant="h2"
             className="addOn"
             style={{
               fontFamily: "Allison",
               fontStyle: "cursive",
-              fontSize: "12vh",
+              fontSize: "18vh",
               color: "#152D35",
               textAlign: "center",
-              margin: "0",
-              visibility: "hidden",
+              marginTop: "50%",
             }}
           >
-            Designare
+            designare
           </Typography>
         </Grid>
         <Grid
@@ -51,6 +47,7 @@ export default function Login() {
           justify="space-between"
           alignItems="center"
           direction="column"
+          className="Grid_mid"
         >
           <div style={{ height: "20px" }} />
 
@@ -156,7 +153,7 @@ export default function Login() {
             >
               Want to Design?
               <Link
-                href="#"
+                href="/Signup"
                 style={{ color: "#22577A", marginLeft: "5px" }}
                 underline="none"
               >

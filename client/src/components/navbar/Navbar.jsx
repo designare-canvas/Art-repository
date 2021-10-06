@@ -6,19 +6,27 @@ import {
   Typography,
   useMediaQuery,
   Button,
-  Menu,
-  MenuItem,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@material-ui/core";
-
 import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 // IMPORTING ICONS
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import LoginIcon from "@mui/icons-material/Login";
 import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
+import ExploreIcon from "@material-ui/icons/Explore";
+import BrushIcon from "@material-ui/icons/Brush";
+import FiberNewIcon from "@material-ui/icons/FiberNew";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Drawer from "@material-ui/core/Drawer";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -62,11 +70,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
     width: "auto%",
     [theme.breakpoints.down(1001)]: {
-      marginLeft: theme.spacing(3),
+      marginLeft: theme.spacing(0),
       width: "50%",
     },
     [theme.breakpoints.down(600)]: {
-      display: "none",
+      marginLeft: theme.spacing(0),
+      width: "50%",
     },
   },
   searchIcon: {
@@ -88,11 +97,19 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
+    [theme.breakpoints.down(1001)]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+      marginLeft: theme.spacing(3),
+    },
     [theme.breakpoints.down(600)]: {
       width: "12ch",
       "&:focus": {
         width: "20ch",
       },
+      marginLeft: theme.spacing(3),
     },
   },
   auth: {
@@ -115,124 +132,145 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
-  const [anchor, setAnchor] = React.useState(null);
-  const open = Boolean(anchor);
+  const classes = useStyles();
   const [value, setValue] = React.useState();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1001));
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const handleMenu = (event) => {
-    setAnchor(event.currentTarget);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
-  const classes = useStyles();
+  const drawerWidth = "50%";
+  const drawer = (
+    <div>
+      <>
+        <div style={{ height: "20px" }} />
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon style={{ color: "#22577A" }} />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ "aria-label": "search" }}
+          />
+        </div>
+
+        <List>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="Home">
+              <ListItemIcon style={{ color: "#22577A" }}>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+          </Link>
+          <ListItem button key="Explore">
+            <ListItemIcon style={{ color: "#22577A" }}>
+              <ExploreIcon />
+            </ListItemIcon>
+            <ListItemText primary="Explore" />
+          </ListItem>
+          <ListItem button key="Designs">
+            <ListItemIcon style={{ color: "#22577A" }}>
+              <BrushIcon />
+            </ListItemIcon>
+            <ListItemText primary="Designs" />
+          </ListItem>
+          <ListItem button key="What'sNew">
+            <ListItemIcon style={{ color: "#22577A" }}>
+              <FiberNewIcon />
+            </ListItemIcon>
+            <ListItemText primary="What'sNew" />
+          </ListItem>
+          <Link to="/Signin" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="SignIn">
+              <ListItemIcon style={{ color: "#22577A" }}>
+                <LoginIcon />
+              </ListItemIcon>
+              <ListItemText primary="SignIn" />
+            </ListItem>
+          </Link>
+          <Link to="/Signup" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="SignUp">
+              <ListItemIcon style={{ color: "#22577A" }}>
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary="SignUp" />
+            </ListItem>
+          </Link>
+
+          {/* {["Home", "Explore ", "Designs", "WhatsNew", "SignIn", "SignUp"].map(
+            (text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon style={{ color: "#22577A" }}>
+                  {index === 0 ? <HomeIcon /> : " "}
+                  {index === 1 ? <ExploreIcon /> : " "}
+                  {index === 2 ? <BrushIcon /> : " "}
+                  {index === 3 ? <FiberNewIcon /> : " "}
+                  {index === 4 ? <LoginIcon /> : " "}
+                  {index === 5 ? <AccountBoxIcon /> : " "}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            )
+          )} */}
+        </List>
+      </>
+    </div>
+  );
 
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ background: "#22577A" }}>
         <Toolbar className={classes.usage}>
-          <Typography variant="h2" className={classes.title}>
-            Designare
-          </Typography>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <Typography
+              variant="h2"
+              className={classes.title}
+              style={{ paddingBottom: "13%", fontWeight: 500 }}
+            >
+              designare
+            </Typography>
+          </Link>
+
           {isMobile ? (
             <>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </div>
               <IconButton
-                edge="end"
-                className={classes.menuButton}
                 color="inherit"
-                aria-label="menu"
-                onClick={handleMenu}
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
               >
                 <MenuIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchor}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+              <Drawer
+                // container={container}
+                variant="temporary"
+                anchor="right"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
                 }}
-                KeepMountedtransformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  "& .MuiDrawer-paper": {
+                    boxSizing: "border-box",
+                    width: drawerWidth,
+                  },
                 }}
-                open={open}
               >
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Home
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/College"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Explore{" "}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/About"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Designs
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/designs"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    What'sNew{" "}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/signup"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Sign In{" "}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                //   onClick={() => setAnchor(null)}
-                //   component={Link}
-                //   to="/signin"
-                >
-                  <Typography className={classes.innertab} variant="h6">
-                    {" "}
-                    Sign Up{" "}
-                  </Typography>
-                </MenuItem>
-              </Menu>
+                {drawer}
+              </Drawer>
             </>
           ) : (
             <>
@@ -246,18 +284,16 @@ export default function ButtonAppBar() {
                   },
                 }}
               >
-                <Link to="/" style={{ textDecoration: "none" }}>
-                  <Tab
-                    label="Home"
-                    onMouseEnter={(e) => {
-                      e.target.style.color = "#A1CEF7";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.color = "#FEFBF3";
-                    }}
-                    className={classes.tab}
-                  />
-                </Link>
+                <Tab
+                  label="Home"
+                  // onMouseEnter={(e) => {
+                  //   e.target.style.color = "#F9F871";
+                  // }}
+                  // onMouseLeave={(e) => {
+                  //   e.target.style.color = "#FEFBF3";
+                  // }}
+                  className={classes.tab}
+                />
 
                 <Tab label="Explore" className={classes.tab} />
                 <Tab label="Designs" className={classes.tab} />

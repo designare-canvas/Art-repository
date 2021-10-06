@@ -1,0 +1,43 @@
+.postArea{
+    width: calc(100% - 25rem);
+    padding: 20px;
+    font-family: "Lato";
+    box-sizing: border-box;
+
+    .postHeader{
+        display: flex;
+        justify-content: space-between;
+        padding:0 8vw;
+        
+        .profileImg{
+            height: 48px;
+            margin-right: 10px;
+        }
+
+        .leftItems{
+            display: flex;
+        }
+
+        .postBody h4{
+            margin:0 10px;
+            font-size:16px;
+        }
+
+        .authorLinks{
+            display: flex;
+
+            p{
+                margin: 5px 10px;
+            }
+        }
+    }
+
+    .postImg{
+        text-align: center;
+        margin:5vh 0;
+    }
+
+    .postDescription{
+        text-align: center;
+    }
+}

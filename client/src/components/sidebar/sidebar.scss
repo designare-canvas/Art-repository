@@ -1,0 +1,17 @@
+.sidebar{
+    padding:20px;
+    height: 100%;
+    width:25rem;
+    transition:all 1.0s ease-in-out;
+    box-sizing: border-box;
+    background: #fff;
+   
+
+    .icons{
+        z-index: 100;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

@@ -22,7 +22,8 @@ function ImageListShow(){
 
         data.map((x)=> {
 
-         return <Post title={x.title} imgurl={x.url} id={x.id}/>
+         return (
+            <Post title={x.title} imgurl={x.url} id={x.id}/>    )
         })
     }
     </Grid>;
