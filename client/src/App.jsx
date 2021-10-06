@@ -5,6 +5,7 @@ import Home from "../src/Pages/Home/Home.jsx";
 import Login from "./components/SignIn/Login";
 import Post from "../src/Pages/Post/Post.jsx";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 function App() {
   return (
     <Router>
