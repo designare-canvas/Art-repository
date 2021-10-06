@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Post from './post';
 import Grid from '@material-ui/core/Grid';
+import Filter from '../filter/filter'
 const url = "https://jsonplaceholder.typicode.com/photos";
 function ImageListShow(){
     const [data ,getdata]= useState([]);
@@ -17,6 +18,7 @@ function ImageListShow(){
     },[]);
     console.log(data);
     return <Grid container spacing={5} className="container1">{
+       
 
         data.map((x)=> {
 
