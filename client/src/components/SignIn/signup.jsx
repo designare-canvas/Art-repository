@@ -199,8 +199,9 @@ export default function Login() {
                   onChange={handleDateChange}
                 />
               </MuiPickersUtilsProvider>
-              <TextField label="City" margin="none" />
               <TextField label="Country" margin="none" />
+              <TextField label="State" margin="none" />
+              <TextField label="Pincode" margin="none" />
             </FormControl>
 
             <div style={{ height: "20px" }}></div>

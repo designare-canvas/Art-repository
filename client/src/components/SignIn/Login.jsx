@@ -4,8 +4,35 @@ import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import Box from '@material-ui/core/Box';
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import FormControl from "@material-ui/core/FormControl";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 // import Navbar from "../navbar/Navbar";
 export default function Login() {
+  const[values, setValues] = React.useState({
+    password: "",
+    showPassword: false,
+  });
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <div className="Login">
       {/* <Navbar /> */}
@@ -118,7 +145,29 @@ export default function Login() {
             </Grid>
             <hr className="divider" style={{ width: "100%" }}></hr>
             <TextField label="Username" margin="normal" />
-            <TextField label="Password" margin="normal" />
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+              <InputLabel htmlFor="standard-adornment-password">
+                Password
+              </InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <div style={{ height: "20px" }}></div>
             <Link
               href="#"
               style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
