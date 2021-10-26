@@ -296,8 +296,11 @@ export default function ButtonAppBar() {
                 />
 
                 <Tab label="Explore" className={classes.tab} />
+
                 <Tab label="Designs" className={classes.tab} />
-                <Tab label="What'sNew" className={classes.tab} />
+                <Link to="/WhatsNew" style={{ textDecoration: "none" }}>
+                  <Tab label="What'sNew" className={classes.tab} />
+                </Link>
               </Tabs>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
