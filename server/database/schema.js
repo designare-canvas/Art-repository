@@ -5,11 +5,18 @@ mysqlConnection.connect((err)=>{
         console.log('Connection Failed!'+ JSON.stringify(err,undefined,2));
 
     console.log('Connection Established Successfully');
-    mysqlConnection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DATABASEUSER}`, function (err, result) {
-        if (err) throw err;
-          console.log(" Database created");
-        });
 });
+
+mysqlConnection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DATABASENAME}`, function (err, result) {
+    if (err)
+    {
+        throw err;
+        return;
+    }
+      console.log(" Database created");
+    });
+
+mysqlConnection.query(`USE ${process.env.DATABASENAME}`);
 
 const admin = `Create TABLE IF NOT EXISTS admin(
     username VARCHAR(40) NOT NULL UNIQUE,
@@ -20,7 +27,7 @@ const admin = `Create TABLE IF NOT EXISTS admin(
     PRIMARY KEY (username)
 )`;
 
-const user = `Create TABLE IF NOT EXISTS user(
+const users = `Create TABLE IF NOT EXISTS users(
     username VARCHAR(40) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     Fname VARCHAR(255) NOT NULL,
@@ -42,13 +49,14 @@ const arts = `Create TABLE IF NOT EXISTS arts(
     id INT AUTO_INCREMENT,
     isPublished BOOLEAN NOT NULL,
     dateOfPublish DATETIME NOT NULL,
+    timestamp DATETIME NOT NULL,
     title VARCHAR(255),
     description TEXT,
     username VARCHAR(40),
     admin_id VARCHAR(40),
     PRIMARY KEY (id),
     FOREIGN KEY (admin_id) REFERENCES admin(username),
-    FOREIGN KEY (username) REFERENCES user(username)
+    FOREIGN KEY (username) REFERENCES users(username)
 )`;
 
 const likes = `Create TABLE IF NOT EXISTS likes(
@@ -57,7 +65,7 @@ const likes = `Create TABLE IF NOT EXISTS likes(
     postId int,
     PRIMARY KEY (timestamp, username, postId),
     FOREIGN KEY (postId) REFERENCES arts(id),
-    FOREIGN KEY (username) REFERENCES user(username)
+    FOREIGN KEY (username) REFERENCES users(username)
 )`;
 
 const comments = `Create TABLE IF NOT EXISTS comments(
@@ -67,7 +75,7 @@ const comments = `Create TABLE IF NOT EXISTS comments(
     postId int,
     PRIMARY KEY (timestamp, username, postId),
     FOREIGN KEY (postId) REFERENCES arts(id),
-    FOREIGN KEY (username) REFERENCES user(username)
+    FOREIGN KEY (username) REFERENCES users(username)
 )`;
 
 const artImages = `Create TABLE IF NOT EXISTS artImages(
@@ -78,36 +86,32 @@ const artImages = `Create TABLE IF NOT EXISTS artImages(
     FOREIGN KEY (postId) REFERENCES arts(id)
 )`;
 
-mysqlConnection.query(admin, function (err) {
+mysqlConnection.query(admin, (err,result) => {
     if (err) throw err;
-    console.log(" Admin Table created");
+    else console.log(" Admin Table created");
   });
 
-mysqlConnection.query(user, function (err) {
+mysqlConnection.query(users, (err,result) => {
     if (err) throw err;
-    console.log(" User Table created");
+    else console.log(" Users Table created");
 });
 
-mysqlConnection.query(arts, function (err) {
+mysqlConnection.query(arts, (err,result) => {
     if (err) throw err;
-    console.log(" Arts Table created");
+    else console.log(" Arts Table created");
 });
 
-mysqlConnection.query(likes, function (err) {
+mysqlConnection.query(likes, (err,result) => {
     if (err) throw err;
-    console.log(" Likes Table created");
+    else console.log(" Likes Table created");
 });
 
-mysqlConnection.query(comments, function (err) {
+mysqlConnection.query(comments, (err,result) => {
     if (err) throw err;
-    console.log(" Commnets Table created");
+    else console.log(" Commnets Table created");
 });
 
-mysqlConnection.query(artImages, function (err) {
+mysqlConnection.query(artImages, (err,result) => {
     if (err) throw err;
-    console.log(" Art Images Table created");
+    else console.log(" Art Images Table created");
 });
-
-setInterval(function () {
-    mysqlConnection.query('SELECT 1');
-}, 5000);
