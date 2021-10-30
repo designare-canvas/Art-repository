@@ -1,11 +1,33 @@
-import React from "react";
+import React,{useState} from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
+import axios from "axios";
 // import Navbar from "../navbar/Navbar";
 export default function Login() {
+
+  const [values,setValues] = useState({
+    username:"",
+    password:""
+  });
+
+  axios.defaults.withCredentials = true;
+
+  const handleChange = (props) => (e) => {
+    setValues({
+      ...values,
+      [props]:e.target.value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:8080/api/auth/login",values, {withCredentials: true}).catch((Err) => console.log(Err));
+    console.log(response);
+  }
+
   return (
     <div className="Login">
       {/* <Navbar /> */}
@@ -117,8 +139,8 @@ export default function Login() {
               </div>
             </Grid>
             <hr className="divider" style={{ width: "100%" }}></hr>
-            <TextField label="Username" margin="normal" />
-            <TextField label="Password" margin="normal" />
+            <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
+            <TextField label="Password" margin="normal" onChange = {handleChange("password")}/>
             <Link
               href="#"
               style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
@@ -135,6 +157,7 @@ export default function Login() {
                 color: "white",
               }}
               variant="contained"
+              onClick = {handleSubmit}
             >
               Sign In
             </Button>
