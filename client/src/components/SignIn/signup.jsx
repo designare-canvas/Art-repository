@@ -231,6 +231,7 @@ export default function Login() {
             <TextField
               label="Email"
               required
+              type = "email"
               onChange={handleChange("email")}
               margin="none"
             />

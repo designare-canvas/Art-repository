@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const mysqlConnection = require("../database/dbConnect");
 const util = require("util");
+const { appendFile } = require("fs");
 
 const saltRounds = 12;
 

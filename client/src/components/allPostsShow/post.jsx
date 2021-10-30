@@ -52,7 +52,7 @@ function Post(props) {
       <Link to="/Post" style={{ textDecoration: "none" }}>
         <div className="container">
           <img
-            className="image"
+            className="image skeleton"
             src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
             alt="post_img"
           />
