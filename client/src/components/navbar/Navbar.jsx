@@ -284,20 +284,16 @@ export default function ButtonAppBar() {
                   },
                 }}
               >
-                <Tab
-                  label="Home"
-                  // onMouseEnter={(e) => {
-                  //   e.target.style.color = "#F9F871";
-                  // }}
-                  // onMouseLeave={(e) => {
-                  //   e.target.style.color = "#FEFBF3";
-                  // }}
-                  className={classes.tab}
-                />
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <Tab label="Home" className={classes.tab} />
+                </Link>
 
                 <Tab label="Explore" className={classes.tab} />
+
                 <Tab label="Designs" className={classes.tab} />
-                <Tab label="What'sNew" className={classes.tab} />
+                <Link to="/WhatsNew" style={{ textDecoration: "none" }}>
+                  <Tab label="What'sNew" className={classes.tab} />
+                </Link>
               </Tabs>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>

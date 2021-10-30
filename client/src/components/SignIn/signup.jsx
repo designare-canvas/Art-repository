@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
@@ -37,11 +37,11 @@ export default function Login() {
     showPassword: false,
   });
 
-  const usernameComponent = useRef();
-  const passwordComponent = useRef();
+
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+    
   };
 
   // const handleDateChange = (event) => {
@@ -79,7 +79,12 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(values);
+    const keys = Object.keys(values);
+    keys.forEach((key, index) => {
+      if (values[key] === "") {
+        console.log(`${key} is empty`);
+     }
+    });
     console.log(selectedDate.toISOString().split("T")[0]);
     setValues({
       ...values,
@@ -217,6 +222,7 @@ export default function Login() {
                 className="name"
                 variant="standard"
                 onChange={handleChange("Fname")}
+                
               />
               <TextField
                 required
@@ -283,21 +289,21 @@ export default function Login() {
                 onChange={handleChange("country")}
                 margin="none"
               />
+              <div style={{ height: "20px" }}></div>
+              <Button
+                style={{
+                  backgroundColor: "#22577A",
+                  textTransform: "none",
+                  fontSize: "2.5vh",
+                  color: "white",
+                }}
+                variant="contained"
+                onClick={handleSubmit}
+              >
+                Sign Up
+              </Button>
             </FormControl>
 
-            <div style={{ height: "20px" }}></div>
-            <Button
-              style={{
-                backgroundColor: "#22577A",
-                textTransform: "none",
-                fontSize: "2.5vh",
-                color: "white",
-              }}
-              variant="contained"
-              onClick={handleSubmit}
-            >
-              Sign Up
-            </Button>
             <Snackbar
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
               open={open}
