@@ -18,16 +18,35 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import axios from "axios";
+import Snackbar from "@material-ui/core/Snackbar";
 
 export default function Login() {
+  axios.defaults.withCredentials = true;
+
+  const [selectedDate, setDate] = React.useState(new Date());
   const [values, setValues] = React.useState({
-    password: "",
+    Fname: null,
+    Lname: null,
+    username: null,
+    password: null,
+    email: null,
+    city: null,
+    country: null,
+    DOB: selectedDate.toISOString().split("T")[0],
     showPassword: false,
   });
-  const [selectedDate, handleDateChange] = React.useState(new Date());
+
+
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+    
   };
+
+  // const handleDateChange = (event) => {
+  //   setDate(event.target.value);
+  // }
 
   const handleClickShowPassword = () => {
     setValues({
@@ -39,6 +58,52 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+    message: "",
+  });
+
+  const { vertical, horizontal, open, message } = state;
+
+  const handleClick = (newmessage) => {
+    setState({ open: true, message: newmessage, ...state });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+  let msg = "";
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const keys = Object.keys(values);
+    keys.forEach((key, index) => {
+      if (values[key] === "") {
+        console.log(`${key} is empty`);
+     }
+    });
+    console.log(selectedDate.toISOString().split("T")[0]);
+    setValues({
+      ...values,
+      DOB: selectedDate.toISOString().split("T")[0],
+    });
+    const result = await axios
+      .post("http://localhost:8080/api/auth/signup", values, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    console.log(result);
+    if (result) {
+      console.log(result.data.message);
+      handleClick(result.data.message);
+      console.log(state);
+      msg = result.data.message;
+    }
+  };
+
   return (
     <div className="Register">
       <Grid
@@ -156,6 +221,8 @@ export default function Login() {
                 label="First Name"
                 className="name"
                 variant="standard"
+                onChange={handleChange("Fname")}
+                
               />
               <TextField
                 required
@@ -164,14 +231,27 @@ export default function Login() {
                 fullWidth
                 className="name"
                 variant="standard"
+                onChange={handleChange("Lname")}
               />
             </div>
-            <TextField label="Username" margin="none" />
+            <TextField
+              label="Email"
+              required
+              onChange={handleChange("email")}
+              margin="none"
+            />
+            <TextField
+              required
+              label="Username"
+              margin="none"
+              onChange={handleChange("username")}
+            />
             <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
               <InputLabel htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
               <Input
+                required
                 id="standard-adornment-password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
@@ -196,26 +276,41 @@ export default function Login() {
                   label="Date of birth"
                   views={["year", "month", "date"]}
                   value={selectedDate}
-                  onChange={handleDateChange}
+                  onChange={handleChange}
                 />
               </MuiPickersUtilsProvider>
-              <TextField label="Country" margin="none" />
-              <TextField label="State" margin="none" />
-              <TextField label="Pincode" margin="none" />
+              <TextField
+                label="City"
+                onChange={handleChange("city")}
+                margin="none"
+              />
+              <TextField
+                label="Country"
+                onChange={handleChange("country")}
+                margin="none"
+              />
+              <div style={{ height: "20px" }}></div>
+              <Button
+                style={{
+                  backgroundColor: "#22577A",
+                  textTransform: "none",
+                  fontSize: "2.5vh",
+                  color: "white",
+                }}
+                variant="contained"
+                onClick={handleSubmit}
+              >
+                Sign Up
+              </Button>
             </FormControl>
 
-            <div style={{ height: "20px" }}></div>
-            <Button
-              style={{
-                backgroundColor: "#22577A",
-                textTransform: "none",
-                fontSize: "2.5vh",
-                color: "white",
-              }}
-              variant="contained"
-            >
-              Sign Up
-            </Button>
+            <Snackbar
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              open={open}
+              onClose={handleClose}
+              message={message}
+              key={vertical + horizontal}
+            />
             <div style={{ height: "20px" }}></div>
             <Typography
               variant="paragraph"

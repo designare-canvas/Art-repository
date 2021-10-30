@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
@@ -13,12 +13,16 @@ import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
+import axios from "axios";
 // import Navbar from "../navbar/Navbar";
 export default function Login() {
-  const[values, setValues] = React.useState({
+  const [values, setValues] = useState({
+    username: "",
     password: "",
     showPassword: false,
   });
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -33,6 +37,20 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  // import Navbar from "../navbar/Navbar";
+
+  axios.defaults.withCredentials = true;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios
+      .post("http://localhost:8080/api/auth/login", values, {
+        withCredentials: true,
+      })
+      .catch((Err) => console.log(Err));
+    console.log(response);
+  };
+
   return (
     <div className="Login">
       {/* <Navbar /> */}
@@ -144,9 +162,14 @@ export default function Login() {
               </div>
             </Grid>
             <hr className="divider" style={{ width: "100%" }}></hr>
-            <TextField label="Username" margin="normal" />
+            <TextField
+              required
+              label="Username"
+              margin="normal"
+              onChange={handleChange("username")}
+            />
             <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-              <InputLabel htmlFor="standard-adornment-password">
+              <InputLabel required htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
               <Input
@@ -168,6 +191,8 @@ export default function Login() {
               />
             </FormControl>
             <div style={{ height: "20px" }}></div>
+            {/* <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
+            <TextField label="Password" margin="normal" onChange = {handleChange("password")}/> */}
             <Link
               href="#"
               style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
@@ -184,6 +209,7 @@ export default function Login() {
                 color: "white",
               }}
               variant="contained"
+              onClick={handleSubmit}
             >
               Sign In
             </Button>

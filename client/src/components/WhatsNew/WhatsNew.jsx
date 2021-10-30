@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3.8rem",
     fontFamily: "Josefin Sans",
     [theme.breakpoints.down("sm")]: {
-      height: 100,
+      height: 80,
       fontSize: "2.5em",
     },
   },
