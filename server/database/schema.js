@@ -1,9 +1,10 @@
 const mysqlConnection = require('./dbConnect');
 
 mysqlConnection.connect((err)=>{
-    if(err)
-        console.log('Connection Failed!'+ JSON.stringify(err,undefined,2));
-
+    if (err) {
+        console.log("Connection Failed!" + JSON.stringify(err, undefined, 2));
+        return;
+    }
     console.log('Connection Established Successfully');
 });
 

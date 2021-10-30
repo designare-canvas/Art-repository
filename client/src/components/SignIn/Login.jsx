@@ -1,32 +1,55 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
 import google from "./search.png";
 import "./Login.scss";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import Box from '@material-ui/core/Box';
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import FormControl from "@material-ui/core/FormControl";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
 import axios from "axios";
 // import Navbar from "../navbar/Navbar";
 export default function Login() {
-
-  const [values,setValues] = useState({
-    username:"",
-    password:""
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+    showPassword: false,
   });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  // import Navbar from "../navbar/Navbar";
 
   axios.defaults.withCredentials = true;
 
-  const handleChange = (props) => (e) => {
-    setValues({
-      ...values,
-      [props]:e.target.value
-    })
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/api/auth/login",values, {withCredentials: true}).catch((Err) => console.log(Err));
+    const response = await axios
+      .post("http://localhost:8080/api/auth/login", values, {
+        withCredentials: true,
+      })
+      .catch((Err) => console.log(Err));
     console.log(response);
-  }
+  };
 
   return (
     <div className="Login">
@@ -139,8 +162,37 @@ export default function Login() {
               </div>
             </Grid>
             <hr className="divider" style={{ width: "100%" }}></hr>
-            <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
-            <TextField label="Password" margin="normal" onChange = {handleChange("password")}/>
+            <TextField
+              required
+              label="Username"
+              margin="normal"
+              onChange={handleChange("username")}
+            />
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+              <InputLabel required htmlFor="standard-adornment-password">
+                Password
+              </InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <div style={{ height: "20px" }}></div>
+            {/* <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
+            <TextField label="Password" margin="normal" onChange = {handleChange("password")}/> */}
             <Link
               href="#"
               style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
@@ -157,7 +209,7 @@ export default function Login() {
                 color: "white",
               }}
               variant="contained"
-              onClick = {handleSubmit}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>
