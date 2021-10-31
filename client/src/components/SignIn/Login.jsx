@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import facebook from "./facebook.png";
@@ -12,6 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
+import { AuthContext } from "../../Context/Authcontext";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 import axios from "axios";
@@ -22,6 +23,24 @@ export default function Login() {
     password: "",
     showPassword: false,
   });
+  const { dispatch } = useContext(AuthContext);
+
+  const fetchAuthUser = async () => {
+    const response = await axios
+      .get("http://localhost:8080/api/auth/user", { withCredentials: true })
+      .catch((err) => console.log("Authentication Not done"));
+    console.log(response);
+
+    if (response && response.data.loggedIn) {
+      console.log("User:", response.data.user);
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+    }
+  };
+
+  useEffect(() => {
+    fetchAuthUser();
+  }, []);
+
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -40,15 +59,21 @@ export default function Login() {
   // import Navbar from "../navbar/Navbar";
 
   axios.defaults.withCredentials = true;
+  const [msg,setMsg] = React.useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios
+    const result = await axios
       .post("http://localhost:8080/api/auth/login", values, {
         withCredentials: true,
       })
-      .catch((Err) => console.log(Err));
-    console.log(response);
+      .catch((err) => console.log(err));
+    
+      if(result){
+        if(result.data.success) window.location.reload();
+        else  setMsg(result.data.message);
+      }
+    console.log(result);
   };
 
   return (
@@ -104,6 +129,17 @@ export default function Login() {
               maxWidth: 400,
             }}
           >
+           <div
+              style={{
+                width:"auto",
+                margin:"auto",
+                color:"red",
+                fontSize:"20px",
+                marginBottom:"30px",
+              }}
+            >
+              {msg}
+            </div>
             <Grid container justify="center" style={{ marginBottom: "5%" }}>
               <Typography
                 variant="h2"
@@ -117,7 +153,7 @@ export default function Login() {
               >
                 Sign in to Designare
               </Typography>
-              <div style={{ marginTop: "5%" }}>
+              {/* <div style={{ marginTop: "5%" }}>
                 <a href="/auth/google">
                   <Button
                     style={{
@@ -159,16 +195,18 @@ export default function Login() {
                     ></img>
                   </Button>
                 </a>
-              </div>
+              </div> */}
             </Grid>
-            <hr className="divider" style={{ width: "100%" }}></hr>
+            {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
+            <form onSubmit={handleSubmit}>
             <TextField
+            fullWidth
               required
               label="Username"
               margin="normal"
               onChange={handleChange("username")}
             />
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard" fullWidth>
               <InputLabel required htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
@@ -209,10 +247,12 @@ export default function Login() {
                 color: "white",
               }}
               variant="contained"
-              onClick={handleSubmit}
+              type="submit"
+              fullWidth
             >
               Sign In
             </Button>
+            </form>
             <div style={{ height: "20px" }}></div>
             <Typography
               variant="paragraph"

@@ -17,12 +17,14 @@ router.post("/login", (req, res) => {
       if (result.length) {
         bcrypt.compare(password, result[0].password, (error, resultnew) => {
           if (resultnew) {
-            const {password, ...other} = result[0];
+            const { password, ...other } = result[0];
             req.session.user = other;
-            console.log(req.session.user);
             res.status(200).json({ success: true });
           } else {
-            res.json({ success: false, message: "Wrong password or username entered!" });
+            res.json({
+              success: false,
+              message: "Wrong password or username entered!",
+            });
           }
         });
       } else {
@@ -33,13 +35,12 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  console.log(req.body);
   const username = req.body.username;
   let password = req.body.password;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if (err) console.log(err);
-    
+
     const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
     mysqlConnection.query(
@@ -53,29 +54,44 @@ router.post("/signup", (req, res) => {
           });
         } else {
           mysqlConnection.query(
-            "INSERT INTO `users`(`Fname`,`Lname`,`username`,`email`,`password`,`DOB`,`country`) VALUES (?,?,?,?,?,?,?)",
-            [
-              req.body.Fname,
-              req.body.Lname,
-              username,
-              req.body.email,
-              hash,
-              req.body.DOB,
-              req.body.country,
-            ],
-            async (err, result) => {
-              if (err) {
-                console.log(err);
-                res.json({ success: false, message: err });
-              } else {
-                console.log(result);
-                const rows = await query("SELECT * FROM users WHERE username = ?",[username]); 
-                const {password, ...other} = rows[0];
-                req.session.user = other;
-                res.status(200).json({
-                  success: true,
-                  message: "Account created successfully!",
+            "SELECT * FROM users WHERE email = ?",
+            [req.body.email],
+            (err, Res) => {
+              if (Res.length) {
+                res.json({
+                  success: false,
+                  message: "email already taken!",
                 });
+              } else {
+                mysqlConnection.query(
+                  "INSERT INTO `users`(`Fname`,`Lname`,`username`,`email`,`password`,`DOB`,`country`) VALUES (?,?,?,?,?,?,?)",
+                  [
+                    req.body.Fname,
+                    req.body.Lname,
+                    username,
+                    req.body.email,
+                    hash,
+                    req.body.DOB,
+                    req.body.country,
+                  ],
+                  async (err, result) => {
+                    if (err) {
+                      const {sqlMessage, ...other} = err;
+                      res.json({ success: false, message: sqlMessage });
+                    } else {
+                      const rows = await query(
+                        "SELECT * FROM users WHERE username = ?",
+                        [username]
+                      );
+                      const { password, ...other } = rows[0];
+                      req.session.user = other;
+                      res.status(200).json({
+                        success: true,
+                        message: "Account created successfully!",
+                      });
+                    }
+                  }
+                );
               }
             }
           );

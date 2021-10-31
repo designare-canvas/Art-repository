@@ -1,8 +1,6 @@
-import React from "react";
+import React,{useContext, useEffect} from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
-import facebook from "./facebook.png";
-import google from "./search.png";
 import "./Login.scss";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
@@ -18,11 +16,27 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { AuthContext } from "../../Context/Authcontext";
 import axios from "axios";
-import Snackbar from "@material-ui/core/Snackbar";
 
 export default function Login() {
   axios.defaults.withCredentials = true;
+  const { dispatch } = useContext(AuthContext);
+
+  const fetchAuthUser = async () => {
+    const response = await axios
+      .get("http://localhost:8080/api/auth/user", { withCredentials: true })
+      .catch((err) => console.log("Authentication Not done"));
+
+    if (response && response.data) {
+      console.log("User:", response.data.user);
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+    }
+  };
+
+  useEffect(() => {
+    fetchAuthUser();
+  }, []);
 
   const [selectedDate, setDate] = React.useState(new Date());
   const [values, setValues] = React.useState({
@@ -59,23 +73,7 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const [state, setState] = React.useState({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-    message: "",
-  });
-
-  const { vertical, horizontal, open, message } = state;
-
-  const handleClick = (newmessage) => {
-    setState({ open: true, message: newmessage, ...state });
-  };
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
-  let msg = "";
+  const [msg,setMsg] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -97,10 +95,10 @@ export default function Login() {
       .catch((err) => console.log(err));
     console.log(result);
     if (result) {
-      console.log(result.data.message);
-      handleClick(result.data.message);
-      console.log(state);
-      msg = result.data.message;
+      if(result.data.success)
+        window.location.reload();
+      else
+        setMsg(result.data.message);
     }
   };
 
@@ -155,6 +153,17 @@ export default function Login() {
               maxWidth: 400,
             }}
           >
+            <div
+              style={{
+                width:"auto",
+                margin:"auto",
+                color:"red",
+                fontSize:"20px",
+                marginBottom:"30px",
+              }}
+            >
+              {msg}
+            </div>
             <Grid container justify="center" style={{ marginBottom: "5%" }}>
               <Typography
                 variant="h2"
@@ -168,7 +177,7 @@ export default function Login() {
               >
                 Sign Up with Designare
               </Typography>
-              <div style={{ marginTop: "5%" }}>
+              {/* <div style={{ marginTop: "5%" }}>
                 <a href="/auth/google">
                   <Button
                     style={{
@@ -210,9 +219,10 @@ export default function Login() {
                     ></img>
                   </Button>
                 </a>
-              </div>
+              </div> */}
             </Grid>
-            <hr className="divider" style={{ width: "100%" }}></hr>
+            {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
+            <form onSubmit = {handleSubmit} >
             <div>
               <TextField
                 required
@@ -240,19 +250,22 @@ export default function Login() {
               type = "email"
               onChange={handleChange("email")}
               margin="none"
+              fullWidth
             />
             <TextField
               required
               label="Username"
+              fullWidth
               margin="none"
               onChange={handleChange("username")}
             />
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard" fullWidth>
               <InputLabel htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
               <Input
                 required
+                fullWidth
                 id="standard-adornment-password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
@@ -269,9 +282,11 @@ export default function Login() {
                   </InputAdornment>
                 }
               />
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            </FormControl>
+              <MuiPickersUtilsProvider utils={DateFnsUtils} >
                 <DatePicker
                   disableFuture
+                  fullWidth
                   openTo="year"
                   format="dd/MM/yyyy"
                   label="Date of birth"
@@ -281,17 +296,20 @@ export default function Login() {
                 />
               </MuiPickersUtilsProvider>
               <TextField
+              fullWidth
                 label="City"
                 onChange={handleChange("city")}
                 margin="none"
               />
               <TextField
+              fullWidth
                 label="Country"
                 onChange={handleChange("country")}
                 margin="none"
               />
               <div style={{ height: "20px" }}></div>
               <Button
+              fullWidth
                 style={{
                   backgroundColor: "#22577A",
                   textTransform: "none",
@@ -299,19 +317,11 @@ export default function Login() {
                   color: "white",
                 }}
                 variant="contained"
-                onClick={handleSubmit}
+                type="submit"
               >
                 Sign Up
               </Button>
-            </FormControl>
-
-            <Snackbar
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              open={open}
-              onClose={handleClose}
-              message={message}
-              key={vertical + horizontal}
-            />
+            </form>
             <div style={{ height: "20px" }}></div>
             <Typography
               variant="paragraph"
