@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,9 +14,16 @@ import {
 import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
+import Avatar from '@mui/material/Avatar';
+
+
+
+
 // IMPORTING ICONS
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import ExploreIcon from "@material-ui/icons/Explore";
@@ -27,6 +34,8 @@ import InputBase from "@material-ui/core/InputBase";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Drawer from "@material-ui/core/Drawer";
+import { AuthContext } from "../../Context/Authcontext";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -113,6 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   auth: {
+   
     display: "block",
     [theme.breakpoints.down(600)]: {
       display: "none",
@@ -132,6 +142,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+  const { user } = useContext(AuthContext);
+
   const classes = useStyles();
   const [value, setValue] = React.useState();
   const theme = useTheme();
@@ -190,22 +202,57 @@ export default function ButtonAppBar() {
             </ListItemIcon>
             <ListItemText primary="What'sNew" />
           </ListItem>
-          <Link to="/Signin" style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button key="SignIn">
-              <ListItemIcon style={{ color: "#22577A" }}>
-                <LoginIcon />
-              </ListItemIcon>
-              <ListItemText primary="SignIn" />
-            </ListItem>
-          </Link>
-          <Link to="/Signup" style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button key="SignUp">
-              <ListItemIcon style={{ color: "#22577A" }}>
-                <AccountBoxIcon />
-              </ListItemIcon>
-              <ListItemText primary="SignUp" />
-            </ListItem>
-          </Link>
+          {user ? (
+            <>
+              <Link
+                to="/Profile"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ListItem button key="Profile">
+                  <ListItemIcon style={{ color: "#22577A" }}>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Profile" />
+                </ListItem>
+              </Link>
+              <Link
+                to="/Signout"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ListItem button key="Signout">
+                  <ListItemIcon style={{ color: "#22577A" }}>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="SIgnout" />
+                </ListItem>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/Signin"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ListItem button key="SignIn">
+                  <ListItemIcon style={{ color: "#22577A" }}>
+                    <LoginIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="SignIn" />
+                </ListItem>
+              </Link>
+              <Link
+                to="/Signup"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ListItem button key="SignUp">
+                  <ListItemIcon style={{ color: "#22577A" }}>
+                    <AccountBoxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="SignUp" />
+                </ListItem>
+              </Link>
+            </>
+          )}
 
           {/* {["Home", "Explore ", "Designs", "WhatsNew", "SignIn", "SignUp"].map(
             (text, index) => (
@@ -308,23 +355,39 @@ export default function ButtonAppBar() {
                   inputProps={{ "aria-label": "search" }}
                 />
               </div>
-              <div className={classes.auth}>
-                <Link to="/Signin" style={{ textDecoration: "none" }}>
-                  <Button className={classes.tab} color="primary" variant="">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/Signup" style={{ textDecoration: "none" }}>
-                  <Button
-                    style={{ color: "#B1FFFD" }}
-                    className={classes.tab}
-                    color="primary"
-                    variant=""
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
-              </div>
+              {user ? (
+                <div
+                  className={classes.auth}
+                >
+                  <Link to="/Profile" >
+                    <Avatar style={{display:"inline-block", marginLeft:"10px", marginTop:"10px" }}alt ={user.username} src={user.profileImgUrl}></Avatar>
+                  </Link>
+
+                  <Link to="/Signout" style={{ textDecoration: "none" }}>
+                      <Button style={{ display: "inline-block" }} className={classes.tab} color="primary" variant="">
+                      Sign Out
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <div className={classes.auth}>
+                  <Link to="/Signin" style={{ textDecoration: "none" }}>
+                    <Button className={classes.tab} color="primary" variant="">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/Signup" style={{ textDecoration: "none" }}>
+                    <Button
+                      style={{ color: "#B1FFFD" }}
+                      className={classes.tab}
+                      color="primary"
+                      variant=""
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </>
           )}
         </Toolbar>

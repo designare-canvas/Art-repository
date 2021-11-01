@@ -36,7 +36,7 @@ export default function Login() {
 
   useEffect(() => {
     fetchAuthUser();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [selectedDate, setDate] = React.useState(new Date());
   const [values, setValues] = React.useState({
@@ -51,11 +51,8 @@ export default function Login() {
     showPassword: false,
   });
 
-
-
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
-    
   };
 
   // const handleDateChange = (event) => {
@@ -73,7 +70,7 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const [msg,setMsg] = React.useState("");
+  const [msg, setMsg] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,7 +78,7 @@ export default function Login() {
     keys.forEach((key, index) => {
       if (values[key] === "") {
         console.log(`${key} is empty`);
-     }
+      }
     });
     console.log(selectedDate.toISOString().split("T")[0]);
     setValues({
@@ -95,10 +92,8 @@ export default function Login() {
       .catch((err) => console.log(err));
     console.log(result);
     if (result) {
-      if(result.data.success)
-        window.location.reload();
-      else
-        setMsg(result.data.message);
+      if (result.data.success) window.location.reload();
+      else setMsg(result.data.message);
     }
   };
 
@@ -155,11 +150,11 @@ export default function Login() {
           >
             <div
               style={{
-                width:"auto",
-                margin:"auto",
-                color:"red",
-                fontSize:"20px",
-                marginBottom:"30px",
+                width: "auto",
+                margin: "auto",
+                color: "red",
+                fontSize: "20px",
+                marginBottom: "30px",
               }}
             >
               {msg}
@@ -222,94 +217,104 @@ export default function Login() {
               </div> */}
             </Grid>
             {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
-            <form onSubmit = {handleSubmit} >
-            <div>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <TextField
+                  required
+                  fullWidth
+                  id="standard-required"
+                  label="First Name"
+                  className="name"
+                  variant="standard"
+                  onChange={handleChange("Fname")}
+                />
+                <TextField
+                  required
+                  id="standard-required"
+                  label="Last Name"
+                  fullWidth
+                  className="name"
+                  variant="standard"
+                  onChange={handleChange("Lname")}
+                />
+              </div>
+              <TextField
+                label="Email"
+                required
+                type="email"
+                onChange={handleChange("email")}
+                margin="none"
+                fullWidth
+              />
               <TextField
                 required
+                label="Username"
                 fullWidth
-                id="standard-required"
-                label="First Name"
-                className="name"
+                margin="none"
+                onChange={handleChange("username")}
+              />
+              <FormControl
+                sx={{ m: 1, width: "25ch" }}
                 variant="standard"
-                onChange={handleChange("Fname")}
-                
-              />
-              <TextField
-                required
-                id="standard-required"
-                label="Last Name"
                 fullWidth
-                className="name"
-                variant="standard"
-                onChange={handleChange("Lname")}
-              />
-            </div>
-            <TextField
-              label="Email"
-              required
-              type = "email"
-              onChange={handleChange("email")}
-              margin="none"
-              fullWidth
-            />
-            <TextField
-              required
-              label="Username"
-              fullWidth
-              margin="none"
-              onChange={handleChange("username")}
-            />
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard" fullWidth>
-              <InputLabel htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
-              <Input
-                required
-                fullWidth
-                id="standard-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-              <MuiPickersUtilsProvider utils={DateFnsUtils} >
+              >
+                <InputLabel htmlFor="standard-adornment-password">
+                  Password
+                </InputLabel>
+                <Input
+                  required
+                  fullWidth
+                  id="standard-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   disableFuture
                   fullWidth
                   openTo="year"
                   format="dd/MM/yyyy"
                   label="Date of birth"
-                  views={["year", "month", "date"]}
+                  views={["year", "month", "day"]}
                   value={selectedDate}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setDate(e);
+                  }}
                 />
               </MuiPickersUtilsProvider>
               <TextField
-              fullWidth
+                fullWidth
                 label="City"
                 onChange={handleChange("city")}
                 margin="none"
               />
               <TextField
-              fullWidth
+                fullWidth
                 label="Country"
                 onChange={handleChange("country")}
                 margin="none"
               />
               <div style={{ height: "20px" }}></div>
               <Button
-              fullWidth
+                fullWidth
                 style={{
                   backgroundColor: "#22577A",
                   textTransform: "none",
