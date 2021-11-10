@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import "./Login.scss";
@@ -20,6 +20,8 @@ import { AuthContext } from "../../Context/Authcontext";
 import axios from "axios";
 
 export default function Login() {
+  const [shake, setShake] = useState(false);
+
   axios.defaults.withCredentials = true;
   const { dispatch } = useContext(AuthContext);
 
@@ -28,7 +30,7 @@ export default function Login() {
       .get("http://localhost:8080/api/auth/user", { withCredentials: true })
       .catch((err) => console.log("Authentication Not done"));
 
-    if (response && response.data) {
+    if (response && response.data.user) {
       console.log("User:", response.data.user);
       dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
     }
@@ -36,7 +38,7 @@ export default function Login() {
 
   useEffect(() => {
     fetchAuthUser();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [selectedDate, setDate] = React.useState(new Date());
   const [values, setValues] = React.useState({
@@ -51,11 +53,8 @@ export default function Login() {
     showPassword: false,
   });
 
-
-
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
-    
   };
 
   // const handleDateChange = (event) => {
@@ -73,7 +72,7 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const [msg,setMsg] = React.useState("");
+  const [msg, setMsg] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,7 +80,7 @@ export default function Login() {
     keys.forEach((key, index) => {
       if (values[key] === "") {
         console.log(`${key} is empty`);
-     }
+      }
     });
     console.log(selectedDate.toISOString().split("T")[0]);
     setValues({
@@ -95,10 +94,15 @@ export default function Login() {
       .catch((err) => console.log(err));
     console.log(result);
     if (result) {
-      if(result.data.success)
-        window.location.reload();
-      else
+      if (result.data.success) window.location.reload();
+      else {
         setMsg(result.data.message);
+        setShake(true);
+        setTimeout(() => {
+          setShake(false);
+        }, 1000);
+        console.log(shake);
+      }
     }
   };
 
@@ -155,12 +159,13 @@ export default function Login() {
           >
             <div
               style={{
-                width:"auto",
-                margin:"auto",
-                color:"red",
-                fontSize:"20px",
-                marginBottom:"30px",
+                width: "auto",
+                margin: "auto",
+                color: "red",
+                fontSize: "20px",
+                marginBottom: "30px",
               }}
+              className={`${shake ? "shake" : ""}`}
             >
               {msg}
             </div>
@@ -222,68 +227,75 @@ export default function Login() {
               </div> */}
             </Grid>
             {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
-            <form onSubmit = {handleSubmit} >
-            <div>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <TextField
+                  required
+                  fullWidth
+                  id="standard-required"
+                  label="First Name"
+                  className="name"
+                  variant="standard"
+                  onChange={handleChange("Fname")}
+                />
+                <TextField
+                  required
+                  id="standard-required"
+                  label="Last Name"
+                  fullWidth
+                  className="name"
+                  variant="standard"
+                  onChange={handleChange("Lname")}
+                />
+              </div>
+              <TextField
+                label="Email"
+                required
+                type="email"
+                onChange={handleChange("email")}
+                margin="none"
+                fullWidth
+              />
               <TextField
                 required
+                label="Username"
                 fullWidth
-                id="standard-required"
-                label="First Name"
-                className="name"
+                margin="none"
+                onChange={handleChange("username")}
+              />
+              <FormControl
+                sx={{ m: 1, width: "25ch" }}
                 variant="standard"
-                onChange={handleChange("Fname")}
-                
-              />
-              <TextField
-                required
-                id="standard-required"
-                label="Last Name"
                 fullWidth
-                className="name"
-                variant="standard"
-                onChange={handleChange("Lname")}
-              />
-            </div>
-            <TextField
-              label="Email"
-              required
-              type = "email"
-              onChange={handleChange("email")}
-              margin="none"
-              fullWidth
-            />
-            <TextField
-              required
-              label="Username"
-              fullWidth
-              margin="none"
-              onChange={handleChange("username")}
-            />
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard" fullWidth>
-              <InputLabel htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
-              <Input
-                required
-                fullWidth
-                id="standard-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-              <MuiPickersUtilsProvider utils={DateFnsUtils} >
+              >
+                <InputLabel htmlFor="standard-adornment-password">
+                  Password
+                </InputLabel>
+                <Input
+                  required
+                  fullWidth
+                  id="standard-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   disableFuture
                   fullWidth
@@ -292,24 +304,27 @@ export default function Login() {
                   label="Date of birth"
                   views={["year", "month", "date"]}
                   value={selectedDate}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setDate(e);
+                    handleChange(e);
+                  }}
                 />
               </MuiPickersUtilsProvider>
               <TextField
-              fullWidth
+                fullWidth
                 label="City"
                 onChange={handleChange("city")}
                 margin="none"
               />
               <TextField
-              fullWidth
+                fullWidth
                 label="Country"
                 onChange={handleChange("country")}
                 margin="none"
               />
               <div style={{ height: "20px" }}></div>
               <Button
-              fullWidth
+                fullWidth
                 style={{
                   backgroundColor: "#22577A",
                   textTransform: "none",

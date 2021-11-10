@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
-import facebook from "./facebook.png";
-import google from "./search.png";
 import "./Login.scss";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -23,6 +21,9 @@ export default function Login() {
     password: "",
     showPassword: false,
   });
+  const [shake, setShake] = useState(false);
+  const [msg, setMsg] = useState(null);
+
   const { dispatch } = useContext(AuthContext);
 
   const fetchAuthUser = async () => {
@@ -39,8 +40,7 @@ export default function Login() {
 
   useEffect(() => {
     fetchAuthUser();
-  }, []);
-
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -59,7 +59,6 @@ export default function Login() {
   // import Navbar from "../navbar/Navbar";
 
   axios.defaults.withCredentials = true;
-  const [msg,setMsg] = React.useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,11 +67,18 @@ export default function Login() {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
-    
-      if(result){
-        if(result.data.success) window.location.reload();
-        else  setMsg(result.data.message);
+
+    if (result) {
+      if (result.data.success) window.location.reload();
+      else {
+        setMsg(result.data.message);
+        setShake(true);
+        setTimeout(() => {
+          setShake(false);
+        }, 1000);
+        console.log(shake);
       }
+    }
     console.log(result);
   };
 
@@ -129,17 +135,7 @@ export default function Login() {
               maxWidth: 400,
             }}
           >
-           <div
-              style={{
-                width:"auto",
-                margin:"auto",
-                color:"red",
-                fontSize:"20px",
-                marginBottom:"30px",
-              }}
-            >
-              {msg}
-            </div>
+            <div className={`display-msg ${shake ? "shake" : ""}`}>{msg}</div>
             <Grid container justify="center" style={{ marginBottom: "5%" }}>
               <Typography
                 variant="h2"
@@ -199,59 +195,67 @@ export default function Login() {
             </Grid>
             {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
             <form onSubmit={handleSubmit}>
-            <TextField
-            fullWidth
-              required
-              label="Username"
-              margin="normal"
-              onChange={handleChange("username")}
-            />
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard" fullWidth>
-              <InputLabel required htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
-              <Input
-                id="standard-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+              <TextField
+                fullWidth
+                required
+                label="Username"
+                margin="normal"
+                onChange={handleChange("username")}
               />
-            </FormControl>
-            <div style={{ height: "20px" }}></div>
-            {/* <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
+              <FormControl
+                sx={{ m: 1, width: "25ch" }}
+                variant="standard"
+                fullWidth
+              >
+                <InputLabel required htmlFor="standard-adornment-password">
+                  Password
+                </InputLabel>
+                <Input
+                  id="standard-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <div style={{ height: "20px" }}></div>
+              {/* <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
             <TextField label="Password" margin="normal" onChange = {handleChange("password")}/> */}
-            <Link
-              href="#"
-              style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
-              underline="none"
-            >
-              Forget Password ?
-            </Link>
-            <div style={{ height: "20px" }}></div>
-            <Button
-              style={{
-                backgroundColor: "#22577A",
-                textTransform: "none",
-                fontSize: "2.5vh",
-                color: "white",
-              }}
-              variant="contained"
-              type="submit"
-              fullWidth
-            >
-              Sign In
-            </Button>
+              <Link
+                href="#"
+                style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
+                underline="none"
+              >
+                Forget Password ?
+              </Link>
+              <div style={{ height: "20px" }}></div>
+              <Button
+                style={{
+                  backgroundColor: "#22577A",
+                  textTransform: "none",
+                  fontSize: "2.5vh",
+                  color: "white",
+                }}
+                variant="contained"
+                type="submit"
+                fullWidth
+              >
+                Sign In
+              </Button>
             </form>
             <div style={{ height: "20px" }}></div>
             <Typography
