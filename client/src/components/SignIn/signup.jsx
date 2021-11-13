@@ -95,6 +95,9 @@ export default function Login() {
     console.log(result);
     if (result) {
       if (result.data.success) window.location.reload();
+<<<<<<< HEAD
+      else setMsg(result.data.message);
+=======
       else {
         setMsg(result.data.message);
         setShake(true);
@@ -103,6 +106,7 @@ export default function Login() {
         }, 1000);
         console.log(shake);
       }
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
     }
   };
 
@@ -302,11 +306,16 @@ export default function Login() {
                   openTo="year"
                   format="dd/MM/yyyy"
                   label="Date of birth"
-                  views={["year", "month", "date"]}
+                  views={["year", "month", "day"]}
                   value={selectedDate}
                   onChange={(e) => {
+<<<<<<< HEAD
+                    handleChange(e);
+                    setDate(e);
+=======
                     setDate(e);
                     handleChange(e);
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
                   }}
                 />
               </MuiPickersUtilsProvider>
