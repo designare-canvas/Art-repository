@@ -7,8 +7,9 @@ import Post from "../src/Pages/Post/Post.jsx";
 import WhatsNew from "../src/components/WhatsNew/WhatsNew.jsx";
 import Profilepage from "./Pages/Profile/profile"
 import UpdateProfilepage from "./Pages/updateprofile/updateprofile";
+import Upload from "./Pages/upload/Upload";
 import { BrowserRouter as Router, Switch, Route , Redirect} from "react-router-dom";
-import { AuthContext } from "./Context/Authcontext"
+import { AuthContext } from "./Context/Authcontext";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/WhatsNew" component={WhatsNew} />
         <Route exact path="/Profile" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
+        <Route exact path="/upload" component={Upload} />
       </Switch>
       
     </Router>

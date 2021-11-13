@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import "./Login.scss";
@@ -20,6 +20,8 @@ import { AuthContext } from "../../Context/Authcontext";
 import axios from "axios";
 
 export default function Login() {
+  const [shake, setShake] = useState(false);
+
   axios.defaults.withCredentials = true;
   const { dispatch } = useContext(AuthContext);
 
@@ -28,7 +30,7 @@ export default function Login() {
       .get("http://localhost:8080/api/auth/user", { withCredentials: true })
       .catch((err) => console.log("Authentication Not done"));
 
-    if (response && response.data) {
+    if (response && response.data.user) {
       console.log("User:", response.data.user);
       dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
     }
@@ -93,7 +95,18 @@ export default function Login() {
     console.log(result);
     if (result) {
       if (result.data.success) window.location.reload();
+<<<<<<< HEAD
       else setMsg(result.data.message);
+=======
+      else {
+        setMsg(result.data.message);
+        setShake(true);
+        setTimeout(() => {
+          setShake(false);
+        }, 1000);
+        console.log(shake);
+      }
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
     }
   };
 
@@ -156,6 +169,7 @@ export default function Login() {
                 fontSize: "20px",
                 marginBottom: "30px",
               }}
+              className={`${shake ? "shake" : ""}`}
             >
               {msg}
             </div>
@@ -295,8 +309,13 @@ export default function Login() {
                   views={["year", "month", "day"]}
                   value={selectedDate}
                   onChange={(e) => {
+<<<<<<< HEAD
                     handleChange(e);
                     setDate(e);
+=======
+                    setDate(e);
+                    handleChange(e);
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
                   }}
                 />
               </MuiPickersUtilsProvider>

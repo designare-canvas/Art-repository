@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
+<<<<<<< HEAD
 // import facebook from "./facebook.png";
 // import google from "./search.png";
+=======
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
 import "./Login.scss";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -23,6 +26,9 @@ export default function Login() {
     password: "",
     showPassword: false,
   });
+  const [shake, setShake] = useState(false);
+  const [msg, setMsg] = useState(null);
+
   const { dispatch } = useContext(AuthContext);
 
   const fetchAuthUser = async () => {
@@ -58,7 +64,10 @@ export default function Login() {
   // import Navbar from "../navbar/Navbar";
 
   axios.defaults.withCredentials = true;
+<<<<<<< HEAD
   const [msg, setMsg] = React.useState("");
+=======
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +79,18 @@ export default function Login() {
 
     if (result) {
       if (result.data.success) window.location.reload();
+<<<<<<< HEAD
       else setMsg(result.data.message);
+=======
+      else {
+        setMsg(result.data.message);
+        setShake(true);
+        setTimeout(() => {
+          setShake(false);
+        }, 1000);
+        console.log(shake);
+      }
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
     }
     console.log(result);
   };
@@ -128,6 +148,7 @@ export default function Login() {
               maxWidth: 400,
             }}
           >
+<<<<<<< HEAD
             <div
               style={{
                 width: "auto",
@@ -139,6 +160,9 @@ export default function Login() {
             >
               {msg}
             </div>
+=======
+            <div className={`display-msg ${shake ? "shake" : ""}`}>{msg}</div>
+>>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
             <Grid container justify="center" style={{ marginBottom: "5%" }}>
               <Typography
                 variant="h2"

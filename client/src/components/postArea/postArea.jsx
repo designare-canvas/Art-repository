@@ -18,11 +18,11 @@ function PostArea(props) {
             <h4>{props.postTitle}</h4>
             <div className="authorLinks">
               <p>{props.authorName}</p>
-              <FiberManualRecordIcon sx={{ fontSize: 10, marginTop: "10px" }} />
+              <FiberManualRecordIcon sx={{ fontSize: 8, marginTop: "12px" }} />
               <Link to="/">
               <p>Follow</p>
               </Link>
-              <FiberManualRecordIcon sx={{ fontSize: 10, marginTop: "10px" }} />
+              <FiberManualRecordIcon sx={{ fontSize: 8, marginTop: "12px" }} />
               <Link to="/">
               <p>Hire Me</p>
               </Link>
@@ -62,9 +62,9 @@ function PostArea(props) {
       <div className="postImg">
           <img src={props.postImgUrl} alt="posts" style={{width:"63.8vw", borderRadius:"10px"}} />
       </div>
-      <p className="postDescription">
+      <div className="postDescription">
           {props.postDescription}
-      </p>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,9 @@ const { appendFile } = require("fs");
 
 const saltRounds = 12;
 
-router.post("/login", (req, res) => {
+router.post("/login",async (req, res) => {
+  const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
+
   const username = req.body.username;
   const password = req.body.password;
 

@@ -38,6 +38,11 @@
     }
 
     .postDescription{
-        text-align: center;
+        display: flex;
+        font-size: 18px;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        white-space: pre-wrap;
     }
 }
