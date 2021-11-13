@@ -10,8 +10,21 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useTheme } from "@material-ui/core/styles";
+import axios from "axios";
+
 export default function Filter() {
   const [age, setAge] = useState("");
+
+  const handleSearchChange = async (event) => {
+
+    const result = await axios
+      .post("http://localhost:8080/api/search/tags",{tags:event.target.value}, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    
+    console.log(result.data.data);
+  };
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -40,6 +53,7 @@ export default function Filter() {
           label="Seach Tags"
           variant="outlined"
           size="small"
+          onChange={handleSearchChange}
         />
 
         {/* </Box> */}

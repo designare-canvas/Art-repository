@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Allison
+- Font Author: Copyright 2020 The Allison Project Authors (https://github.com/googlefonts/allison)
+- Font Source: http://fonts.gstatic.com/s/allison/v1/X7nl4b88AP2nkbvZOCaQ4MTgAgk.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
