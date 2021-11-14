@@ -14,16 +14,13 @@ import {
 import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
-import Avatar from '@mui/material/Avatar';
-
-
-
+import Avatar from "@mui/material/Avatar";
 
 // IMPORTING ICONS
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import ExploreIcon from "@material-ui/icons/Explore";
@@ -35,6 +32,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Drawer from "@material-ui/core/Drawer";
 import { AuthContext } from "../../Context/Authcontext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,7 +120,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   auth: {
-   
     display: "block",
     [theme.breakpoints.down(600)]: {
       display: "none",
@@ -155,6 +152,15 @@ export default function ButtonAppBar() {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+  const handleLogout = async () => {
+    console.log(document.cookie);
+
+    const result = await axios.get("http://localhost:8080/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
+    if(result.data.success){
+      sessionStorage.removeItem("user");
+      window.location.reload();
+    }
   };
   const drawerWidth = "50%";
   const drawer = (
@@ -215,17 +221,12 @@ export default function ButtonAppBar() {
                   <ListItemText primary="Profile" />
                 </ListItem>
               </Link>
-              <Link
-                to="/Signout"
-                style={{ textDecoration: "none", color: "black" }}
-              >
                 <ListItem button key="Signout">
                   <ListItemIcon style={{ color: "#22577A" }}>
                     <LogoutIcon />
                   </ListItemIcon>
-                  <ListItemText primary="SIgnout" />
+                  <ListItemText primary="Logout" onClick={handleLogout} />
                 </ListItem>
-              </Link>
             </>
           ) : (
             <>
@@ -356,18 +357,28 @@ export default function ButtonAppBar() {
                 />
               </div>
               {user ? (
-                <div
-                  className={classes.auth}
-                >
-                  <Link to="/Profile" >
-                    <Avatar style={{display:"inline-block", marginLeft:"10px", marginTop:"10px" }}alt ={user.username} src={user.profileImgUrl}></Avatar>
+                <div className={classes.auth}>
+                  <Link to="/Profile">
+                    <Avatar
+                      style={{
+                        display: "inline-block",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                      }}
+                      alt={user.username}
+                      src={user.profileImgUrl}
+                    ></Avatar>
                   </Link>
 
-                  <Link to="/Signout" style={{ textDecoration: "none" }}>
-                      <Button style={{ display: "inline-block" }} className={classes.tab} color="primary" variant="">
-                      Sign Out
-                    </Button>
-                  </Link>
+                  <Button
+                    style={{ display: "inline-block" }}
+                    onClick={handleLogout}
+                    className={classes.tab}
+                    color="primary"
+                    variant=""
+                  >
+                    Logout
+                  </Button>
                 </div>
               ) : (
                 <div className={classes.auth}>
@@ -378,7 +389,7 @@ export default function ButtonAppBar() {
                   </Link>
                   <Link to="/Signup" style={{ textDecoration: "none" }}>
                     <Button
-                      style={{ color: "#B1FFFD" }}
+                      style={{ color: "#ff66a0" }}
                       className={classes.tab}
                       color="primary"
                       variant=""

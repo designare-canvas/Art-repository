@@ -12,8 +12,18 @@ import Select from "@mui/material/Select";
 import { useTheme } from "@material-ui/core/styles";
 import axios from "axios";
 
-export default function Filter() {
+export default function Filter(props) {
   const [age, setAge] = useState("");
+
+  const fetchAllPosts = async () => {
+    const result = await axios.get("http://localhost:8080/api/posts/all", {
+      withCredentials: true,
+    });
+
+    if (result.data.success) {
+      props.setPosts(props.shuffle(result.data.data).slice(1, 12 + 1));
+    }
+  };
 
   const handleSearchChange = async (event) => {
 
@@ -22,11 +32,16 @@ export default function Filter() {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
+
+      if(result.data.success){
+        props.setPosts(result.data.data);
+      }
     
     console.log(result.data.data);
   };
 
   const handleChange = (event) => {
+    console.log(event);
     setAge(event.target.value);
   };
   const [primary, setPrimay] = useState("");
@@ -124,7 +139,7 @@ export default function Filter() {
               className="middlebuttons"
               style={{ margin: "auto", textAlign: "center" }}
             >
-              <Button variant="text">All</Button>
+              <Button variant="text" onClick={fetchAllPosts}>All</Button>
               <Button variant="text">Canvas</Button>
               <Button variant="text">Graphic</Button>
               <Button variant="text">Animation</Button>
@@ -161,7 +176,7 @@ export default function Filter() {
             <Button variant="outlined">Trending</Button> */}
             {/* <Button variant="text"></Button> */}
             <div>
-              <Button variant="text">All</Button>
+              <Button variant="text" onClick={fetchAllPosts}>All</Button>
               <Button variant="text">Canvas</Button>
               <Button variant="text">Graphic</Button>
               <Button variant="text">Animation</Button>

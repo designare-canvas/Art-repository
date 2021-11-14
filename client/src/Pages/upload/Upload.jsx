@@ -43,7 +43,7 @@ function Upload() {
     }
     console.log(values);
     const res = await axios
-      .post("http://localhost:8080/api/posts/upload", values, {
+      .post("http://localhost:8080/api/posts/art", values, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

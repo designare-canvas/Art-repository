@@ -95,9 +95,6 @@ export default function Login() {
     console.log(result);
     if (result) {
       if (result.data.success) window.location.reload();
-<<<<<<< HEAD
-      else setMsg(result.data.message);
-=======
       else {
         setMsg(result.data.message);
         setShake(true);
@@ -106,7 +103,6 @@ export default function Login() {
         }, 1000);
         console.log(shake);
       }
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
     }
   };
 
@@ -133,7 +129,7 @@ export default function Login() {
               fontFamily: "Allison",
               fontStyle: "cursive",
               fontSize: "18vh",
-              color: "#152D35",
+              color: "#fff",
               textAlign: "center",
               marginTop: "50%",
             }}
@@ -186,51 +182,7 @@ export default function Login() {
               >
                 Sign Up with Designare
               </Typography>
-              {/* <div style={{ marginTop: "5%" }}>
-                <a href="/auth/google">
-                  <Button
-                    style={{
-                      display: "inline-block",
-                      cursor: "pointer",
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                      backgroundColor: "none",
-                      border: "none",
-                      marginRight: "15px",
-                    }}
-                    variant="outlined"
-                  >
-                    <img
-                      src={google}
-                      style={{ fontSize: "35px", paddingTop: 10 }}
-                      alt="google"
-                    ></img>
-                  </Button>
-                </a>
-                <a href="/auth/facebook">
-                  <Button
-                    style={{
-                      display: "inline-block",
-                      cursor: "pointer",
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                      backgroundColor: "none",
-                      border: "none",
-                    }}
-                    variant="outlined"
-                  >
-                    <img
-                      src={facebook}
-                      style={{ fontSize: "35px", paddingTop: 10 }}
-                      alt="facebook"
-                    ></img>
-                  </Button>
-                </a>
-              </div> */}
             </Grid>
-            {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
             <form onSubmit={handleSubmit}>
               <div>
                 <TextField
@@ -309,13 +261,8 @@ export default function Login() {
                   views={["year", "month", "day"]}
                   value={selectedDate}
                   onChange={(e) => {
-<<<<<<< HEAD
                     handleChange(e);
                     setDate(e);
-=======
-                    setDate(e);
-                    handleChange(e);
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
                   }}
                 />
               </MuiPickersUtilsProvider>

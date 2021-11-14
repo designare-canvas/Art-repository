@@ -8,6 +8,7 @@ const schema = require('./database/schema');
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const auth = require("./routes/auth");
+const user = require("./routes/user");
 const posts = require("./routes/posts");
 const search = require("./routes/search");
 
@@ -31,6 +32,7 @@ app.use(cors({
 const port = process.env.PORT || 8080;
 
 app.use("/api/auth",auth);
+app.use("/api/user",user);
 app.use("/api/posts",posts);
 app.use("/api/search",search);
 

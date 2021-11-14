@@ -20,7 +20,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/Signin"  >{user ? <Redirect to="/" /> : <Login />}</Route>
         <Route exact path="/Signup" >{user ? <Redirect to="/" /> : <Register />}</Route>
-        <Route exact path="/Post" component={Post} />
+        <Route exact path="/Post/:id" component={Post} />
         <Route exact path="/WhatsNew" component={WhatsNew} />
         <Route exact path="/Profile" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
