@@ -17,7 +17,7 @@ function Post() {
   const { id } = useParams();
 
   const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:8080/api/posts/"+id, {
+    const result = await axios.get("http://localhost:8080/api/posts/post/"+id, {
       withCredentials: true,
     });
 

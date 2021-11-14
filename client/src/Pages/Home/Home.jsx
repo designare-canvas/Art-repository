@@ -37,7 +37,7 @@ function Home() {
 
     console.log(result);
     if (result.data.success) {
-      setPosts(shuffle(result.data.data).slice(1, 12 + 1));
+      setPosts(shuffle(result.data.data).slice(0, 12));
     }
   };
   useEffect(() => {

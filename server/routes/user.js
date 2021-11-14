@@ -4,7 +4,7 @@ const util = require("util");
 
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
-router.get("/user/:username", async (req, res) => {
+router.get("/:username", async (req, res) => {
   const result = await query("SELECT * FROM users WHERE username = ?", [
     req.params.username,
   ]).catch((Err) => {
