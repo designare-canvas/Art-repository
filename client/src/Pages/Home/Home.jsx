@@ -5,6 +5,7 @@ import Filter from '../../components/filter/filter';
 import Footer from "../../components/footer/footer";
 import Box from '@mui/material/Box';
 import { Typography } from "@material-ui/core";
+import bannerimg from './creativity.png';
 function Home() {
     return (
         <div className="home">
@@ -41,16 +42,30 @@ function Home() {
                     style={{
                     fontFamily: "Rajdhani",
                     fontStyle:"cursive",
-                    fontSize: "1.85rem",
-                    fontWeight: "700",
+                    fontSize: "1.75rem",
+                    fontWeight: "500",
                     color: "#22577A",
                     }}
                 >
-                    designare is the go-to resource for discovering  <br />  and connecting with designers
-                     and creative talent <br />around the globe.
-                    <br />
+                    <i style={{ fontSize: "4rem", fontFamily: "Allison"}}> Designare </i> is the go-to resource for discovering and <br />   connecting with designers
+                     and creative talent  around<br />around the globe.
+                    </Typography>
+                    <Typography
+                    variant="h1"
+                    className="heading"
+                    style={{
+                    fontFamily: "Josefin Sans",
+                    fontStyle:"cursive",
+                    fontSize: "2.5rem",
+                    fontWeight: "800",
+                    lineHeight: 1.5,
+                    color: "#22577A",
+                    margin:"4% 0% 0% 10%"
+                    }}
+                >
                     Dream , Depict  , Develop
-                </Typography>
+                    </Typography>
+                   
                 </Box>
                 <Box
                     component="img"
@@ -59,9 +74,10 @@ function Home() {
                         width: 350,
                         maxHeight: { xs: 233, md: 167 },
                         maxWidth: { xs: 350, md: 250 },
+                        marginLeft:"20%"
                     }}
                     alt="Some design"
-                    src=""
+                    src={bannerimg} 
                 />
                
             </Box>

@@ -21,7 +21,7 @@ function Post() {
         <PostArea
           imgUrl="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
           postTitle="first"
-          authorName="hsh"
+          authorName="thewackyindian"
           postImgUrl="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
           postDescription={
             "Hello Designares ⚡\nHere is my new shot✌\nHope you enjoyed it! ❤️ Thanks for your likes and comments! 💬\nFollow Me : IG | TW | BE Contact me: Email"
