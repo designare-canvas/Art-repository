@@ -1,5 +1,4 @@
 import React,{useContext} from "react";
-
 import Register from "./components/SignIn/signup";
 import Home from "../src/Pages/Home/Home.jsx";
 import Login from "./components/SignIn/Login";
@@ -24,7 +23,7 @@ function App() {
         <Route exact path="/WhatsNew" component={WhatsNew} />
         <Route exact path="/Profile" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
-        <Route exact path="/upload" component={Upload} />
+        <Route exact path="/upload"  >{user ? <Upload /> : <Redirect to="/Signin" />}</Route>
       </Switch>
       
     </Router>

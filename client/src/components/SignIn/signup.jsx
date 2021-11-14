@@ -32,7 +32,7 @@ export default function Login() {
 
     if (response && response.data.user) {
       console.log("User:", response.data.user);
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user ,adminState: false});
     }
   };
 

@@ -1,13 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
-// import facebook from "./facebook.png";
-// import google from "./search.png";
 import "./Login.scss";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import Box from '@material-ui/core/Box';
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
@@ -36,7 +32,7 @@ export default function Login() {
 
     if (response && response.data.loggedIn) {
       console.log("User:", response.data.user);
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user ,adminState: false});
     }
   };
 

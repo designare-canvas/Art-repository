@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Post from './profilepost';
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect, useState } from "react";
+import Post from "./profilepost";
+import Grid from "@material-ui/core/Grid";
 
-function ImageListShow(props){
+function ImageListShow(props) {
   const url = props.url;
   const [data, getdata] = useState([]);
   const fetchPost = async () => {
@@ -14,7 +14,7 @@ function ImageListShow(props){
   useEffect(() => {
     fetchPost();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  
   console.log(data);
   return (
     <Grid container spacing={5} className="container1">

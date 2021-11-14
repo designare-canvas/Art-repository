@@ -8,8 +8,14 @@ router.post("/art", (req, res) => {
   const now = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   mysqlConnection.query(
-    "INSERT INTO `arts` (`timestamp`,`title`,`description`,`username`) VALUES (?,?,?,?)",
-    [now, req.body.Title, req.body.Description, req.body.user.username],
+    "INSERT INTO `arts` (`timestamp`,`title`,`description`,`username`,`isPublished`) VALUES (?,?,?,?,?)",
+    [
+      now,
+      req.body.Title,
+      req.body.Description,
+      req.body.user.username,
+      req.body.isPublished,
+    ],
     async (err, result) => {
       if (err) {
         const { sqlMessage, ...other } = err;
@@ -32,11 +38,38 @@ router.post("/art", (req, res) => {
           });
         });
         if (rows1 && Res2) {
-          return res.json({ success: true, message: "Post created successfully!" });
+          return res.json({
+            success: true,
+            message: "Post created successfully!",
+          });
         }
       }
     }
   );
+});
+
+router.post("/like", async (req, res) => {
+  const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const result = await query(
+    "INSERT INTO likes (`timestamp`,`username`,`postId`) VALUES (?,?,?)",
+    [now, req.body.username, req.body.postId]
+  ).catch((Err) => {
+    const { sqlMessage, ...other } = Err;
+    return res.json({ success: false, message: sqlMessage });
+  });
+
+  return res.json({ success: true, message: "Post liked successfully!" });
+});
+
+router.post("/comment", async (req, res) => {
+  const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const result = await query(
+    "INSERT INTO comments (`timestamp`,`username`,commentData`,`postId`) VALUES (?,?,?,?)",
+    [now, req.body.username, req.body.commentData, req.body.postId]
+  ).catch((Err) => {
+    const { sqlMessage, ...other } = Err;
+    return res.json({ success: false, message: sqlMessage });
+  });
 });
 
 router.get("/all", async (req, res) => {
@@ -74,11 +107,19 @@ router.get("/all", async (req, res) => {
         const { sqlMessage, ...other } = Err;
         return res.json({ success: false, message: sqlMessage });
       });
-      const res4 = await query("SELECT profileImgUrl FROM users WHERE username = ?",[rowData.username]).catch((Err) => {
+      const res4 = await query(
+        "SELECT profileImgUrl FROM users WHERE username = ?",
+        [rowData.username]
+      ).catch((Err) => {
         const { sqlMessage, ...other } = Err;
         return res.json({ success: false, message: sqlMessage });
       });
-      result.push({ art: rowData, image: res2[0], likes: res3[0]["COUNT(*)"], artistImg: res4[0] });
+      result.push({
+        art: rowData,
+        image: res2[0],
+        likes: res3[0]["COUNT(*)"],
+        artistImg: res4[0],
+      });
     })
   );
   // console.log(result);
@@ -89,7 +130,7 @@ router.get("/all", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const id = Number(req.params.id);
 
-  const res1 = await query("SELECT * FROM arts WHERE postId = ?", [id]).catch(
+  const res1 = await query("SELECT * FROM arts WHERE id = ?", [id]).catch(
     (Err) => {
       const { sqlMessage, ...other } = Err;
       return res.json({ success: false, message: sqlMessage });
@@ -115,12 +156,20 @@ router.get("/:id", async (req, res) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
+  const res5 = await query(
+    "SELECT profileImgUrl FROM users WHERE username = ?",
+    [res1[0].username]
+  ).catch((Err) => {
+    const { sqlMessage, ...other } = Err;
+    return res.json({ success: false, message: sqlMessage });
+  });
 
   const result = {
     art: res1[0],
     likes: res2[0]["COUNT(*)"],
-    commnets: res3[0],
+    comments: res3,
     image: res4[0],
+    artistImg:res5[0]
   };
 
   return res.json({ success: true, data: result });
@@ -233,7 +282,7 @@ router.put("/post/:id", async (req, res) => {
       });
     });
     return res.json({ success: true, message: "Post updated successfully" });
-  }else{
+  } else {
     return res.json({
       success: false,
       message: "You can update only your Post!",

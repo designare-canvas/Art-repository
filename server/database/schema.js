@@ -9,7 +9,7 @@ mysqlConnection.connect((err) => {
 });
 
 mysqlConnection.query(
-  `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASENAME}`,
+  `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASENAME} DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;`,
   function (err, result) {
     if (err) {
       throw err;

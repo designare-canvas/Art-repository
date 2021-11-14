@@ -7,7 +7,6 @@ import ShareIcon from "@material-ui/icons/Share";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import { blue, red } from "@material-ui/core/colors";
 import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import {Link} from "react-router-dom";
@@ -24,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(2.5),
     height: theme.spacing(2.5),
-    color: blue[100],
-    backgroundColor: red[500],
   },
   left: {
     justifyContent: "space-evenly",
@@ -86,7 +83,7 @@ function Post(props) {
         </Link>
 
         <CardActions className={classes.left}>
-          <Avatar color="primary" className={classes.small} src="" />
+          <Avatar className={classes.small} src="" />
           <Typography
             size="small"
             variant="h7"
