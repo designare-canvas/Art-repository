@@ -24,7 +24,7 @@ import Stack from '@mui/material/Stack';
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import ExploreIcon from "@material-ui/icons/Explore";
@@ -36,6 +36,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Drawer from "@material-ui/core/Drawer";
 import { AuthContext } from "../../Context/Authcontext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -123,7 +124,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   auth: {
-   
     display: "block",
     [theme.breakpoints.down(600)]: {
       display: "none",
@@ -156,6 +156,15 @@ export default function ButtonAppBar() {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+  const handleLogout = async () => {
+    console.log(document.cookie);
+
+    const result = await axios.get("http://localhost:8080/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
+    if(result.data.success){
+      sessionStorage.removeItem("user");
+      window.location.reload();
+    }
   };
   const drawerWidth = "50%";
   const drawer = (
@@ -227,17 +236,12 @@ export default function ButtonAppBar() {
                   <ListItemText primary="Upload" />
                 </ListItem>
               </Link>
-              <Link
-                to="/Signout"
-                style={{ textDecoration: "none", color: "black" }}
-              >
                 <ListItem button key="Signout">
                   <ListItemIcon style={{ color: "#22577A" }}>
                     <LogoutIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Signout" />
+                  <ListItemText primary="Logout" onClick={handleLogout} />
                 </ListItem>
-              </Link>
             </>
           ) : (
             <>
@@ -368,21 +372,25 @@ export default function ButtonAppBar() {
                 />
               </div>
               {user ? (
-                  <div>
+                <div className={classes.auth}>
                     <Stack direction="row" spacing={0.5}>
                       <Link to="/Profile" >
                         <Avatar style={{ marginLeft:"15px" }} src={user.profileImgUrl}></Avatar>
                       </Link>
                       <Link to="/upload" style={{ textDecoration: "none" }}>
-                        <Button  style={{ color: "#B1FFFD" }} className={classes.tab} color="primary" variant="">
+                        <Button  style={{ color: "#ff66a0" }} className={classes.tab} color="primary" variant="">
                           Upload
                         </Button>
                       </Link>
-                      <Link to="/Signout" style={{ textDecoration: "none" }}>
-                          <Button className={classes.tab} color="primary" variant="">
-                            Sign Out
-                          </Button>
-                      </Link>
+                      <Button
+                    style={{ display: "inline-block" }}
+                    onClick={handleLogout}
+                    className={classes.tab}
+                    color="primary"
+                    variant=""
+                  >
+                    Logout
+                  </Button>
                     </Stack>
                 </div>
               ) : (
@@ -394,7 +402,7 @@ export default function ButtonAppBar() {
                   </Link>
                   <Link to="/Signup" style={{ textDecoration: "none" }}>
                     <Button
-                      style={{ color: "#B1FFFD" }}
+                      style={{ color: "#ff66a0" }}
                       className={classes.tab}
                       color="primary"
                       variant=""

@@ -8,7 +8,7 @@ import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import './sidebar.scss';
 
-function Sidebar() {
+function Sidebar(props) {
   const temp = [
     {
       url: "https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg",
@@ -72,7 +72,7 @@ function Sidebar() {
         </div>
         <br />
         <h2>Feedback</h2>
-        {temp.map((data) => {
+        {props.comment.map((data) => {
           return (
             <Comment
               imgUrl={data.url}
