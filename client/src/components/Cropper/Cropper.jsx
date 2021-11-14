@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import "./Cropper.scss";
-import { Button } from "@material-ui/core";
+import cloud from './computing-cloud.png';
+import { Button,Typography } from "@material-ui/core";
+import "./Cropper.scss";
 
 function Cropper(props) {
   const [crop, setCrop] = useState({ aspect: 4 / 3 });
   const [src, setFile] = useState(null);
   const [image, setImage] = useState(null);
-
   const handleFileChange = (e) => {
     setFile(URL.createObjectURL(e.target.files[0]));
+    console.log(e.target.files[0]);
+    
   };
-
+  
   function getCroppedImg(e) {
     e.preventDefault();
     const canvas = document.createElement("canvas");
@@ -43,6 +46,7 @@ function Cropper(props) {
     const base64Image = canvas.toDataURL("image/jpeg");
     props.setResult(base64Image);
     console.log(base64Image);
+    // console.log(props.result);
   }
 
   return (
@@ -54,31 +58,67 @@ function Cropper(props) {
               src={src}
               onImageLoaded={setImage}
               crop={crop}
-              onChange={(newCrop) => setCrop(newCrop)}
+              onChange={(newCrop) => {
+                // console.log(newCrop);
+                setCrop(newCrop);
+              }}
               className="select-img"
+
             />
-            <button onClick={getCroppedImg}>Crop</button>
+            {!(crop.x === 0 && crop.y === 0) && <Button variant="contained"  onClick={getCroppedImg}>
+            Crop
+          </Button>}
+            {/* <button onClick={getCroppedImg} > CROp</button> */}
+    
           </div>
         )}
       </div>
-      {!props.result ? (
+      {!src ? (
+        <div style={{ margin:"20%",textAlign:"center"}} >
         <label htmlFor="contained-button-file">
-          Select image for upload
-          <input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-            // required
-          />
-          <Button variant="contained" component="span">
-            Upload
-          </Button>
+            <img src={cloud} alt="input-before"></img>
+            <Typography
+                variant="h3"
+                className="heading"
+                style={{
+                  fontFamily: "Rajdhani",
+                  fontSize: "1.5rem",
+                  fontWeight: "550",
+                  color: "#22577A",
+                }}
+            >
+              Upload Designs here
+                </Typography>
+        <input
+          accept="image/*"
+          id="contained-button-file"
+          multiple
+          type="file"
+          onChange={handleFileChange}
+          style={{ display:"none"}}
+          // required
+        />
+        {/* */}
         </label>
+        </div>
+       
       ) : (
-        <img src={props.result} alt="" />
+          <div style={{ margin: "5%", textAlign: "center" }} >
+           <Typography
+                variant="caption"
+                className="paragraph"
+                style={{
+                  fontFamily: "Josefin Sans",
+                  fontSize: "1.0rem",
+                  fontWeight: "500",
+                  color: "#22577A",
+                }}
+            >
+              Cropped Design : {(crop.x === 0 && crop.y === 0) && "Select and Crop to get image here!"}
+            </Typography>
+            <br />
+            <img src={props.result} alt="" />
+            </div>
       )}
     </div>
   );

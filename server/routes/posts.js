@@ -8,12 +8,13 @@ router.post("/upload", (req, res) => {
   const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
   mysqlConnection.query(
-    "INSERT INTO `arts` (`timestamp`,`title`,`description`,`username`) VALUES (?,?,?,?)",
+    "INSERT INTO `arts` (`timestamp`,`title`,`description`,`username`,`isPublished`) VALUES (?,?,?,?,?)",
     [
       now,
       req.body.Title,
       req.body.Description,
       req.body.user.username,
+      req.body.isPublished
     ],
     async (err, result) => {
       if (err) {

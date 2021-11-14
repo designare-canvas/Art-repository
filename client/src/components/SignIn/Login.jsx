@@ -1,11 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
-<<<<<<< HEAD
-// import facebook from "./facebook.png";
-// import google from "./search.png";
-=======
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
 import "./Login.scss";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -64,10 +59,6 @@ export default function Login() {
   // import Navbar from "../navbar/Navbar";
 
   axios.defaults.withCredentials = true;
-<<<<<<< HEAD
-  const [msg, setMsg] = React.useState("");
-=======
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,9 +70,6 @@ export default function Login() {
 
     if (result) {
       if (result.data.success) window.location.reload();
-<<<<<<< HEAD
-      else setMsg(result.data.message);
-=======
       else {
         setMsg(result.data.message);
         setShake(true);
@@ -90,7 +78,6 @@ export default function Login() {
         }, 1000);
         console.log(shake);
       }
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
     }
     console.log(result);
   };
@@ -148,21 +135,7 @@ export default function Login() {
               maxWidth: 400,
             }}
           >
-<<<<<<< HEAD
-            <div
-              style={{
-                width: "auto",
-                margin: "auto",
-                color: "red",
-                fontSize: "20px",
-                marginBottom: "30px",
-              }}
-            >
-              {msg}
-            </div>
-=======
             <div className={`display-msg ${shake ? "shake" : ""}`}>{msg}</div>
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
             <Grid container justify="center" style={{ marginBottom: "5%" }}>
               <Typography
                 variant="h2"
