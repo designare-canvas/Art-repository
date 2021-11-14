@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import "./Login.scss";
+import Checkbox from '@mui/material/Checkbox';
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +19,7 @@ export default function Login() {
     username: "",
     password: "",
     showPassword: false,
+    isAdmin: 0
   });
   const [shake, setShake] = useState(false);
   const [msg, setMsg] = useState(null);
@@ -41,9 +43,13 @@ export default function Login() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (prop) => (event) => {
+    if (prop === "isAdmin") {
+      setValues({ ...values, [prop]:(event.target.checked) ? 1 : 0});
+      return;
+    }
     setValues({ ...values, [prop]: event.target.value });
   };
-
+  console.log(values);
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -233,13 +239,10 @@ export default function Login() {
               <div style={{ height: "20px" }}></div>
               {/* <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
             <TextField label="Password" margin="normal" onChange = {handleChange("password")}/> */}
-              <Link
-                href="#"
-                style={{ color: "#22577A", fontFamily: "Josefin Sans" }}
-                underline="none"
-              >
-                Forget Password ?
-              </Link>
+              <div><Checkbox onChange={handleChange("isAdmin")} style={{textAlign:"center"}} />
+              <label style = {{fontFamily:"Rajdhani",fontSize: "1rem",
+                    fontWeight: "550",
+                    color: "#22577A"}}>Signin as Admin</label></div>
               <div style={{ height: "20px" }}></div>
               <Button
                 style={{
