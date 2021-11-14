@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, } from "react";
 import { useLocation } from "react-router-dom";
-import Cropper from "../../components/Cropper/Cropper";
+// import Cropper from "../../components/Cropper/Cropper";
 import { Button,TextField } from "@material-ui/core";
 import axios from "axios";
 import { AuthContext } from "../../Context/Authcontext";
@@ -103,7 +103,7 @@ function Optionone(postdetails) {
                   fontWeight: "550",
                   color: "#22577A"}}>Publish Now</label></div>
             
-            <Button type="submit" variant="contained" >Upload Design</Button>
+            <Button type="submit" variant="contained" >Edit Design</Button>
             {/* <button type="submit">upload</button> */}
         </div>
         </form>
