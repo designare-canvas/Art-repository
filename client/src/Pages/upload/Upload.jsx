@@ -1,10 +1,13 @@
+
 import React, { useState, useEffect, useContext } from "react";
 import Cropper from "../../components/Cropper/Cropper";
-import { TextField } from "@material-ui/core";
+import { Button,TextField } from "@material-ui/core";
 import axios from "axios";
 import { AuthContext } from "../../Context/Authcontext";
 import { useHistory } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
+import Checkbox from '@mui/material/Checkbox';
+// import {DropzoneArea} from 'material-ui-dropzone'
 
 function Upload() {
   const [result, setResult] = useState(null);
@@ -14,7 +17,8 @@ function Upload() {
     Description: "",
     Image: "",
     Tags:[],
-    user:user,
+    user: user,
+    isPublished:0
   });
   let history = useHistory();
 
@@ -32,7 +36,13 @@ function Upload() {
       console.log(values);
       return;
     }
+    if (prop === "isPublished") {
+      setValues({ ...values, [prop]:(event.target.checked === false) ? 1 : 0});
+      console.log(values);
+      return;
+    }
     setValues({ ...values, [prop]: event.target.value });
+    
   };
 
   const handleSubmit = async (e) => {
@@ -50,15 +60,16 @@ function Upload() {
     
       if(res){
         if(res.data.success)  history.push("/");
-        else  alert(result.data.message);
+        else  alert(res.data.message);
       }
     console.log(res);
   };
 
   return (
     <div>
-    <Navbar />
-      <form onSubmit={handleSubmit}>
+      <Navbar />
+      <div style={{margin:"0% 25%" , textAlign:"center"}}>
+      <form onSubmit={handleSubmit} style={{width:"100%"}}>
       <TextField
             fullWidth
               required
@@ -66,22 +77,34 @@ function Upload() {
               margin="normal"
               onChange={handleChange("Title")}
             />
-             <TextField
+            <TextField
             fullWidth
               required
-              label="description"
+              label="Description"
               margin="normal"
               onChange={handleChange("Description")}
-            />
-        <Cropper result={result} setResult={setResult} />
-        <TextField
+          />
+          <div style={{ borderWidth: "5px", borderStyle: "dashed" ,borderColor:"#22577A" }}>
+            {/* <DropzoneArea /> */}
+            <Cropper result={result} setResult={setResult} />
+          </div>
+          <TextField
             fullWidth
-              label="Tags"
-              margin="normal"
-              onChange={handleChange("Tags")}
-            />
-        <button type="submit">Upload</button>
-      </form>
+            label="Add your tags"
+            margin="normal"
+            onChange={handleChange("Tags")}
+          />
+          <div style={{ margin: "2% 25%", textAlign: "center" }}>
+            <div><Checkbox onChange={handleChange("isPublished")} />
+            <label style = {{fontFamily:"Rajdhani",fontSize: "1rem",
+                  fontWeight: "550",
+                  color: "#22577A"}}>Publish Now</label></div>
+            
+            <Button type="submit" variant="contained" >Upload Design</Button>
+            {/* <button type="submit">upload</button> */}
+        </div>
+        </form>
+        </div>
     </div>
   );
 }

@@ -95,9 +95,6 @@ export default function Login() {
     console.log(result);
     if (result) {
       if (result.data.success) window.location.reload();
-<<<<<<< HEAD
-      else setMsg(result.data.message);
-=======
       else {
         setMsg(result.data.message);
         setShake(true);
@@ -106,7 +103,6 @@ export default function Login() {
         }, 1000);
         console.log(shake);
       }
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
     }
   };
 
@@ -228,7 +224,7 @@ export default function Login() {
                     ></img>
                   </Button>
                 </a>
-              </div> */}
+                  </div> */}
             </Grid>
             {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
             <form onSubmit={handleSubmit}>
@@ -309,13 +305,8 @@ export default function Login() {
                   views={["year", "month", "day"]}
                   value={selectedDate}
                   onChange={(e) => {
-<<<<<<< HEAD
-                    handleChange(e);
-                    setDate(e);
-=======
                     setDate(e);
                     handleChange(e);
->>>>>>> 1ba5f0ac4fde506fc617c64a69045aa89153e9f1
                   }}
                 />
               </MuiPickersUtilsProvider>

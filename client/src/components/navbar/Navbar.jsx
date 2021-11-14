@@ -13,8 +13,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles, useTheme, alpha } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -216,6 +217,17 @@ export default function ButtonAppBar() {
                 </ListItem>
               </Link>
               <Link
+                to="/upload"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ListItem button key="Upload">
+                  <ListItemIcon style={{ color: "#22577A" }}>
+                  <CloudUploadIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Upload" />
+                </ListItem>
+              </Link>
+              <Link
                 to="/Signout"
                 style={{ textDecoration: "none", color: "black" }}
               >
@@ -223,7 +235,7 @@ export default function ButtonAppBar() {
                   <ListItemIcon style={{ color: "#22577A" }}>
                     <LogoutIcon />
                   </ListItemIcon>
-                  <ListItemText primary="SIgnout" />
+                  <ListItemText primary="Signout" />
                 </ListItem>
               </Link>
             </>
@@ -356,18 +368,22 @@ export default function ButtonAppBar() {
                 />
               </div>
               {user ? (
-                <div
-                  className={classes.auth}
-                >
-                  <Link to="/Profile" >
-                    <Avatar style={{display:"inline-block", marginLeft:"10px", marginTop:"10px" }}alt ={user.username} src={user.profileImgUrl}></Avatar>
-                  </Link>
-
-                  <Link to="/Signout" style={{ textDecoration: "none" }}>
-                      <Button style={{ display: "inline-block" }} className={classes.tab} color="primary" variant="">
-                      Sign Out
-                    </Button>
-                  </Link>
+                  <div>
+                    <Stack direction="row" spacing={0.5}>
+                      <Link to="/Profile" >
+                        <Avatar style={{ marginLeft:"15px" }} src={user.profileImgUrl}></Avatar>
+                      </Link>
+                      <Link to="/upload" style={{ textDecoration: "none" }}>
+                        <Button  style={{ color: "#B1FFFD" }} className={classes.tab} color="primary" variant="">
+                          Upload
+                        </Button>
+                      </Link>
+                      <Link to="/Signout" style={{ textDecoration: "none" }}>
+                          <Button className={classes.tab} color="primary" variant="">
+                            Sign Out
+                          </Button>
+                      </Link>
+                    </Stack>
                 </div>
               ) : (
                 <div className={classes.auth}>
