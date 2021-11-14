@@ -39,12 +39,10 @@ function Optionone(postdetails) {
       return;
     }
     if (prop === "isPublished") {
-      setValues({ ...values, [prop]:(event.target.checked === true) ? 1 : 0});
+      setValues({ ...values, [prop]:(event.target.checked) ? 1 : 0});
       return;
     }
     setValues({ ...values, [prop]: event.target.value });
-   
-    
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +52,7 @@ function Optionone(postdetails) {
     }
     console.log(values);
     const res = await axios
-      .post("http://localhost:8080/api/posts/upload", values, {
+      .post("http://localhost:8080/api/posts/art", values, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

@@ -104,10 +104,8 @@ router.post("/signup", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("Auth");
-  res.clearCookie("username");
+  req.session.destroy();
   res
-    .sendStatus(200)
     .json({ success: true, message: "User logged out successfully" });
 });
 
