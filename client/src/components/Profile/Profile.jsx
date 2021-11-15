@@ -1,85 +1,82 @@
 import "./profile.scss";
-import React,{useContext, useEffect, useState } from "react";
-import Button from '@mui/material/Button';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import React, { useContext, useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import ImageListShow from "./profilepostlistshow";
 import Link from "@material-ui/core/Link";
-import { AuthContext } from "../../Context/Authcontext";
 import axios from "axios";
+import { AuthContext } from "../../Context/Authcontext";
+import { useParams } from 'react-router-dom';
+import { getThemeProps } from "@material-ui/styles";
 
 export default function Profile() {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
   const { user } = useContext(AuthContext);
-  console.log(user)
-    const [value, setValue] = React.useState('one');
+  const [value, setValue] = React.useState("one");
+  const [userData, setUserData] = useState(null);
+  const [likedPosts,setLikedPosts] = useState([]);
+
+  const { username } = useParams();
 
   const handleChange = (event, newValue) => {
-    var element1 = document.getElementById('one');
-    var element2 = document.getElementById('two');
-    var element3 = document.getElementById('three');
-    if(!element1.classList.contains("mystyle")){
-
-        element1.classList.toggle("mystyle");
+    var element1 = document.getElementById("one");
+    var element2 = document.getElementById("two");
+    var element3 = document.getElementById("three");
+    if (!element1.classList.contains("mystyle")) {
+      element1.classList.toggle("mystyle");
     }
-    if(!element2.classList.contains("mystyle")){
-
-        element2.classList.toggle("mystyle");
-    }if(!element3.classList.contains("mystyle")){
-
-        element3.classList.toggle("mystyle");
+    if (!element2.classList.contains("mystyle")) {
+      element2.classList.toggle("mystyle");
     }
-    console.log(value)
+    if (!element3.classList.contains("mystyle")) {
+      element3.classList.toggle("mystyle");
+    }
     var element = document.getElementById(newValue);
     element.classList.toggle("mystyle");
-    console.log(element1)
     setValue(newValue);
   };
-  var follower=10;//change it by the number of follower
-  var following=0;//change it by the number of following
-  function shuffle(array) {
-    let currentIndex = array.length,
-      randomIndex;
 
-    // While there remain elements to shuffle...
-    while (currentIndex !== 0) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-
-    return array;
-  }
-
-  const [posts, setPosts] = useState([]);
-  const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:8080/api/posts/user/"+user.username, {
+  const fetchData = async() => {
+    const result = await axios.get("http://localhost:8080/api/posts/user/"+username, {
+      params: user,
       withCredentials: true,
     });
-
     console.log(result);
+
     if (result.data.success) {
-      setPosts(shuffle(result.data.data));
+      setPosts(result.data.data);
     }
-  };
+    const result2 = await axios.get("http://localhost:8080/api/posts/liked/"+username, {
+      params: user,
+      withCredentials: true,
+    });
+    console.log(result2);
+    if(result2.data.success){
+      setLikedPosts(result2.data.data)
+    }
+
+    const result3 = await axios.get("http://localhost:8080/api/user/"+username,{
+      withCredentials:true
+    });
+    console.log(result3);
+    if(result3.data.success){
+      setUserData(result3.data.data);
+      console.log(userData);
+    }
+
+    setLoading(false);
+  }
   useEffect(() => {
-    fetchPosts();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  console.log(posts);
-  const myPostUrl="https://jsonplaceholder.typicode.com/photos";//change with url giving the post person created
-  const myLikedPostUrl="https://jsonplaceholder.typicode.com/photos";//change with url liked post
-  var bio=user.discription// change it by the bio of user
-  var name=user.username//change it by the name of user
- 
+    fetchData();
+  }, []);
+
   return (
     <>
       {/* <Topbar /> */}
-      <div className="profile">
+      {isLoading?(<></>):(<> <div className="profile">
         {/* <Sidebar /> */}
         <div className="profileRight">
           <div className="profileRightTop">
@@ -95,10 +92,11 @@ export default function Profile() {
                 alt=""
               />
             </div>
-            <div style={{height:"20px"}}></div>
+            <div style={{ height: "20px" }}></div>
             <div className="profileInfo">
-                <h4 className="profileInfoName">{name}</h4>
-                <span className="profileInfoDesc">{bio}</span>
+                <h4 className="profileInfoName">{userData.username}</h4>
+                <span className="profileInfoDesc">{userData.description}</span>
+
                 
                 <Button className="btn" variant="outlined"><Link
                 href="/upload"
@@ -117,29 +115,23 @@ export default function Profile() {
             </div>
           </div>
           <div>
-          <Tabs
-          className="TabContainer"
-        value={value}
-        onChange={handleChange}
-        aria-label="wrapped label tabs example"
-      >
-        <Tab
-          value="one"
-          label="Your Posts"
-          className="tabs"
-        />
-        <Tab value="two" label="Liked Posts" className="tabs" />
-        <Tab value="three" label="About" className="tabs"/>
-      </Tabs>
-
+            <Tabs
+              className="TabContainer"
+              value={value}
+              onChange={handleChange}
+              aria-label="wrapped label tabs example"
+            >
+              <Tab value="one" label="Your Posts" className="tabs" />
+              <Tab value="two" label="Liked Posts" className="tabs" />
+              <Tab value="three" label="About" className="tabs" />
+            </Tabs>
           </div>
-          <div id="one" >
-             
-              <ImageListShow data={posts}/>
+          <div id="one">
+            <ImageListShow posts={posts} />
           </div>
           <div id="two" className="mystyle">
-             
-              {/* <ImageListShow url={myLikedPostUrl}/> */}
+            <ImageListShow posts={likedPosts} />
+
           </div>
           <div id="three" className="mystyle profileInfo">
           <span className="profileInfoDesc">
@@ -158,8 +150,8 @@ export default function Profile() {
           <div className="profileRightBottom">
           </div>
         </div>
-      </div>
+      </div></>)}
     </>
   );
-
 }
+

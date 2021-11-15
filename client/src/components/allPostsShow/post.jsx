@@ -1,8 +1,7 @@
-import React from "react";
+import React,{useContext, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
@@ -11,7 +10,14 @@ import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import {Link} from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../Context/Authcontext";
 import ReactTimeAgo from "react-time-ago";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,10 +45,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Post(props) {
+  const { user } = useContext(AuthContext);
+  const [likes,setLikes] = useState(props.likes);
   const classes = useStyles();
-  var title = props.title.substr(0, 20);
+  var title = props.title.substr(0, 10);
   title += "...";
-  console.log(props.where);
+  let history = useHistory();
+
+  const handleLikeChange= async(e) => {
+
+    if(user){
+      if(e.target.checked){
+        const result = await axios.post("http://localhost:8080/api/posts/like",{username:user.username,postId:props.id});
+        console.log(result);
+        setLikes((prev) => prev+1)
+      }else{
+        const result = await axios.delete("http://localhost:8080/api/posts/like",{data:{id:props.id, username:user.username}});
+        console.log(result);
+        setLikes((prev) => prev-1)
+      }
+    }else{
+      history.push("/Signin")
+    }
+  }
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
@@ -82,7 +107,6 @@ function Post(props) {
                   aria-label="add to favorites"
                   style={{ backgroundColor: "transparent" }}
                 >
-                  <FavoriteIcon fontSize="middle" className="favicon" />
                 </IconButton>
                 <IconButton
                   aria-label="share"
@@ -108,12 +132,12 @@ function Post(props) {
             {props.artist}
           </Typography>
           <ButtonGroup size="small">
-            <IconButton
+          <IconButton
               aria-label="add to favorites"
               style={{ backgroundColor: "transparent" }}
             >
-              <FavoriteIcon fontSize="small" className="favicon" />
-              {props.likes}
+          <Checkbox className="favicon" onChange={handleLikeChange} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+              {likes} 
             </IconButton>
             <IconButton
               aria-label="share"

@@ -50,15 +50,16 @@ router.post("/art", (req, res) => {
 
 router.post("/like", async (req, res) => {
   const now = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const result = await query(
-    "INSERT INTO likes (`timestamp`,`username`,`postId`) VALUES (?,?,?)",
-    [now, req.body.username, req.body.postId]
-  ).catch((Err) => {
+  try {
+    const result = await query(
+      "INSERT INTO likes (`timestamp`,`username`,`postId`) VALUES (?,?,?)",
+      [now, req.body.username, req.body.postId]
+    );
+    return res.json({ success: true, message: "Post liked successfully!" });
+  } catch (Err) {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
-  });
-
-  return res.json({ success: true, message: "Post liked successfully!" });
+  }
 });
 
 router.post("/comment", async (req, res) => {
@@ -136,21 +137,21 @@ router.get("/post/:id", async (req, res) => {
       return res.json({ success: false, message: sqlMessage });
     }
   );
-  const res2 = await query("SELECT COUNT(*) FROM likes WHERE postId = ?", [
+  const res2 = await query("SELECT COUNT(*) FROM likes WHERE `postId` = ?", [
     id,
   ]).catch((Err) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
 
-  const res3 = await query("SELECT * FROM comments WHERE postId = ?", [
+  const res3 = await query("SELECT * FROM comments WHERE `postId` = ?", [
     id,
   ]).catch((Err) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
 
-  const res4 = await query("SELECT * FROM artImages WHERE postId = ?", [
+  const res4 = await query("SELECT * FROM artImages WHERE `postId` = ?", [
     id,
   ]).catch((Err) => {
     const { sqlMessage, ...other } = Err;
@@ -169,19 +170,66 @@ router.get("/post/:id", async (req, res) => {
     likes: res2[0]["COUNT(*)"],
     comments: res3,
     image: res4[0],
-    artistImg:res5[0]
+    artistImg: res5[0],
   };
 
   return res.json({ success: true, data: result });
 });
 
+router.get("/liked/:username", async (req, res) => {
+  const username = req.params.username;
+  const result = await query("SELECT postId FROM likes where username = ?", [
+    username,
+  ]).catch((Err) => {
+    const { sqlMessage, ...other } = Err;
+    return res.json({ success: false, message: sqlMessage });
+  });
+
+  let newres = result.map((e) => e.postId);
+  newres = [...new Set(newres)];
+
+  const newResult = [];
+  await Promise.all(
+    newres.map(async (rowData) => {
+      const res1 = await query("SELECT * FROM arts WHERE id =?", [
+        rowData,
+      ]).catch((err) => {
+        const { sqlMessage, ...other } = Err;
+        res.json({ success: false, message: sqlMessage });
+      });
+      if (res1.length) {
+        const res2 = await query("SELECT * FROM artImages WHERE postId = ?", [
+          rowData,
+        ]).catch((err) => {
+          const { sqlMessage, ...other } = Err;
+          res.json({ success: false, message: sqlMessage });
+        });
+        const res3 = await query(
+          "SELECT COUNT(*) FROM likes WHERE `postId` = ?",
+          [rowData]
+        ).catch((Err) => {
+          const { sqlMessage, ...other } = Err;
+          return res.json({ success: false, message: sqlMessage });
+        });
+        newResult.push({
+          art: res1[0],
+          likes: res3[0]["COUNT(*)"],
+          image: res2[0],
+        });
+      }
+    })
+  );
+
+  res.json({ success: true, data: newResult });
+});
+
 router.get("/user/:username", async (req, res) => {
   const username = req.params.username;
-  const isPublished = 1;
+  const isPublished = username === req.query.username;
 
   const res1 = await query(
-    "SELECT * FROM arts WHERE username = ? AND isPublished = ?",
-    [username, isPublished]
+    "SELECT * FROM arts WHERE username = ? AND isPublished = 1",
+    [username]
   ).catch((Err) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
@@ -190,36 +238,82 @@ router.get("/user/:username", async (req, res) => {
 
   await Promise.all(
     res1.map(async (rowData) => {
-      const res2 = await query("SELECT * FROM artImages WHERE postId = ?", [
+      const res2 = await query("SELECT * FROM artImages WHERE `postId` = ?", [
         rowData.id,
       ]).catch((Err) => {
         const { sqlMessage, ...other } = Err;
         return res.json({ success: false, message: sqlMessage });
       });
-      const res3 = await query("SELECT COUNT(*) FROM likes WHERE postId = ?", [
-        rowData.id,
-      ]).catch((Err) => {
+      const res3 = await query(
+        "SELECT COUNT(*) FROM likes WHERE `postId` = ?",
+        [rowData.id]
+      ).catch((Err) => {
         const { sqlMessage, ...other } = Err;
         return res.json({ success: false, message: sqlMessage });
       });
       result.push({ art: rowData, image: res2[0], likes: res3[0]["COUNT(*)"] });
     })
   );
+  if (isPublished) {
+    const res1_2 = await query(
+      "SELECT * FROM arts WHERE username = ? AND isPublished = 0",
+      [username]
+    ).catch((Err) => {
+      const { sqlMessage, ...other } = Err;
+      return res.json({ success: false, message: sqlMessage });
+    });
+    await Promise.all(
+      res1_2.map(async (rowData) => {
+        const res2_2 = await query(
+          "SELECT * FROM artImages WHERE `postId` = ?",
+          [rowData.id]
+        ).catch((Err) => {
+          const { sqlMessage, ...other } = Err;
+          return res.json({ success: false, message: sqlMessage });
+        });
+        const res3_2 = await query(
+          "SELECT COUNT(*) FROM likes WHERE `postId` = ?",
+          [rowData.id]
+        ).catch((Err) => {
+          const { sqlMessage, ...other } = Err;
+          return res.json({ success: false, message: sqlMessage });
+        });
+        result.push({
+          art: rowData,
+          image: res2_2[0],
+          likes: res3_2[0]["COUNT(*)"],
+        });
+      })
+    );
+  }
   // console.log(result);
 
   return res.json({ success: true, data: result });
 });
 
-router.delete("/:id", async (req, res) => {
-  const post = await query("SELECT * FROM arts WHERE postId = ?", [
+router.delete("/like", async (req, res) => {
+  console.log(req.body);
+  const result = await query(
+    "DELETE FROM likes WHERE postId  = ? AND username = ?",
+    [req.body.id, req.body.username]
+  ).catch((Err) => {
+    const { sqlMessage, ...other } = Err;
+    return res.json({ success: false, message: sqlMessage });
+  });
+  return res.json({ success: true, message: "like deleted successfully" });
+});
+
+router.delete("/post/:id", async (req, res) => {
+  console.log("hello");
+  const post = await query("SELECT * FROM arts WHERE id = ?", [
     req.params.id,
   ]).catch((Err) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
 
-  if (req.body.username === post.username || req.body.isAdmin) {
-    const res1 = await query("DELETE FROM arts WHERE postId = ?", [
+  if (req.body.user.username === post[0].username || req.body.isAdmin) {
+    const res1 = await query("DELETE FROM arts WHERE id = ?", [
       req.params.id,
     ]).catch((Err) => {
       const { sqlMessage, ...other } = Err;
@@ -243,24 +337,16 @@ router.put("/post/:id", async (req, res) => {
     return res.json({ success: false, message: sqlMessage });
   });
 
-  if (art.username === req.body.user.username || req.body.isAdmin) {
+  if (art[0].username === req.body.user.username || req.body.isAdmin) {
     const res1 = await query(
-      "UPDATE arts SET isPublished = ?, dateOfPublish = ?, title = ?, description = ? WHERE id = ?",
+      "UPDATE arts SET isPublished = ?, title = ?, description = ? WHERE id = ?",
       [
         req.body.isPublished,
-        req.body.dateOfPublish,
-        req.body.title,
-        req.body.description,
+        req.body.Title,
+        req.body.Description,
         req.params.id,
       ]
     ).catch((Err) => {
-      const { sqlMessage, ...other } = Err;
-      return res.json({ success: false, message: sqlMessage });
-    });
-
-    const res2 = await query("UPDATE artImages SET imageUrl = ?", [
-      req.body.image,
-    ]).catch((Err) => {
       const { sqlMessage, ...other } = Err;
       return res.json({ success: false, message: sqlMessage });
     });
@@ -272,7 +358,7 @@ router.put("/post/:id", async (req, res) => {
       return res.json({ success: false, message: sqlMessage });
     });
 
-    const res3 = req.body.Tags.map(async (tag) => {
+    const res2 = req.body.Tags.map(async (tag) => {
       const rows = await query(
         "INSERT INTO `tags`(`postId`,`tagName`) VALUES (?,?)",
         [req.params.id, tag]

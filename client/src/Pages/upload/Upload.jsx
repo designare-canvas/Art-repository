@@ -12,13 +12,14 @@ import Optiontwo from "./optiontwo";
 function Optionone(postdetails) {
   console.log(postdetails.postImgUrl);
   const [result, setResult] = useState(null);
-  const { user } = useContext(AuthContext);
+  const { user , isAdmin} = useContext(AuthContext);
   const [values, setValues] = useState({
     Title: postdetails.postTitle,
     Description: postdetails.postDescription,
     Image: postdetails.postImgUrl,
-    Tags:postdetails.tags,
+    Tags:[],
     user: user,
+    isAdmin:isAdmin,
     isPublished:0   
   });
   let history = useHistory();
@@ -52,7 +53,7 @@ function Optionone(postdetails) {
     }
     console.log(values);
     const res = await axios
-      .post("http://localhost:8080/api/posts/art", values, {
+      .put("http://localhost:8080/api/posts/post/"+postdetails.id, values, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

@@ -4,7 +4,6 @@ import { Button,TextField } from "@material-ui/core";
 import Comment from "../../components/comment/comment.jsx";
 import { IconButton } from "@material-ui/core";
 import ShareIcon from "@mui/icons-material/Share";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 // import { AuthContext } from "../../Context/Authcontext";
 import { useHistory } from "react-router-dom";
@@ -41,9 +40,6 @@ function Sidebar(props) {
           <div>
             <IconButton aria-label="share">
               <ShareIcon />
-            </IconButton>
-            <IconButton aria-label="save">
-              <CreateNewFolderIcon />
             </IconButton>
             <IconButton aria-label="favorite">
               <FavoriteIcon />

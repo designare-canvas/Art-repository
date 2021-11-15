@@ -17,7 +17,7 @@ function Post() {
   const { id } = useParams();
 
   const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:8080/api/posts/"+id, {
+    const result = await axios.get("http://localhost:8080/api/posts/post/"+id, {
       withCredentials: true,
     });
 
@@ -28,7 +28,6 @@ function Post() {
     }
   };
   useEffect(() => {
-    console.log("hello");
     fetchPosts();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -45,6 +44,7 @@ function Post() {
       <Navbar />
       <div className="Post-page">
         <PostArea
+        id={posts.art.id}
           imgUrl={posts.artistImg}
           postTitle={posts.art.title}
           authorName={posts.art.username}
