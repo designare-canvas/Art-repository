@@ -7,33 +7,39 @@ function Dashboardpage() {
 
     const [requests,setRequests] = useState([]);
     const [users,setUsers] = useState({});
+    const [isLoading, setLoading] = useState(true);
 
     const fetchData = async () => {
-        const result1 = await axios.get("http://localhost:8080/api/admin/allusers",{withCredentials:true});
+
+        const result1 =  await axios.get("http://localhost:8080/api/admin/requests",{withCredentials:true});
         console.log(result1);
 
         if (result1.data.success) {
             setRequests(result1.data.data);
           }
 
-        const result2 =  await axios.get("http://localhost:8080/api/admin/requests",{withCredentials:true});
-        console.log(result2);
+          const result2 = await axios.get("http://localhost:8080/api/admin/allusers",{withCredentials:true});
+          console.log(result2);
 
         if (result2.data.success) {
             setUsers(result2.data.data);
           }
+
+        if(result1.data.success && result2.data.success){
+      setLoading(false);
+        }
     }
 
     useEffect(() => {
        fetchData();
     }, []);
 
-    return (
-        <div >
-        
-            <Navbar />
-           <Dashboard requests={requests} users={users} />
-        </div>
+    return (<>{
+        isLoading?(<></>): <div >
+        <Navbar />
+       <Dashboard requests={requests} users={users} fetchData={fetchData} />
+    </div>
+    }</>
     )
 }
 

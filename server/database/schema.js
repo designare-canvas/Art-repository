@@ -44,6 +44,7 @@ const users = `Create TABLE IF NOT EXISTS users(
     country VARCHAR(255),
     pincode INT(16),
     isArtist BOOLEAN NOT NULL DEFAULT 0,
+    timestamp DATETIME NOT NULL,
     admin_id VARCHAR(40) DEFAULT 'admin123',
     PRIMARY KEY (username),
     FOREIGN KEY (admin_id) REFERENCES admin(username)
@@ -106,7 +107,7 @@ const requests = `CREATE TABLE IF NOT EXISTS requests(
   PRIMARY KEY (username, admin_id),
   FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (admin_id) REFERENCES admin(username) ON DELETE CASCADE ON UPDATE CASCADE
-)`
+)`;
 
 mysqlConnection.query(admin, (err, result) => {
   if (err) throw err;

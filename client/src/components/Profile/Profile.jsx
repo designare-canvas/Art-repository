@@ -9,7 +9,10 @@ import axios from "axios";
 import { AuthContext } from "../../Context/Authcontext";
 import { useParams } from 'react-router-dom';
 import { getThemeProps } from "@material-ui/styles";
-
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CategoryIcon from '@mui/icons-material/Category';
+import ApplyNow from "./applynow";
 export default function Profile() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -17,9 +20,10 @@ export default function Profile() {
   const { user } = useContext(AuthContext);
   const [value, setValue] = React.useState("one");
   const [userData, setUserData] = useState(null);
-  const [likedPosts,setLikedPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
 
   const { username } = useParams();
+  const {profileImgUrl, coverImgUrl, ...other} = user;
 
   const handleChange = (event, newValue) => {
     var element1 = document.getElementById("one");
@@ -38,10 +42,16 @@ export default function Profile() {
     element.classList.toggle("mystyle");
     setValue(newValue);
   };
+  
+  // if(user.isArtist){
+  //   ele1.classList.toggle("mystyle");
+  // }else{
+  //   ele2.classList.toggle("mystyle");
+  // }
 
-  const fetchData = async() => {
-    const result = await axios.get("http://localhost:8080/api/posts/user/"+username, {
-      params: user,
+  const fetchData = async () => {
+    const result = await axios.get("http://localhost:8080/api/posts/user/" + username, {
+      params: other,
       withCredentials: true,
     });
     console.log(result);
@@ -49,20 +59,20 @@ export default function Profile() {
     if (result.data.success) {
       setPosts(result.data.data);
     }
-    const result2 = await axios.get("http://localhost:8080/api/posts/liked/"+username, {
-      params: user,
+    const result2 = await axios.get("http://localhost:8080/api/posts/liked/" + username, {
+      params: other,
       withCredentials: true,
     });
     console.log(result2);
-    if(result2.data.success){
+    if (result2.data.success) {
       setLikedPosts(result2.data.data)
     }
 
-    const result3 = await axios.get("http://localhost:8080/api/user/"+username,{
-      withCredentials:true
+    const result3 = await axios.get("http://localhost:8080/api/user/" + username, {
+      withCredentials: true
     });
     console.log(result3);
-    if(result3.data.success){
+    if (result3.data.success) {
       setUserData(result3.data.data);
       console.log(userData);
     }
@@ -76,35 +86,36 @@ export default function Profile() {
   return (
     <>
       {/* <Topbar /> */}
-      {isLoading?(<></>):(<> <div className="profile">
+      {isLoading ? (<></>) : (<> <div className="profile">
         {/* <Sidebar /> */}
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={user.coverImgUrl}
+                src={userData.coverImgUrl}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profileImgUrl}
+                src={userData.profileImgUrl}
                 alt=""
               />
             </div>
             <div style={{ height: "20px" }}></div>
             <div className="profileInfo">
-                <h4 className="profileInfoName">{userData.username}</h4>
-                <span className="profileInfoDesc">{userData.description}</span>
-                
-                <Button className="btn" variant="outlined"><Link
+              <h4 className="profileInfoName">{userData.username}</h4>
+              <span className="profileInfoDesc">{userData.description}</span>
+
+
+              <Button className="btn" variant="outlined"><Link
                 href="/upload"
                 // style={{ color: "#22577A", marginLeft: "5px" }}
                 underline="none"
               >
                 Create Post
               </Link></Button>
-                <Button className="btn" variant="outlined"><Link
+              <Button className="btn" variant="outlined"><Link
                 href="/updateProfile"
                 // style={{ color: "#22577A", marginLeft: "5px" }}
                 underline="none"
@@ -126,24 +137,27 @@ export default function Profile() {
             </Tabs>
           </div>
           <div id="one">
-            <ImageListShow posts={posts} />
+          {!user.isArtist && <ApplyNow />}
+          {user.isArtist && <ImageListShow posts={posts} />}
+            
           </div>
           <div id="two" className="mystyle">
             <ImageListShow posts={likedPosts} />
+
           </div>
           <div id="three" className="mystyle profileInfo">
-          <span className="profileInfoDesc">
-                <Button className="btn" variant="text" disabled>Name</Button>
-                <Button className="btn" variant="text" disabled>{user.Fname} {user.Lname}</Button>
-                </span>
-          <span className="profileInfoDesc">
-                <Button className="btn" variant="text" disabled>Country of Origin</Button>
-                <Button className="btn" variant="text" disabled>{user.country}</Button>
-                </span>
-                <span className="profileInfoDesc">
-                <Button className="btn" variant="text" disabled>Date of Birth</Button>
-                <Button className="btn" variant="text" disabled>{user.DOB}</Button>
-                </span>
+            <span className="profileInfoDesc">
+              <Button className="btn" variant="text" disabled>Name</Button>
+              <Button className="btn" variant="text" disabled>{user.Fname} {user.Lname}</Button>
+            </span>
+            <span className="profileInfoDesc">
+              <Button className="btn" variant="text" disabled>Country of Origin</Button>
+              <Button className="btn" variant="text" disabled>{user.country}</Button>
+            </span>
+            <span className="profileInfoDesc">
+              <Button className="btn" variant="text" disabled>Date of Birth</Button>
+              <Button className="btn" variant="text" disabled>{user.DOB}</Button>
+            </span>
           </div>
           <div className="profileRightBottom">
           </div>
@@ -152,3 +166,4 @@ export default function Profile() {
     </>
   );
 }
+

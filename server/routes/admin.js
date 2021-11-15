@@ -32,7 +32,19 @@ router.get("/requests",async(req,res) => {
     return res.json({ success: false, message: sqlMessage });
   });
 
-  res.json({success:true, data: result});
+  const newRes = [];
+
+  await Promise.all(
+    result.map(async (rowData) => {
+      const res2 = await query("SELECT * FROM users WHERE username = ?",[rowData.username]).catch((Err) => {
+        const { sqlMessage, ...other } = Err;
+        return res.json({ success: false, message: sqlMessage });
+      });
+      newRes.push({req:rowData, user:res2});
+    })
+  )
+
+  res.json({success:true, data: newRes});
 })
 
 router.post("/changeReq",async(req,res) => {

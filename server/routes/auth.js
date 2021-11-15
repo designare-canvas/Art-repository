@@ -61,6 +61,7 @@ router.post("/adminLogin", async (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
+  const now = new Date().toISOString().slice(0, 19).replace("T", " ");
   const username = req.body.username;
   let password = req.body.password;
 
@@ -90,7 +91,7 @@ router.post("/signup", (req, res) => {
                 });
               } else {
                 mysqlConnection.query(
-                  "INSERT INTO `users`(`Fname`,`Lname`,`username`,`email`,`password`,`DOB`,`country`) VALUES (?,?,?,?,?,?,?)",
+                  "INSERT INTO `users`(`Fname`,`Lname`,`username`,`email`,`password`,`DOB`,`country`,`timestamp`,`profileImgUrl`,`coverImgUrl`) VALUES (?,?,?,?,?,?,?,?,?,?)",
                   [
                     req.body.Fname,
                     req.body.Lname,
@@ -99,6 +100,9 @@ router.post("/signup", (req, res) => {
                     hash,
                     req.body.DOB,
                     req.body.country,
+                    now,
+                    req.body.profileImgUrl,
+                    req.body.coverImgUrl
                   ],
                   async (err, result) => {
                     if (err) {

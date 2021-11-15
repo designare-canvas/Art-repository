@@ -27,7 +27,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
-import ExploreIcon from "@material-ui/icons/Explore";
+// import ExploreIcon from "@material-ui/icons/Explore";
 import BrushIcon from "@material-ui/icons/Brush";
 import FiberNewIcon from "@material-ui/icons/FiberNew";
 import SearchIcon from "@material-ui/icons/Search";
@@ -37,6 +37,7 @@ import Tab from "@material-ui/core/Tab";
 import Drawer from "@material-ui/core/Drawer";
 import { AuthContext } from "../../Context/Authcontext";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -143,8 +144,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
-  const { user } = useContext(AuthContext);
 
+  const { user } = useContext(AuthContext);
   const classes = useStyles();
   const [value, setValue] = React.useState();
   const theme = useTheme();
@@ -153,6 +154,7 @@ export default function ButtonAppBar() {
     setValue(newValue);
   };
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  let history = useHistory();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -164,7 +166,8 @@ export default function ButtonAppBar() {
     if(result.data.success){
       sessionStorage.removeItem("user");
       sessionStorage.removeItem("isAdmin");
-      window.location.reload();
+      history.push("/");
+      window.location.reload(); 
     }
   };
   const drawerWidth = "50%";
@@ -195,24 +198,26 @@ export default function ButtonAppBar() {
               <ListItemText primary="Home" />
             </ListItem>
           </Link>
-          <ListItem button key="Explore">
+          {/* <ListItem button key="Explore">
             <ListItemIcon style={{ color: "#22577A" }}>
               <ExploreIcon />
             </ListItemIcon>
             <ListItemText primary="Explore" />
-          </ListItem>
+          </ListItem> */}
           <ListItem button key="Designs">
             <ListItemIcon style={{ color: "#22577A" }}>
               <BrushIcon />
             </ListItemIcon>
             <ListItemText primary="Designs" />
           </ListItem>
+          <Link to="/WhatsNew" style={{ textDecoration: "none", color: "black" }}>
           <ListItem button key="What'sNew">
             <ListItemIcon style={{ color: "#22577A" }}>
               <FiberNewIcon />
             </ListItemIcon>
             <ListItemText primary="What'sNew" />
           </ListItem>
+          </Link>
           {user ? (
             <>
               <Link
@@ -352,7 +357,7 @@ export default function ButtonAppBar() {
                   <Tab label="Home" className={classes.tab} />
                 </Link>
 
-                <Tab label="Explore" className={classes.tab} />
+                {/* <Tab label="Explore" className={classes.tab} /> */}
 
                 <Tab label="Designs" className={classes.tab} />
                 <Link to="/WhatsNew" style={{ textDecoration: "none" }}>

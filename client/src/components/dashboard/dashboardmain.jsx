@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
 import './dashboardmain.scss'
 import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import PermissionRequest from "./PermissionRequest";
 import EditUserPost from "./EditUserPost";
+
 function Dashboard(props){
     const [value, setValue] = React.useState('one');
     const handleChange = (event, newValue) => {
@@ -30,7 +31,7 @@ return (
     
     <div className="head">
         <div style={{paddingTop:"125px"}}>
-            Hii Admin!
+            Hi Admin!
         </div>
     </div>
     <div className="midhead">
@@ -55,11 +56,11 @@ return (
     </div>
     <div id="one" >
              
-             <PermissionRequest requests = {props.requests} />
+             <PermissionRequest requests = {props.requests} fetchData = {props.fetchData} />
           </div>
           <div id="two" className="mystyle">
              
-             <EditUserPost users={props.requests} />
+             <EditUserPost users={props.users} />
           </div>
          
     </div>

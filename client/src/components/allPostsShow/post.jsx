@@ -16,6 +16,8 @@ import Favorite from '@mui/icons-material/Favorite';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../Context/Authcontext";
+import ReactTimeAgo from "react-time-ago";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +68,6 @@ function Post(props) {
       history.push("/Signin")
     }
   }
-
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
@@ -84,7 +85,22 @@ function Post(props) {
                 style={{ color: "white", fontSize: "20px", marginLeft: "10px" }}
               >
                 {title}
-              </span>
+                </span>
+                {props.where === "whatsnew" ? (<>
+                <div style={{ display: "inline-block" }}>
+                  <ReactTimeAgo
+                    date={props.time}
+                    locale="en-US"
+                    style={{
+                      fontSize: "small",
+                      margin: "0",
+                      fontFamily: "Verdana",
+                    }}
+                  />
+                </div>
+                </>) :
+                  (<></>)
+                }
               <ButtonGroup className="left" size="medium">
                 <div></div>
                 <IconButton

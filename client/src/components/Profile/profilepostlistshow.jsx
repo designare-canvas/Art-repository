@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Post from "./profilepost";
 import Grid from "@material-ui/core/Grid";
 
