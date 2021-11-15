@@ -28,6 +28,7 @@ function App() {
         <Route exact path="/upload"  >{user ? <Upload /> : <Redirect to="/Signin" />}</Route>
         <Route exact path="/dashboard" component={Dashboardpage}/>
         {/* <Route exact path="/dashboard" >{isAdmin ? <Dashboardpage /> : <Redirect to="/Signin" />}</Route> */}
+
       </Switch>
       
     </Router>

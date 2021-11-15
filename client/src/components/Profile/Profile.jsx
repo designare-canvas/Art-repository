@@ -96,6 +96,7 @@ export default function Profile() {
             <div className="profileInfo">
                 <h4 className="profileInfoName">{userData.username}</h4>
                 <span className="profileInfoDesc">{userData.description}</span>
+
                 
                 <Button className="btn" variant="outlined"><Link
                 href="/upload"
@@ -130,6 +131,7 @@ export default function Profile() {
           </div>
           <div id="two" className="mystyle">
             <ImageListShow posts={likedPosts} />
+
           </div>
           <div id="three" className="mystyle profileInfo">
           <span className="profileInfoDesc">
@@ -152,3 +154,4 @@ export default function Profile() {
     </>
   );
 }
+
