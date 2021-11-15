@@ -3,23 +3,13 @@ import Post from "./profilepost";
 import Grid from "@material-ui/core/Grid";
 
 function ImageListShow(props) {
-  const url = props.url;
-  const [data, getdata] = useState([]);
-  const fetchPost = async () => {
-    const response = await fetch(url);
-    const data = await response.json();
-    const shortdata = data.slice(1, 10 + 1); //for getting small amount of data
-    getdata(shortdata);
-  };
-  useEffect(() => {
-    fetchPost();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   
+  const data=props.data;
   console.log(data);
   return (
     <Grid container spacing={5} className="container1">
       {data.map((x) => {
-        return <Post title={x.title} imgurl={x.url} id={x.id} />;
+        return <Post data ={x} title={x.art.title} imgurl={x.image.imageUrl} id={x.art.id} username={x.art.username} />;
       })}
     </Grid>
   );
