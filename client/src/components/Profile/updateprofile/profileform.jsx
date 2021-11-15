@@ -27,15 +27,29 @@ export default function ProfileForm() {
     DOB: selectedDate.toISOString().split("T")[0],
     
   });
-  const handleImg=(event)=>{
-    setProfileImg({profileimg : URL.createObjectURL(event.target.files[0] )});
-    
-  }
 
-  useEffect(() => {
-    setValues({...values, "profileImgUrl": profileimg});
-    console.log(values);
-  }, [profileimg]);
+  //  onChange = (e) =>{
+  //   let file=e.target.files[0]
+  //   if(file){
+  //     const reader= new FileReader()
+  //     reader.onload= this._handleReaderLoaded.bind(this)
+  //     reader.readAsBinaryString(file)
+  //   }
+  //   // setProfileImg({profileimg : URL.createObjectURL(event.target.files[0] )});
+    
+  // }
+  //  _handleReaderLoaded = (readerEvt)=>{
+  //   let binaryString=readerEvt.target.result
+  //   this.setState({
+  //     base64String:btoa(binaryString)
+  //   })
+  // }
+ 
+
+  // useEffect(() => {
+  //   setValues({...values, "profileImgUrl": profileimg});
+  //   console.log(values);
+  // }, [profileimg]);
 
 
   const handleChange = (prop) => (event) => {
@@ -53,7 +67,7 @@ export default function ProfileForm() {
     // console.log(base64Image)
     setValues({
       ...values,
-      "profileImgUrl":profileimg.profileimg,
+      "profileImgUrl":this.state.base64String,
       DOB: selectedDate.toISOString().split("T")[0],
     });
     console.log(values);
@@ -161,7 +175,7 @@ Upload
 <input
 type="file"
 hidden
-onChange={handleImg}
+onChange={(e)=>this.onChange(e)}
 // onImageLoaded={handleImg}
 // onChange={handleChange("ProfileImg")}
 />

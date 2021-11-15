@@ -13,6 +13,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CategoryIcon from '@mui/icons-material/Category';
 import ApplyNow from "./applynow";
+import CreateUpdateBtn from "./update/createbutton";
 export default function Profile() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -23,7 +24,8 @@ export default function Profile() {
   const [likedPosts, setLikedPosts] = useState([]);
 
   const { username } = useParams();
-
+  console.log(username);
+  console.log(user.username);
   const handleChange = (event, newValue) => {
     var element1 = document.getElementById("one");
     var element2 = document.getElementById("two");
@@ -105,22 +107,7 @@ export default function Profile() {
             <div className="profileInfo">
               <h4 className="profileInfoName">{userData.username}</h4>
               <span className="profileInfoDesc">{userData.description}</span>
-
-
-              <Button className="btn" variant="outlined"><Link
-                href="/upload"
-                // style={{ color: "#22577A", marginLeft: "5px" }}
-                underline="none"
-              >
-                Create Post
-              </Link></Button>
-              <Button className="btn" variant="outlined"><Link
-                href="/updateProfile"
-                // style={{ color: "#22577A", marginLeft: "5px" }}
-                underline="none"
-              >
-                Update Profile
-              </Link></Button>
+              {username===user.username&&<CreateUpdateBtn/>}
             </div>
           </div>
           <div>
