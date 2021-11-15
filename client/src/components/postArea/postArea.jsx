@@ -1,12 +1,18 @@
-import React from "react";
+
+import React, { useContext } from "react";
 import "./postArea.scss";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import Button from "@mui/material/Button";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {Link } from "react-router-dom";
-
+import { AuthContext } from "../../Context/Authcontext";
 function PostArea(props) {
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  console.log(props);
   return (
     <div className="postArea">
       <div className="postHeader">
@@ -30,7 +36,46 @@ function PostArea(props) {
           </div>
         </div>
         <div>
-          <Button
+          {(user && user.username === props.authorName)? (
+            <>
+              <Link to={{
+                pathname: "/upload",
+                state: props
+              }}
+              style={{ textDecoration: "none" }}>
+              <Button
+              variant="contained"
+              style={{
+                color: "#000",
+                backgroundColor: "#f3f3f4",
+                border: "none",
+                marginRight: "20px",
+                zIndex:"0"
+              }}
+              size="small"
+              startIcon={<EditIcon />}
+            >
+              Edit
+                </Button>
+                </Link>
+              <Button
+              variant="contained"
+              style={{
+                color: "#000",
+                backgroundColor: "#f3f3f4",
+                border: "none",
+                marginRight: "20px",
+                zIndex:"0"
+              }}
+              size="small"
+              startIcon={<DeleteIcon />}
+            >
+              Delete
+            </Button>
+            </>
+          ) : ( 
+            <>
+            <Button
             variant="contained"
             style={{
               color: "#000",
@@ -44,6 +89,8 @@ function PostArea(props) {
           >
             Save
           </Button>
+          </>)}
+         
           <Button
             variant="contained"
             style={{
