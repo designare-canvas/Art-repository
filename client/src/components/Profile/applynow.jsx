@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext , useEffect} from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -8,6 +8,7 @@ import { AuthContext } from "../../Context/Authcontext";
 
 function ApplyNow() {
   const { user, isAdmin } = useContext(AuthContext);
+  const [btnDisable,setBtnDisable] = React.useState(false);
 
   const postRequest = async () => {
     console.log(user);
@@ -16,9 +17,27 @@ function ApplyNow() {
       {user:user},
       { withCredentials: true }
     );
-
     console.log(result);
+    if(result.data.success){
+      setBtnDisable(true)
+      alert("Applied successfully for being an artist!");
+    } 
   };
+
+  const checkApplyStatus = async () => {
+    const result = await axios.get("http://localhost:8080/api/admin/requests",{withCredentials:true});
+
+    if(result.data.success){
+      console.log(result.data);
+      result.data.data.map( e => {
+        if(e.req.username === user.username)  setBtnDisable(true);
+      })
+    } else  alert(result.data.message);
+  }
+
+  useEffect(() => {
+    checkApplyStatus();
+  },[])
 
   return (
     <div
@@ -38,6 +57,7 @@ function ApplyNow() {
           variant="contained"
           onClick={postRequest}
           style={{ marginBottom: "10px" }}
+          disabled={btnDisable}
         >
           Apply Now
         </Button>

@@ -25,7 +25,7 @@ function App() {
         <Route exact path="/WhatsNew" component={WhatsNew} />
         <Route exact path="/Profile/:username" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
-        <Route exact path="/upload"  >{user ? <Upload /> : <Redirect to="/Signin" />}</Route>
+        <Route exact path="/upload"  >{(user && user.isArtist === 1) ? <Upload /> : <Redirect to="/Signin" />}</Route>
         <Route exact path="/dashboard" >{isAdmin ? <Dashboardpage /> : <Redirect to="/Signin" />}</Route>
       </Switch>
       

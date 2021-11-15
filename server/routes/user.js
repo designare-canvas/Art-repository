@@ -25,7 +25,6 @@ router.get("/all", async (req, res) => {
 });
 
 router.put("/:username",async (req,res) => {
-
   if(req.body.user.username === req.params.username || req.body.isAdmin){
     const res1 = await query(
       "UPDATE users SET profileImgUrl = ?,coverImgUrl = ?,Fname = ?, Lname = ?, DOB = ?, country = ? WHERE username = ?",
@@ -45,10 +44,12 @@ router.put("/:username",async (req,res) => {
   }else{
     return res.json({success: false, message: "You can only Update your Account!"});
   }
-            
+
+  res.json({success:true, message:"Account updated successfuly!"});
 })
 
-router.delete("/:username", async (Req,res) => {
+router.delete("/:username", async (req,res) => {
+  console.log(req.body);
 
   if(req.body.user.username === req.params.username || req.body.isAdmin){
     const res1 = await query(
@@ -63,7 +64,7 @@ router.delete("/:username", async (Req,res) => {
   }else{
     return res.json({success: false, message: "You can only Delete your Account!"});
   }
-
+  res.json({success:true,message:"Account deleted successfully"});
 })
 
 module.exports = router;
