@@ -11,6 +11,7 @@ const auth = require("./routes/auth");
 const user = require("./routes/user");
 const posts = require("./routes/posts");
 const search = require("./routes/search");
+const admin = require("./routes/admin");
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
@@ -35,6 +36,7 @@ app.use("/api/auth",auth);
 app.use("/api/user",user);
 app.use("/api/posts",posts);
 app.use("/api/search",search);
+app.use("/api/admin",admin);
 
 
 app.listen(port, () => console.log(`Listening on port ${port}..`));

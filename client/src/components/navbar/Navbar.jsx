@@ -163,6 +163,7 @@ export default function ButtonAppBar() {
     const result = await axios.get("http://localhost:8080/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
     if(result.data.success){
       sessionStorage.removeItem("user");
+      sessionStorage.removeItem("isAdmin");
       window.location.reload();
     }
   };

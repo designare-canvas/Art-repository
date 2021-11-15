@@ -44,7 +44,7 @@ const users = `Create TABLE IF NOT EXISTS users(
     country VARCHAR(255),
     pincode INT(16),
     isArtist BOOLEAN NOT NULL DEFAULT 0,
-    admin_id VARCHAR(40),
+    admin_id VARCHAR(40) DEFAULT 'admin123',
     PRIMARY KEY (username),
     FOREIGN KEY (admin_id) REFERENCES admin(username)
 )`;
@@ -57,7 +57,7 @@ const arts = `Create TABLE IF NOT EXISTS arts(
     title VARCHAR(255),
     description TEXT,
     username VARCHAR(40) NOT NULL,
-    admin_id VARCHAR(40),
+    admin_id VARCHAR(40) DEFAULT 'admin123',
     PRIMARY KEY (id),
     FOREIGN KEY (admin_id) REFERENCES admin(username) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
@@ -97,6 +97,17 @@ const artImages = `Create TABLE IF NOT EXISTS artImages(
     FOREIGN KEY (postId) REFERENCES arts(id) ON DELETE CASCADE ON UPDATE CASCADE
 )`;
 
+const requests = `CREATE TABLE IF NOT EXISTS requests(
+  timestamp DATETIME NOT NULL,
+  username VARCHAR(40) NOT NULL,
+  admin_id VARCHAR(40) NOT NULL DEFAULT 'admin123',
+  current_status VARCHAR(40),
+  permission_asked VARCHAR(40),
+  PRIMARY KEY (username, admin_id),
+  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (admin_id) REFERENCES admin(username) ON DELETE CASCADE ON UPDATE CASCADE
+)`
+
 mysqlConnection.query(admin, (err, result) => {
   if (err) throw err;
   else console.log(" Admin Table created");
@@ -130,6 +141,11 @@ mysqlConnection.query(comments, (err, result) => {
 mysqlConnection.query(artImages, (err, result) => {
   if (err) throw err;
   else console.log(" Art Images Table created");
+});
+
+mysqlConnection.query(requests, (err, result) => {
+  if (err) throw err;
+  else console.log(" Requests Images Table created");
 });
 
 mysqlConnection.query("SELECT * FROM admin",(err,result) => {

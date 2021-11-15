@@ -21,7 +21,8 @@ router.post("/login", async (req, res) => {
           if (resultnew) {
             const { password, ...other } = result[0];
             req.session.user = other;
-            res.status(200).json({ success: true });
+            req.session.isAdmin = false;
+            res.status(200).json({ success: true, isAdmin:false });
           } else {
             res.json({
               success: false,
@@ -31,6 +32,29 @@ router.post("/login", async (req, res) => {
         });
       } else {
         res.json({ success: false, message: "User does not exist!" });
+      }
+    }
+  );
+});
+
+router.post("/adminLogin", async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  mysqlConnection.query(
+    "SELECT * FROM admin WHERE username = ? AND password = ?",
+    [username, password],
+    (err, result) => {
+      if (result.length) {
+        const { password, ...other } = result[0];
+        req.session.user = other;
+        req.session.isAdmin = true;
+        res.status(200).json({ success: true, isAdmin:true });
+      } else {
+        res.json({
+          success: false,
+          message: "Wrong password or username entered!",
+        });
       }
     }
   );
@@ -110,7 +134,7 @@ router.get("/logout", (req, res) => {
 
 router.get("/user", (req, res) => {
   if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
+    res.send({ loggedIn: true, user: req.session.user, isAdmin: req.session.isAdmin });
   } else {
     res.send({ loggedIn: false });
   }
