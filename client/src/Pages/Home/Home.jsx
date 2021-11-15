@@ -39,11 +39,7 @@ function Home() {
 
     console.log(result);
     if (result.data.success) {
-<<<<<<< HEAD
       setPosts(shuffle(result.data.data));
-=======
-      setPosts(shuffle(result.data.data).slice(0, 12));
->>>>>>> 465669c6c2d657cd9930a7273191c1dd19bbf6bf
     }
   };
   useEffect(() => {
