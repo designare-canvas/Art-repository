@@ -8,7 +8,7 @@ import Profilepage from "./Pages/Profile/profile"
 import UpdateProfilepage from "./Pages/updateprofile/updateprofile";
 import Upload from "./Pages/upload/Upload";
 import Dashboardpage from "./Pages/adminDashboard/AdminDashboard";
-import EditUserPost from "./components/dashboard/EditUserPost";
+// import EditUserPost from "./components/dashboard/EditUserPost";
 import { BrowserRouter as Router, Switch, Route , Redirect} from "react-router-dom";
 import { AuthContext } from "./Context/Authcontext";
 

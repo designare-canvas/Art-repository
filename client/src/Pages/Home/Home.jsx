@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Posts from "../../components/allPostsShow/ImageListShow";
 import Filter from "../../components/filter/filter";
@@ -7,11 +7,11 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import { Typography } from "@material-ui/core";
 import bannerimg from './wallpaperflare.com_wallpaper.jpg';
-import { AuthContext } from "../../Context/Authcontext";
+// import { AuthContext } from "../../Context/Authcontext";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -49,7 +49,7 @@ function Home() {
   return (
     <div className="home">
       <Navbar />
-      {!user && <Box
+      {<Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
