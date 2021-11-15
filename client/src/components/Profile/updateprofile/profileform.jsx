@@ -1,4 +1,4 @@
-import React,{useContext,useState} from "react";
+import React,{useContext,useState,useEffect} from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 
 import "./form.scss";
@@ -13,9 +13,11 @@ export default function ProfileForm() {
   const { user } = useContext(AuthContext);
   const [msg, setMsg] = React.useState("");
   const [selectedDate, setDate] = React.useState(new Date(user.DOB));
+  const [profileimg, setProfileImg] = useState(null);
+  const [Coverimg, setCoverImg] = useState(user.coverImgUrl);
   const [values, setValues] = React.useState({
-    profileImgUrl:null,
-    coverImgUrl:null,
+    profileImgUrl:user.profileImgUrl,
+    coverImgUrl:user.coverImgUrl,
     user:user,
     Fname: user.Fname,
     Lname: user.Lname,
@@ -25,6 +27,16 @@ export default function ProfileForm() {
     DOB: selectedDate.toISOString().split("T")[0],
     
   });
+  const handleImg=(event)=>{
+    setProfileImg({profileimg : URL.createObjectURL(event.target.files[0] )});
+    
+  }
+
+  useEffect(() => {
+    setValues({...values, "profileImgUrl": profileimg});
+    console.log(values);
+  }, [profileimg]);
+
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -37,11 +49,14 @@ export default function ProfileForm() {
         console.log(`${key} is empty`);
       }
     });
-    console.log(values);
+    // const base64Image = profileimg.toDataURL("image/jpeg");
+    // console.log(base64Image)
     setValues({
       ...values,
+      "profileImgUrl":profileimg.profileimg,
       DOB: selectedDate.toISOString().split("T")[0],
     });
+    console.log(values);
     const result = await axios
       .put(`http://localhost:8080/api/user/${user.username}`, values)
       .catch((err) => console.log(err));
@@ -146,7 +161,9 @@ Upload
 <input
 type="file"
 hidden
-onChange={handleChange("ProfileImg")}
+onChange={handleImg}
+// onImageLoaded={handleImg}
+// onChange={handleChange("ProfileImg")}
 />
 </Button>
 <Button variant="contained" className="btn"
@@ -191,6 +208,7 @@ Upload
 <input
 type="file"
 hidden
+onImageLoaded={setCoverImg}
 />
 </Button>
 <Button variant="contained" className="btn"
