@@ -16,6 +16,7 @@ export default function Profile() {
   const { user } = useContext(AuthContext);
   const [value, setValue] = React.useState("one");
   const [userData, setUserData] = useState(null);
+  const [likedPosts,setLikedPosts] = useState([]);
 
   const { username } = useParams();
 
@@ -37,24 +38,6 @@ export default function Profile() {
     setValue(newValue);
   };
 
-  const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:8080/api/posts/user/"+username, {
-      params: user,
-      withCredentials: true,
-    });
-    console.log(result);
-
-    if (result.data.success) {
-      setPosts((result.data.data));
-    }
-  };
-  const fetchUser = async () => {
-    const result = await axios.get("http://localhost:8080/api/user/"+username,{
-      withCredentials:true
-    });
-    console.log(result);
-    setUserData(result.data.data);
-  }
   const fetchData = async() => {
     const result = await axios.get("http://localhost:8080/api/posts/user/"+username, {
       params: user,
@@ -63,14 +46,23 @@ export default function Profile() {
     console.log(result);
 
     if (result.data.success) {
-      setPosts((result.data.data));
+      setPosts(result.data.data);
     }
-    const result2 = await axios.get("http://localhost:8080/api/user/"+username,{
-      withCredentials:true
+    const result2 = await axios.get("http://localhost:8080/api/posts/liked/"+username, {
+      params: user,
+      withCredentials: true,
     });
     console.log(result2);
     if(result2.data.success){
-      setUserData(result2.data.data);
+      setLikedPosts(result2.data.data)
+    }
+
+    const result3 = await axios.get("http://localhost:8080/api/user/"+username,{
+      withCredentials:true
+    });
+    console.log(result3);
+    if(result3.data.success){
+      setUserData(result3.data.data);
       console.log(userData);
     }
 
@@ -78,9 +70,7 @@ export default function Profile() {
   }
   useEffect(() => {
     fetchData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const myPostUrl = "https://jsonplaceholder.typicode.com/photos"; //change with url giving the post person created
-  const myLikedPostUrl = "https://jsonplaceholder.typicode.com/photos"; //change with url liked post
+  }, []);
 
   return (
     <>
@@ -134,7 +124,7 @@ export default function Profile() {
             <ImageListShow posts={posts} />
           </div>
           <div id="two" className="mystyle">
-            <ImageListShow posts={posts} />
+            <ImageListShow posts={likedPosts} />
           </div>
           <div id="three" className="mystyle profileInfo">
             <span className="profileInfoDesc">

@@ -74,7 +74,7 @@ const likes = `Create TABLE IF NOT EXISTS likes(
     timestamp DATETIME NOT NULL,
     username VARCHAR(40),
     postId int,
-    PRIMARY KEY (timestamp, username, postId),
+    PRIMARY KEY (username, postId),
     FOREIGN KEY (postId) REFERENCES arts(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 )`;

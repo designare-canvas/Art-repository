@@ -1,17 +1,22 @@
-import React from "react";
+import React,{useState, useContext} from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import { blue, red } from "@material-ui/core/colors";
 import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { Typography } from "@material-ui/core";
+import {Link} from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../Context/Authcontext";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,9 +51,31 @@ function Post(props) {
   var title = props.title.substr(0, 20);
   title += "...";
 
+  const { user } = useContext(AuthContext);
+  const [likes,setLikes] = useState(props.likes);
+  let history = useHistory();
+
+  const handleLikeChange= async(e) => {
+
+    if(user){
+      if(e.target.checked){
+        const result = await axios.post("http://localhost:8080/api/posts/like",{username:user.username,postId:props.id});
+        console.log(result);
+        setLikes((prev) => prev+1)
+      }else{
+        const result = await axios.delete("http://localhost:8080/api/posts/like",{data:{id:props.id, username:user.username}});
+        console.log(result);
+        setLikes((prev) => prev-1)
+      }
+    }else{
+      history.push("/Signin")
+    }
+  }
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
+      <Link to={`/Post/${props.id}`} style={{ textDecoration: "none" }}>
       <div to="/Post" style={{ textDecoration: "none" }}>
         <div className="container">
           <img
@@ -65,13 +92,6 @@ function Post(props) {
                 {title}
               </span>
               <ButtonGroup className="left" size="medium">
-                <div></div>
-                <IconButton
-                  aria-label="add to favorites"
-                  style={{ backgroundColor: "transparent" }}
-                >
-                  <FavoriteIcon fontSize="middle" className="favicon" />
-                </IconButton>
                 <IconButton
                   aria-label="share"
                   style={{ backgroundColor: "transparent" }}
@@ -85,6 +105,7 @@ function Post(props) {
           </div>
           </div>
         </div>
+        </Link>
 
         <CardActions className={classes.left}>
           <Typography
@@ -94,13 +115,12 @@ function Post(props) {
           >
             {props.artist}
           </Typography>
-          <ButtonGroup size="small">
-            <IconButton
+          <ButtonGroup size="small"><IconButton
               aria-label="add to favorites"
               style={{ backgroundColor: "transparent" }}
             >
-              <FavoriteIcon fontSize="small" className="favicon" />
-              {props.likes}
+          <Checkbox className="favicon" onChange={handleLikeChange} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+              {likes} 
             </IconButton>
             <IconButton
               aria-label="share"

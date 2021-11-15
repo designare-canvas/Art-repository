@@ -28,7 +28,6 @@ function Post() {
     }
   };
   useEffect(() => {
-    console.log("hello");
     fetchPosts();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -45,6 +44,7 @@ function Post() {
       <Navbar />
       <div className="Post-page">
         <PostArea
+        id={posts.art.id}
           imgUrl={posts.artistImg}
           postTitle={posts.art.title}
           authorName={posts.art.username}
