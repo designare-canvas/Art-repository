@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Post(props) {
   const classes = useStyles();
-  var title = props.title.substr(0, 7);
+  var title = props.title;
   title += "...";
   console.log(title);
 
@@ -53,7 +53,7 @@ function Post(props) {
         <div className="container">
           <img
             className="image"
-            src="https://cdn.dribbble.com/users/1150809/screenshots/16485499/media/02e55b3a0d537c1335c05400518d5e45.jpg"
+            src={props.imgurl}
             alt="post_img"
           />
           <div className="middle">
@@ -88,7 +88,8 @@ function Post(props) {
 
         <CardActions className={classes.left}>
           <Avatar color="primary" className={classes.small}>
-            {props.title[0]}
+            {/* {props.title[0]} */}
+            A
           </Avatar>
           <Button
             size="small"
@@ -96,7 +97,7 @@ function Post(props) {
             fontSize="small"
             style={{ marginRight: "auto" }}
           >
-            Username
+            {props.username}
           </Button>
           <ButtonGroup size="small">
             <IconButton
@@ -104,7 +105,7 @@ function Post(props) {
               style={{ backgroundColor: "transparent" }}
             >
               <FavoriteIcon fontSize="small" className="favicon" />
-              {20}
+              {props.data.likes}
             </IconButton>
             <IconButton
               aria-label="share"

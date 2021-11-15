@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Ubuntu+Mono&display=swap");
 
 .profileform {
+  text-align: center !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow-x: hidden;
@@ -81,13 +82,15 @@
     }
   }
   .profileCover{
+    margin:auto;
     height: 320px;
     position: relative;
 }
 
 .profileCoverImg{
     /* background-color: blue; */
-    width: 100%;
+
+    width: 50%;
     height: 250px;
     object-fit: cover;
 }
