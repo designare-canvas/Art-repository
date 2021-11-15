@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useContext, } from "react";
+import React, { useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import { Button,TextField } from "@material-ui/core";
 import Comment from "../../components/comment/comment.jsx";
 import { IconButton } from "@material-ui/core";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { AuthContext } from "../../Context/Authcontext";
+// import { AuthContext } from "../../Context/Authcontext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import './sidebar.scss';
 
 function Sidebar(props) {
   const [comment, setComment] = useState(null);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   let history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
