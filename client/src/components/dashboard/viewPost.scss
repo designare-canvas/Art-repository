@@ -1,0 +1,37 @@
+.viewpostContainer{
+   margin: 3%;
+.postHeader{
+    display: flex;
+    justify-content: space-between;
+    padding:0 8vw;
+
+    .profileImg{
+        height: 48px;
+        margin-right: 10px;
+    }
+
+    .leftItems{
+        display: flex;
+    }
+
+     h2{
+        // margin:0 10px;
+        font-size:16px;
+    }
+}
+.upperhead{
+    font-size: 30px;
+    color: #014988;
+}
+.postbody{
+    margin-top: 2vw;
+    padding:0 8vw;
+    .postImg{
+        // text-align: center;
+        margin:5vh 0;
+    }
+    .btnstack{
+        margin:5vh 0;
+    }
+}
+}

@@ -131,3 +131,15 @@ mysqlConnection.query(artImages, (err, result) => {
   if (err) throw err;
   else console.log(" Art Images Table created");
 });
+
+mysqlConnection.query("SELECT * FROM admin",(err,result) => {
+  if(result.length === 0){
+    mysqlConnection.query(
+      "INSERT INTO admin (`username`,`email`,`Fname`,`Lname`,`password`) VALUES (?,?,?,?,?)",["admin123","admin@mail.com","new","admin","pass2566"],
+      (err, result) => {
+        if (err)  console.log(err);
+        else console.log("admin inserted");
+      }
+    );
+    }
+});

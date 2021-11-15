@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Post(props) {
   const classes = useStyles();
-  var title = props.title.substr(0, 20);
+  var title = props.title;
   title += "...";
 
   const { user } = useContext(AuthContext);
