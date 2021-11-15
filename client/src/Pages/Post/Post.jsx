@@ -45,7 +45,7 @@ function Post() {
       <div className="Post-page">
         <PostArea
         id={posts.art.id}
-          imgUrl={posts.artistImg}
+          imgUrl={posts.artistImg.profileImgUrl}
           postTitle={posts.art.title}
           authorName={posts.art.username}
           postImgUrl={posts.image.imageUrl}
@@ -57,7 +57,7 @@ function Post() {
           <KeyboardArrowLeftIcon />
         </Divider>
         <div>
-          <Sidebar comment={posts.comments} />
+          <Sidebar artistImg={posts.artistImg} comment={posts.comments} fetchPosts={fetchPosts} />
         </div>
       </div>
       <Footer />

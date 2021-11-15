@@ -36,7 +36,7 @@ export default function Login() {
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: response.data.user,
-        adminState: false,
+        adminState: response.data.isAdmin,
       });
     }
   };
@@ -67,24 +67,45 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await axios
-      .post("http://localhost:8080/api/auth/login", values, {
-        withCredentials: true,
-      })
-      .catch((err) => console.log(err));
-
-    if (result) {
-      if (result.data.success) window.location.reload();
-      else {
-        setMsg(result.data.message);
-        setShake(true);
-        setTimeout(() => {
-          setShake(false);
-        }, 1000);
-        console.log(shake);
+    if(values.isAdmin){
+      const result = await axios
+      .post("http://localhost:8080/api/auth/adminlogin", values, {
+          withCredentials: true,
+        })
+        .catch((err) => console.log(err));
+  
+      if (result) {
+        if (result.data.success) window.location.reload();
+        else {
+          setMsg(result.data.message);
+          setShake(true);
+          setTimeout(() => {
+            setShake(false);
+          }, 1000);
+          console.log(shake);
+        }
       }
+      console.log(result);
+    }else{
+      const result = await axios
+      .post("http://localhost:8080/api/auth/login", values, {
+          withCredentials: true,
+        })
+        .catch((err) => console.log(err));
+  
+      if (result) {
+        if (result.data.success) window.location.reload();
+        else {
+          setMsg(result.data.message);
+          setShake(true);
+          setTimeout(() => {
+            setShake(false);
+          }, 1000);
+          console.log(shake);
+        }
+      }
+      console.log(result);
     }
-    console.log(result);
   };
 
   return (

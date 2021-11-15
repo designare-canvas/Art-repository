@@ -65,12 +65,13 @@ router.post("/like", async (req, res) => {
 router.post("/comment", async (req, res) => {
   const now = new Date().toISOString().slice(0, 19).replace("T", " ");
   const result = await query(
-    "INSERT INTO comments (`timestamp`,`username`,commentData`,`postId`) VALUES (?,?,?,?)",
-    [now, req.body.username, req.body.commentData, req.body.postId]
+    "INSERT INTO comments (`timestamp`,`username`,`commentData`,`postId`) VALUES (?,?,?,?)",
+    [now, req.body.user.username, req.body.comment, req.body.postId]
   ).catch((Err) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
+  res.json({success:true, message:"Comment added successfully!"});
 });
 
 router.get("/all", async (req, res) => {
@@ -164,11 +165,22 @@ router.get("/post/:id", async (req, res) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
+  const comments =[];
+
+  await Promise.all(
+    res3.map(async (rowData) => {
+      const res6 = await query("SELECT profileImgUrl FROM users WHERE username = ?",[rowData.username]).catch((Err) => {
+        const { sqlMessage, ...other } = Err;
+        return res.json({ success: false, message: sqlMessage });
+      });
+      comments.push({commentData:rowData,commenterImg:res6[0]});
+    })
+  )
 
   const result = {
     art: res1[0],
     likes: res2[0]["COUNT(*)"],
-    comments: res3,
+    comments: comments,
     image: res4[0],
     artistImg: res5[0],
   };
