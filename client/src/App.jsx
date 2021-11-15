@@ -7,6 +7,8 @@ import WhatsNew from "../src/components/WhatsNew/WhatsNew.jsx";
 import Profilepage from "./Pages/Profile/profile"
 import UpdateProfilepage from "./Pages/updateprofile/updateprofile";
 import Upload from "./Pages/upload/Upload";
+import Dashboardpage from "./Pages/adminDashboard/AdminDashboard";
+import EditUserPost from "./components/dashboard/EditUserPost";
 import { BrowserRouter as Router, Switch, Route , Redirect} from "react-router-dom";
 import { AuthContext } from "./Context/Authcontext";
 
@@ -24,6 +26,7 @@ function App() {
         <Route exact path="/Profile" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
         <Route exact path="/upload"  >{user ? <Upload /> : <Redirect to="/Signin" />}</Route>
+        <Route exact path="/dashboard" component={Dashboardpage}/>
       </Switch>
       
     </Router>
