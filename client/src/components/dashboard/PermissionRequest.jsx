@@ -13,29 +13,23 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from '@mui/material/Button';
-
-function createData(name, calories, fat, carbs, protein, price,x) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,x,
-    history: [
-      {
-        Fname:"Akash",
-        Lname:"Singh",
-        country:"India",
-        dob: "2020-01-05",
-      }
-    ]
-  };
-}
+import axios from "axios";
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+
+  const handleReqChange = (prop) => async() => {
+    console.log(prop);
+      const result = await axios.post("http://localhost:8080/api/admin/changeReq",{type:prop.type, user:prop.user});
+      console.log(result);
+
+      if(result.data.success){
+        setTimeout(() => {
+          props.fetchData();
+        }, 600);
+      }
+  } 
 
   return (
     <React.Fragment>
@@ -50,13 +44,13 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.req.username}
         </TableCell>
-        <TableCell align="center">{row.calories}</TableCell>
-        <TableCell align="center">{row.fat}</TableCell>
-        <TableCell align="center">{row.carbs}</TableCell>
-        <TableCell align="center"><Button variant="contained">Accept</Button></TableCell>
-        <TableCell align="center"><Button variant="contained" style={{backgroundColor: "#d9534f"}}>Decline</Button></TableCell>
+        <TableCell align="center">{row.user[0].timestamp.split('T')[0]}</TableCell>
+        <TableCell align="center">{row.req.current_status}</TableCell>
+        <TableCell align="center">{row.req.permission_asked}</TableCell>
+        <TableCell align="center"><Button variant="contained" onClick={handleReqChange({type:"accept",user:row.user[0]})} >Accept</Button></TableCell>
+        <TableCell align="center"><Button variant="contained" onClick={handleReqChange({type:"decline",user:row.user[0]})} style={{backgroundColor: "#d9534f"}}>Decline</Button></TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -70,14 +64,13 @@ function Row(props) {
                   <TableRow>
                     <TableCell align="center" style={{fontSize:"16px",color:"#014988"}}>First Name</TableCell>
                     <TableCell align="center" style={{fontSize:"16px",color:"#014988"}}>Last Name</TableCell>
-                    {/* <TableCell>Discription</TableCell> */}
                     <TableCell align="center" style={{fontSize:"16px",color:"#014988"}}>Country of Origin</TableCell>
                     <TableCell align="center" style={{fontSize:"16px",color:"#014988"}}>Date of Birth</TableCell>
                     
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
+                  {row.user.map((historyRow) => (
                     <TableRow key={historyRow.date}>
                       
                       <TableCell align="center">
@@ -86,7 +79,7 @@ function Row(props) {
                       <TableCell align="center">{historyRow.Lname}</TableCell>
                       <TableCell align="center">{historyRow.country}</TableCell>
                       <TableCell align="center">
-                        {historyRow.dob}
+                        {historyRow.DOB.split('T')[0]}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -100,15 +93,7 @@ function Row(props) {
   );
 }
 
-const rows = [
-  createData("Frozen yoghurt", "ghghghjgjhghghjgjhkjkhk", 6.0, 24, 4.0, 3.99,0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99,0),
-  createData("Eclair", 262, 16.0, 24, 6.0, 3.79,0),
-  createData("Cupcake", 305, 3.7, 67, 4.3, 2.5,0),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5,0)
-];
-
-export default function PermissionRequest() {
+export default function PermissionRequest(props) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -124,8 +109,8 @@ export default function PermissionRequest() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {props.requests.map((row) => (
+            <Row key={row.name} fetchData={props.fetchData} row={row} />
           ))}
         </TableBody>
       </Table>

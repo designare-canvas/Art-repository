@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import { Button,TextField } from "@material-ui/core";
 import Comment from "../../components/comment/comment.jsx";
 import { IconButton } from "@material-ui/core";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-// import { AuthContext } from "../../Context/Authcontext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import './sidebar.scss';
+import { useParams } from 'react-router-dom';
+import { AuthContext } from "../../Context/Authcontext";
 
 function Sidebar(props) {
+  console.log(props);
   const [comment, setComment] = useState(null);
-  // const { user } = useContext(AuthContext);
+  const { user, isAdmin } = useContext(AuthContext);
+  const { id } = useParams();
   let history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!comment){
@@ -22,16 +26,16 @@ function Sidebar(props) {
     }
     console.log(comment);
     const res = await axios
-      .post("http://localhost:8080/api/posts/art", comment, {
+      .post("http://localhost:8080/api/posts/comment",{user:user,comment:comment, postId:id}, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
     
       if(res){
-        if(res.data.success)  history.push("/");
+        console.log(res);
+        if(res.data.success)  props.fetchPosts();
         else  alert(res.data.message);
       }
-    console.log(res);
   };
   return (
     <div>
@@ -41,7 +45,7 @@ function Sidebar(props) {
             <IconButton aria-label="share">
               <ShareIcon />
             </IconButton>
-            <IconButton aria-label="favorite">
+            <IconButton aria-label="favorite" disabled = {isAdmin}>
               <FavoriteIcon />
             </IconButton>
           </div>
@@ -63,14 +67,14 @@ function Sidebar(props) {
         {props.comment.map((data) => {
           return (
             <Comment
-              imgUrl={data.url}
-              name={data.name}
-              comment={data.comment}
+              imgUrl={data.commenterImg.profileImgUrl}
+              name={data.commentData.username}
+              comment={data.commentData.commentData}
             />
           );
         })}
         <form onSubmit={handleSubmit} style={{width:"100%"}}>
-        <TextField
+        {(user && !isAdmin) && <> <TextField
           fullWidth
           variant="outlined"
           label="Write a  Comment"
@@ -82,7 +86,7 @@ function Sidebar(props) {
             type="submit"
             variant="outlined" >
             Comment
-          </Button>
+          </Button></>}
         </form>
       </div>
     </div>

@@ -13,23 +13,20 @@ import { BrowserRouter as Router, Switch, Route , Redirect} from "react-router-d
 import { AuthContext } from "./Context/Authcontext";
 
 function App() {
-  const { user } = useContext(AuthContext);
-  // let loggedin = user.isArtist === 1 ? true : false
+  const { user, isAdmin } = useContext(AuthContext);
   return (
     
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" >{!isAdmin?<Home />:<Dashboardpage/> }</Route>
         <Route exact path="/Signin"  >{user ? <Redirect to="/" /> : <Login />}</Route>
         <Route exact path="/Signup" >{user ? <Redirect to="/" /> : <Register />}</Route>
         <Route exact path="/Post/:id" component={Post} />
         <Route exact path="/WhatsNew" component={WhatsNew} />
         <Route exact path="/Profile/:username" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
-        <Route exact path="/upload"  >{user ? <Upload /> : <Redirect to="/Signin" />}</Route>
-        <Route exact path="/dashboard" component={Dashboardpage}/>
-        {/* <Route exact path="/dashboard" >{isAdmin ? <Dashboardpage /> : <Redirect to="/Signin" />}</Route> */}
-
+        <Route exact path="/upload"  >{(user && user.isArtist === 1) ? <Upload /> : <Redirect to="/Signin" />}</Route>
+        <Route exact path="/dashboard" >{isAdmin ? <Dashboardpage /> : <Redirect to="/Signin" />}</Route>
       </Switch>
       
     </Router>

@@ -37,6 +37,7 @@ import Tab from "@material-ui/core/Tab";
 import Drawer from "@material-ui/core/Drawer";
 import { AuthContext } from "../../Context/Authcontext";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -143,8 +144,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
-  const { user } = useContext(AuthContext);
 
+  const { user } = useContext(AuthContext);
   const classes = useStyles();
   const [value, setValue] = React.useState();
   const theme = useTheme();
@@ -153,6 +154,7 @@ export default function ButtonAppBar() {
     setValue(newValue);
   };
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  let history = useHistory();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -163,7 +165,9 @@ export default function ButtonAppBar() {
     const result = await axios.get("http://localhost:8080/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
     if(result.data.success){
       sessionStorage.removeItem("user");
-      window.location.reload();
+      sessionStorage.removeItem("isAdmin");
+      history.push("/");
+      window.location.reload(); 
     }
   };
   const drawerWidth = "50%";

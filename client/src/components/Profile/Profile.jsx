@@ -14,18 +14,17 @@ import CardContent from '@mui/material/CardContent';
 import CategoryIcon from '@mui/icons-material/Category';
 import ApplyNow from "./applynow";
 import CreateUpdateBtn from "./update/createbutton";
+
 export default function Profile() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
   const { user } = useContext(AuthContext);
   const [value, setValue] = React.useState("one");
   const [userData, setUserData] = useState(null);
   const [likedPosts, setLikedPosts] = useState([]);
-
   const { username } = useParams();
-  console.log(username);
-  console.log(user.username);
+  const {profileImgUrl, coverImgUrl, ...other} = user;
+
   const handleChange = (event, newValue) => {
     var element1 = document.getElementById("one");
     var element2 = document.getElementById("two");
@@ -52,7 +51,7 @@ export default function Profile() {
 
   const fetchData = async () => {
     const result = await axios.get("http://localhost:8080/api/posts/user/" + username, {
-      params: user,
+      params: other,
       withCredentials: true,
     });
     console.log(result);
@@ -61,7 +60,7 @@ export default function Profile() {
       setPosts(result.data.data);
     }
     const result2 = await axios.get("http://localhost:8080/api/posts/liked/" + username, {
-      params: user,
+      params: other,
       withCredentials: true,
     });
     console.log(result2);
@@ -94,12 +93,12 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={user.coverImgUrl}
+                src={userData.coverImgUrl}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profileImgUrl}
+                src={userData.profileImgUrl}
                 alt=""
               />
             </div>
@@ -123,8 +122,8 @@ export default function Profile() {
             </Tabs>
           </div>
           <div id="one">
-          {!user.isArtist && <ApplyNow />}
-          {user.isArtist && <ImageListShow posts={posts} />}
+          {(userData.username === user.username && !userData.isArtist) && <ApplyNow />}
+          {userData.isArtist && <ImageListShow posts={posts} />}
             
           </div>
           <div id="two" className="mystyle">
@@ -134,15 +133,15 @@ export default function Profile() {
           <div id="three" className="mystyle profileInfo">
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Name</Button>
-              <Button className="btn" variant="text" disabled>{user.Fname} {user.Lname}</Button>
+              <Button className="btn" variant="text" disabled>{userData.Fname} {userData.Lname}</Button>
             </span>
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Country of Origin</Button>
-              <Button className="btn" variant="text" disabled>{user.country}</Button>
+              <Button className="btn" variant="text" disabled>{userData.country}</Button>
             </span>
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Date of Birth</Button>
-              <Button className="btn" variant="text" disabled>{user.DOB}</Button>
+              <Button className="btn" variant="text" disabled>{userData.DOB}</Button>
             </span>
           </div>
           <div className="profileRightBottom">

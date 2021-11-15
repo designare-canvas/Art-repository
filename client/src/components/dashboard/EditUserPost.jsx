@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from '@mui/material/Button';
+import {Link} from "react-router-dom";
 
 function createData(name, calories, fat, carbs, protein, price,x) {
   return {
@@ -50,11 +51,11 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.user.username}
         </TableCell>
-        <TableCell align="center">{row.calories}</TableCell>
-        <TableCell align="center">{row.fat}</TableCell>
-        <TableCell align="center">{row.carbs}</TableCell>
+        <TableCell align="center">{row.posts.length}</TableCell>
+        <TableCell align="center">{row.user.timestamp.split('T')[0]}</TableCell>
+        <TableCell align="center">{row.country}</TableCell>
         
         {/* <TableCell align="center"><Button variant="contained">Decline</Button></TableCell> */}
       </TableRow>
@@ -78,14 +79,14 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                  {row.posts.map((historyRow) => (
+                    <TableRow key={historyRow.id}>
                       
                       <TableCell align="center">
-                        {historyRow.Fname}
+                        {historyRow.title}
                       </TableCell>
-                      <TableCell align="center">{historyRow.Lname}</TableCell>
-                      <TableCell align="center"><Button variant="contained">View Post</Button></TableCell>
+                      <TableCell align="center">{historyRow.description}</TableCell>
+                      <TableCell align="center"><Link to={`/Post/${historyRow.id}`}> <Button variant="contained">View Post</Button></Link></TableCell>
                      
                     </TableRow>
                   ))}
@@ -107,7 +108,8 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5,0)
 ];
 
-export default function EditUserPost() {
+export default function EditUserPost(props) {
+  console.log(props.users);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -118,12 +120,10 @@ export default function EditUserPost() {
             <TableCell align="center" style={{fontSize:"18px",color:"#014988"}}>No.&nbsp;of&nbsp;Post</TableCell>
             <TableCell align="center" style={{fontSize:"18px",color:"#014988"}}>User&nbsp;Since</TableCell>
             <TableCell align="center" style={{fontSize:"18px",color:"#014988"}}>Country&nbsp;of&nbsp;Origin</TableCell>
-            {/* <TableCell align="center">Grant</TableCell>
-            <TableCell align="center">Decline</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.users.map((row) => (
             <Row key={row.name} row={row} />
           ))}
         </TableBody>

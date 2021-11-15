@@ -38,7 +38,7 @@ function PostArea(props) {
           </div>
         </div>
         <div>
-          {(user && user.username === props.authorName)? (
+          {((user && user.username === props.authorName) || isAdmin)? (
             <>
               <Link to={{
                 pathname: "/upload",
@@ -90,6 +90,7 @@ function PostArea(props) {
             }}
             size="small"
             startIcon={<FavoriteIcon />}
+            disabled = {isAdmin}
           >
             Like
           </Button>
