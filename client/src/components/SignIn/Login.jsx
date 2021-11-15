@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import "./Login.scss";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,15 +11,14 @@ import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import { AuthContext } from "../../Context/Authcontext";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
 import axios from "axios";
-// import Navbar from "../navbar/Navbar";
+
 export default function Login() {
   const [values, setValues] = useState({
     username: "",
     password: "",
     showPassword: false,
-    isAdmin: 0
+    isAdmin: false,
   });
   const [shake, setShake] = useState(false);
   const [msg, setMsg] = useState(null);
@@ -34,7 +33,11 @@ export default function Login() {
 
     if (response && response.data.loggedIn) {
       console.log("User:", response.data.user);
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user ,adminState: false});
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: response.data.user,
+        adminState: false,
+      });
     }
   };
 
@@ -44,12 +47,11 @@ export default function Login() {
 
   const handleChange = (prop) => (event) => {
     if (prop === "isAdmin") {
-      setValues({ ...values, [prop]:(event.target.checked) ? 1 : 0});
+      setValues({ ...values, [prop]: event.target.checked });
       return;
     }
     setValues({ ...values, [prop]: event.target.value });
   };
-  console.log(values);
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -60,7 +62,6 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  // import Navbar from "../navbar/Navbar";
 
   axios.defaults.withCredentials = true;
 
@@ -153,51 +154,8 @@ export default function Login() {
               >
                 Sign in to Designare
               </Typography>
-              {/* <div style={{ marginTop: "5%" }}>
-                <a href="/auth/google">
-                  <Button
-                    style={{
-                      display: "inline-block",
-                      cursor: "pointer",
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                      backgroundColor: "none",
-                      border: "none",
-                      marginRight: "5px",
-                    }}
-                    variant="outlined"
-                  >
-                    <img
-                      src={google}
-                      style={{ fontSize: "35px", paddingTop: 10 }}
-                      alt="google"
-                    ></img>
-                  </Button>
-                </a>
-                <a href="/auth/facebook">
-                  <Button
-                    style={{
-                      display: "inline-block",
-                      cursor: "pointer",
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                      backgroundColor: "none",
-                      border: "none",
-                    }}
-                    variant="outlined"
-                  >
-                    <img
-                      src={facebook}
-                      style={{ fontSize: "35px", paddingTop: 10 }}
-                      alt="facebook"
-                    ></img>
-                  </Button>
-                </a>
-              </div> */}
+             
             </Grid>
-            {/* <hr className="divider" style={{ width: "100%" }}></hr> */}
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
@@ -237,12 +195,22 @@ export default function Login() {
                 />
               </FormControl>
               <div style={{ height: "20px" }}></div>
-              {/* <TextField label="Username" margin="normal" onChange = {handleChange("username")} />
-            <TextField label="Password" margin="normal" onChange = {handleChange("password")}/> */}
-              <div><Checkbox onChange={handleChange("isAdmin")} style={{textAlign:"center"}} />
-              <label style = {{fontFamily:"Rajdhani",fontSize: "1rem",
+              <div>
+                <Checkbox
+                  onChange={handleChange("isAdmin")}
+                  style={{ textAlign: "center" }}
+                />
+                <label
+                  style={{
+                    fontFamily: "Rajdhani",
+                    fontSize: "1rem",
                     fontWeight: "550",
-                    color: "#22577A"}}>Signin as Admin</label></div>
+                    color: "#22577A",
+                  }}
+                >
+                  Signin as Admin
+                </label>
+              </div>
               <div style={{ height: "20px" }}></div>
               <Button
                 style={{

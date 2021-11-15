@@ -21,22 +21,25 @@ export default function Filter(props) {
     });
 
     if (result.data.success) {
-      props.setPosts(props.shuffle(result.data.data).slice(1, 12 + 1));
+      props.setPosts(props.shuffle(result.data.data).slice(0, 12));
     }
   };
 
   const handleSearchChange = async (event) => {
-
     const result = await axios
-      .post("http://localhost:8080/api/search/tags",{tags:event.target.value}, {
-        withCredentials: true,
-      })
+      .post(
+        "http://localhost:8080/api/search/tags",
+        { tags: event.target.value },
+        {
+          withCredentials: true,
+        }
+      )
       .catch((err) => console.log(err));
 
-      if(result.data.success){
-        props.setPosts(result.data.data);
-      }
-    
+    if (result.data.success) {
+      props.setPosts(result.data.data);
+    }
+
     console.log(result.data.data);
   };
 
@@ -54,14 +57,6 @@ export default function Filter(props) {
   return (
     <Grid container spacing={2} className="indent">
       <Grid item xs={12} sm={12} className="filter">
-        {/* <Box
-          component="form"
-          sx={{
-            '& > :not(style)': { m: 2, width: '100%' },
-          }}
-          noValidate
-          autoComplete="off"
-        > */}
         <TextField
           id="outlined-basic"
           style={{ width: "100%" }}
@@ -74,12 +69,6 @@ export default function Filter(props) {
         {/* </Box> */}
       </Grid>
       <Grid item xs={12} sm={12}>
-        {/* <Box
-          sx={{
-            '& > :not(style)': { width: '70%', m: 2 },
-          }}
-          style={{padding:"8px"}}
-        >  */}
         {isMobile ? (
           <>
             <Stack direction="row" style={{ justifyContent: "space-between" }}>
@@ -107,11 +96,6 @@ export default function Filter(props) {
                   <MenuItem value={30}>Newest</MenuItem>
                 </Select>
               </FormControl>
-
-              {/* <Button variant="outlined">Newest</Button>
-            <Button variant="outlined">Trending</Button> */}
-              {/* <Button variant="text"></Button> */}
-
               <FormControl sm={6} sx={{ minWidth: 140 }}>
                 <InputLabel id="demo-simple-select-helper-label" size="small">
                   Filter
@@ -139,7 +123,9 @@ export default function Filter(props) {
               className="middlebuttons"
               style={{ margin: "auto", textAlign: "center" }}
             >
-              <Button variant="text" onClick={fetchAllPosts}>All</Button>
+              <Button variant="text" onClick={fetchAllPosts}>
+                All
+              </Button>
               <Button variant="text">Canvas</Button>
               <Button variant="text">Graphic</Button>
               <Button variant="text">Animation</Button>
@@ -171,12 +157,10 @@ export default function Filter(props) {
                 <MenuItem value={30}>Newest</MenuItem>
               </Select>
             </FormControl>
-
-            {/* <Button variant="outlined">Newest</Button>
-            <Button variant="outlined">Trending</Button> */}
-            {/* <Button variant="text"></Button> */}
             <div>
-              <Button variant="text" onClick={fetchAllPosts}>All</Button>
+              <Button variant="text" onClick={fetchAllPosts}>
+                All
+              </Button>
               <Button variant="text">Canvas</Button>
               <Button variant="text">Graphic</Button>
               <Button variant="text">Animation</Button>
@@ -205,8 +189,6 @@ export default function Filter(props) {
             </FormControl>
           </Stack>
         )}
-
-        {/* </Box> */}
       </Grid>
     </Grid>
   );

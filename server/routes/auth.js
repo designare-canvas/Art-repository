@@ -6,7 +6,7 @@ const { appendFile } = require("fs");
 
 const saltRounds = 12;
 
-router.post("/login",async (req, res) => {
+router.post("/login", async (req, res) => {
   const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
   const username = req.body.username;
@@ -78,7 +78,7 @@ router.post("/signup", (req, res) => {
                   ],
                   async (err, result) => {
                     if (err) {
-                      const {sqlMessage, ...other} = err;
+                      const { sqlMessage, ...other } = err;
                       res.json({ success: false, message: sqlMessage });
                     } else {
                       const rows = await query(
@@ -105,8 +105,7 @@ router.post("/signup", (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.session.destroy();
-  res
-    .json({ success: true, message: "User logged out successfully" });
+  res.json({ success: true, message: "User logged out successfully" });
 });
 
 router.get("/user", (req, res) => {

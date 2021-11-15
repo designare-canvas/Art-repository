@@ -215,7 +215,7 @@ export default function ButtonAppBar() {
           {user ? (
             <>
               <Link
-                to="/Profile"
+                to={`/Profile/${user.username}`}
                 style={{ textDecoration: "none", color: "black" }}
               >
                 <ListItem button key="Profile">
@@ -374,7 +374,7 @@ export default function ButtonAppBar() {
               {user ? (
                 <div className={classes.auth}>
                     <Stack direction="row" spacing={0.5}>
-                      <Link to="/Profile" >
+                      <Link to={`/Profile/${user.username}`} >
                         <Avatar style={{ marginLeft:"15px" }} src={user.profileImgUrl}></Avatar>
                       </Link>
                       <Link to="/upload" style={{ textDecoration: "none" }}>

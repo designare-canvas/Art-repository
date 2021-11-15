@@ -2,14 +2,15 @@ const router = require("express").Router();
 const mysqlConnection = require("../database/dbConnect");
 const util = require("util");
 
+const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
+
 router.post("/tags", async (req, res) => {
-  const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
   const result = await query("SELECT postId FROM tags WHERE tagName LIKE ?", [
     `%${req.body.tags}%`,
-  ]).catch((err) => {
+  ]).catch((Err) => {
     const { sqlMessage, ...other } = Err;
-    res.json({ success: false, message: sqlMessage });
+    return res.json({ success: false, message: sqlMessage });
   });
 
   let newres = result.map((e) => e.postId);
@@ -32,12 +33,30 @@ router.post("/tags", async (req, res) => {
           const { sqlMessage, ...other } = Err;
           res.json({ success: false, message: sqlMessage });
         });
-        newResult.push({ art: res1[0], image: res2[0] });
+        const res3 = await query("SELECT COUNT(*) FROM likes WHERE `postId` = ?", [
+          rowData,
+        ]).catch((Err) => {
+          const { sqlMessage, ...other } = Err;
+          return res.json({ success: false, message: sqlMessage });
+        });
+        newResult.push({ art: res1[0],likes: res3[0]["COUNT(*)"], image: res2[0] });
       }
     })
   );
 
   res.json({ success: true, data: newResult });
 });
+
+router.post("/artist",async(req,res) => {
+
+  const res1 = await query("SELECT * FROM users WHERE username LIKE ?", [
+    `%${req.body.text}%`,
+  ]).catch((Err) => {
+    const { sqlMessage, ...other } = Err;
+    return res.json({ success: false, message: sqlMessage });
+  });
+
+  res.json({success:true, data:res1});
+})
 
 module.exports = router;

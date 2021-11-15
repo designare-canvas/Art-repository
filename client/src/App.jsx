@@ -23,10 +23,12 @@ function App() {
         <Route exact path="/Signup" >{user ? <Redirect to="/" /> : <Register />}</Route>
         <Route exact path="/Post/:id" component={Post} />
         <Route exact path="/WhatsNew" component={WhatsNew} />
-        <Route exact path="/Profile" component={Profilepage}/>
+        <Route exact path="/Profile/:username" component={Profilepage}/>
         <Route exact path="/updateProfile" component={UpdateProfilepage}/>
         <Route exact path="/upload"  >{user ? <Upload /> : <Redirect to="/Signin" />}</Route>
         <Route exact path="/dashboard" component={Dashboardpage}/>
+        {/* <Route exact path="/dashboard" >{isAdmin ? <Dashboardpage /> : <Redirect to="/Signin" />}</Route> */}
+
       </Switch>
       
     </Router>

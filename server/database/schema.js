@@ -74,7 +74,7 @@ const likes = `Create TABLE IF NOT EXISTS likes(
     timestamp DATETIME NOT NULL,
     username VARCHAR(40),
     postId int,
-    PRIMARY KEY (timestamp, username, postId),
+    PRIMARY KEY (username, postId),
     FOREIGN KEY (postId) REFERENCES arts(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 )`;
@@ -130,4 +130,16 @@ mysqlConnection.query(comments, (err, result) => {
 mysqlConnection.query(artImages, (err, result) => {
   if (err) throw err;
   else console.log(" Art Images Table created");
+});
+
+mysqlConnection.query("SELECT * FROM admin",(err,result) => {
+  if(result.length === 0){
+    mysqlConnection.query(
+      "INSERT INTO admin (`username`,`email`,`Fname`,`Lname`,`password`) VALUES (?,?,?,?,?)",["admin123","admin@mail.com","new","admin","pass2566"],
+      (err, result) => {
+        if (err)  console.log(err);
+        else console.log("admin inserted");
+      }
+    );
+    }
 });

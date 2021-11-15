@@ -3,13 +3,10 @@ import Post from "./profilepost";
 import Grid from "@material-ui/core/Grid";
 
 function ImageListShow(props) {
-  
-  const data=props.data;
-  console.log(data);
   return (
     <Grid container spacing={5} className="container1">
-      {data.map((x) => {
-        return <Post data ={x} title={x.art.title} imgurl={x.image.imageUrl} id={x.art.id} username={x.art.username} />;
+      {props.posts.map((x) => {
+        return <Post title={x.art.title} artist={x.art.username} imgurl={x.image.imageUrl} likes={x.likes} id={x.art.id} />;
       })}
     </Grid>
   );
