@@ -3,17 +3,18 @@ import Register from "./components/SignIn/signup";
 import Home from "../src/Pages/Home/Home.jsx";
 import Login from "./components/SignIn/Login";
 import Post from "../src/Pages/Post/Post.jsx";
-import WhatsNew from "../src/components/WhatsNew/WhatsNew.jsx";
+import WhatsNew from "../src/Pages/WhatsNew/WhatsNew";
 import Profilepage from "./Pages/Profile/profile"
 import UpdateProfilepage from "./Pages/updateprofile/updateprofile";
 import Upload from "./Pages/upload/Upload";
 import Dashboardpage from "./Pages/adminDashboard/AdminDashboard";
-import EditUserPost from "./components/dashboard/EditUserPost";
+// import EditUserPost from "./components/dashboard/EditUserPost";
 import { BrowserRouter as Router, Switch, Route , Redirect} from "react-router-dom";
 import { AuthContext } from "./Context/Authcontext";
 
 function App() {
   const { user } = useContext(AuthContext);
+  // let loggedin = user.isArtist === 1 ? true : false
   return (
     
     <Router>
