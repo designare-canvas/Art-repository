@@ -127,7 +127,7 @@ router.get("/all", async (req, res) => {
   return res.json({ success: true, data: result });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/post/:id", async (req, res) => {
   const id = Number(req.params.id);
 
   const res1 = await query("SELECT * FROM arts WHERE id = ?", [id]).catch(
@@ -175,9 +175,9 @@ router.get("/:id", async (req, res) => {
   return res.json({ success: true, data: result });
 });
 
-router.get("/:username", async (req, res) => {
-  const username = req.body.params;
-  const isPublished = username === req.session.user.username ? 0 : 1;
+router.get("/user/:username", async (req, res) => {
+  const username = req.params.username;
+  const isPublished = 1;
 
   const res1 = await query(
     "SELECT * FROM arts WHERE username = ? AND isPublished = ?",
