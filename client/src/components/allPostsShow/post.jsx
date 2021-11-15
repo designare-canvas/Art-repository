@@ -11,6 +11,7 @@ import "./post.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import {Link} from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import ReactTimeAgo from "react-time-ago";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,7 @@ function Post(props) {
   const classes = useStyles();
   var title = props.title.substr(0, 20);
   title += "...";
-
+  console.log(props.where);
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
@@ -59,7 +60,22 @@ function Post(props) {
                 style={{ color: "white", fontSize: "20px", marginLeft: "10px" }}
               >
                 {title}
-              </span>
+                </span>
+                {props.where === "whatsnew" ? (<>
+                <div style={{ display: "inline-block" }}>
+                  <ReactTimeAgo
+                    date={props.time}
+                    locale="en-US"
+                    style={{
+                      fontSize: "small",
+                      margin: "0",
+                      fontFamily: "Verdana",
+                    }}
+                  />
+                </div>
+                </>) :
+                  (<></>)
+                }
               <ButtonGroup className="left" size="medium">
                 <div></div>
                 <IconButton
