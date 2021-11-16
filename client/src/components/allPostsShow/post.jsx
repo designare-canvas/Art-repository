@@ -82,25 +82,11 @@ function Post(props) {
             {/* <div className="text"> */}
             <CardActions style={{ justifyContent: "space-evenly" }}>
               <span
-                style={{ color: "white", fontSize: "20px", marginLeft: "10px" }}
+                style={{ color: "white", fontSize: "20px", marginLeft: "10px",  fontFamily: "Josefin Sans" }}
               >
                 {title}
                 </span>
-                {props.where === "whatsnew" ? (<>
-                <div style={{ display: "inline-block" }}>
-                  <ReactTimeAgo
-                    date={props.time}
-                    locale="en-US"
-                    style={{
-                      fontSize: "small",
-                      margin: "0",
-                      fontFamily: "Verdana",
-                    }}
-                  />
-                </div>
-                </>) :
-                  (<></>)
-                }
+              
               <ButtonGroup className="left" size="medium">
                 <div></div>
                 <IconButton
@@ -127,10 +113,25 @@ function Post(props) {
           <Typography
             size="small"
             variant="h7"
-            style={{ marginRight: "auto" }}
+            style={{ marginRight: "auto", fontFamily: "Josefin Sans", }}
           >
             {props.artist}
           </Typography>
+          {props.where === "whatsnew" ? (<>
+                <span style={{ display: "inline-block" }}>
+                  <ReactTimeAgo
+                    date={props.time}
+                    locale="en-US"
+                    style={{
+                      fontSize: "small",
+                      marginLeft: 0,
+                      fontFamily: "Verdana",
+                    }}
+                  />
+                </span>
+                </>) :
+                  (<></>)
+           }
           <ButtonGroup size="small">
           <IconButton
               aria-label="add to favorites"
