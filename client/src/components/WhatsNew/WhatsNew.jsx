@@ -4,12 +4,13 @@ import Grid from '@material-ui/core/Grid';
 
 function WhatsNew(props) {
   console.log("In whatsnew");
-  console.log(props.posts);
+ 
   props.posts.sort(function (a, b) {
     // Turn your strings into dates, and then subtract them
     // to get a value that is either negative, positive, or zero.
-    return new Date(b.time) - new Date(a.time);
+    return new Date(b.art.timestamp) - new Date(a.art.timestamp);
   });
+  console.log(props.posts);
     return <Grid container spacing={5} className="container1">{
        
 
