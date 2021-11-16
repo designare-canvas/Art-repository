@@ -15,25 +15,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from '@mui/material/Button';
 import {Link} from "react-router-dom";
 
-function createData(name, calories, fat, carbs, protein, price,x) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,x,
-    history: [
-      {
-        Fname:"Akash",
-        Lname:"Singh",
-        country:"India",
-        dob: "2020-01-05",
-      }
-    ]
-  };
-}
-
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -99,14 +80,6 @@ function Row(props) {
     </React.Fragment>
   );
 }
-
-const rows = [
-  createData("Frozen yoghurt", "ghghghjgjhghghjgjhkjkhk", 6.0, 24, 4.0, 3.99,0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99,0),
-  createData("Eclair", 262, 16.0, 24, 6.0, 3.79,0),
-  createData("Cupcake", 305, 3.7, 67, 4.3, 2.5,0),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5,0)
-];
 
 export default function EditUserPost(props) {
   console.log(props.users);

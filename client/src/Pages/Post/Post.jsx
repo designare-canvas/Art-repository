@@ -52,12 +52,13 @@ function Post() {
           postDescription={
            posts.art.description
           }
+          likes={posts.likes}
         />
         <Divider orientation="vertical" flexItem>
           <KeyboardArrowLeftIcon />
         </Divider>
         <div>
-          <Sidebar artistImg={posts.artistImg} comment={posts.comments} fetchPosts={fetchPosts} />
+          <Sidebar likes={posts.likes} artistImg={posts.artistImg} comment={posts.comments} fetchPosts={fetchPosts} />
         </div>
       </div>
       <Footer />

@@ -41,6 +41,7 @@ function Home() {
     if (result.data.success) {
       setPosts(shuffle(result.data.data));
     }
+
   };
   useEffect(() => {
     fetchPosts();

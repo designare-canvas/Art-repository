@@ -25,11 +25,21 @@ export default function Filter(props) {
     }
   };
 
-  const handleSearchChange = async (event) => {
+  const fetchAllpostsAndSort = async () => {
+    const result = await axios.get("http://localhost:8080/api/posts/all", {
+      withCredentials: true,
+    });
+
+    if (result.data.success) {
+      props.setPosts();
+    }
+  };
+
+  const searchByTags = async(value) => {
     const result = await axios
       .post(
         "http://localhost:8080/api/search/tags",
-        { tags: event.target.value },
+        { tags: value},
         {
           withCredentials: true,
         }
@@ -41,15 +51,32 @@ export default function Filter(props) {
     }
 
     console.log(result.data.data);
+  }
+  const handleClick = (props) => () => {
+    searchByTags(props);
+  }
+
+  const handleSearchChange = async (event) => {
+    await searchByTags(event.target.value);
   };
 
   const handleChange = (event) => {
-    console.log(event);
+    console.log(event.target.value);
     setAge(event.target.value);
+    switch(event.target.value){
+      case 10: searchByTags("plastic");
+      break;
+      case 20: searchByTags("sculptures");
+      break;
+      case 30: searchByTags("spraypainted");
+      break;
+      case 40: searchByTags("oldart");
+      break;
+    }
   };
   const [primary, setPrimay] = useState("");
   const handleprimary = (event) => {
-    console.log(event);
+    console.log(event.target.value);
     setPrimay(event.target.value);
   };
   const theme = useTheme();
@@ -126,9 +153,9 @@ export default function Filter(props) {
               <Button variant="text" onClick={fetchAllPosts}>
                 All
               </Button>
-              <Button variant="text">Canvas</Button>
-              <Button variant="text">Graphic</Button>
-              <Button variant="text">Animation</Button>
+              <Button variant="text" onClick={handleClick("canvas")} >Canvas</Button>
+              <Button variant="text" onClick={handleClick("graphic")} >Graphic</Button>
+              <Button variant="text" onClick={handleClick("animation")} >Animation</Button>
             </div>
           </>
         ) : (
@@ -161,9 +188,9 @@ export default function Filter(props) {
               <Button variant="text" onClick={fetchAllPosts}>
                 All
               </Button>
-              <Button variant="text">Canvas</Button>
-              <Button variant="text">Graphic</Button>
-              <Button variant="text">Animation</Button>
+              <Button variant="text" onClick={handleClick("canvas")} >Canvas</Button>
+              <Button variant="text" onClick={handleClick("graphic")} >Graphic</Button>
+              <Button variant="text" onClick={handleClick("animation")} >Animation</Button>
             </div>
 
             <FormControl sm={6} sx={{ minWidth: 140 }}>

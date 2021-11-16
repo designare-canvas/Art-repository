@@ -140,6 +140,10 @@ export default function Profile() {
               <Button className="btn" variant="text" disabled>{userData.country}</Button>
             </span>
             <span className="profileInfoDesc">
+              <Button className="btn" variant="text" disabled>Email</Button>
+              <Button className="btn" variant="text" disabled>{userData.email}</Button>
+            </span>
+            <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Date of Birth</Button>
               <Button className="btn" variant="text" disabled>{userData.DOB}</Button>
             </span>
