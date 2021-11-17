@@ -25,13 +25,22 @@ export default function Filter(props) {
     }
   };
 
-  const fetchAllpostsAndSort = async () => {
+  const fetchAllpostsAndSort = async (prop) => {
     const result = await axios.get("http://localhost:8080/api/posts/all", {
       withCredentials: true,
     });
 
     if (result.data.success) {
-      props.setPosts();
+      if(prop === "likes"){
+        console.log(result.data.data.sort((a,b) => b.likes - a.likes));
+        props.setPosts(result.data.data.sort((a,b) => b.likes - a.likes));
+      }else if(prop === "random"){
+        props.setPosts(props.shuffle(result.data.data).slice(0,12));
+      }else{
+        props.setPosts(result.data.data.sort(function (a, b) {
+          return new Date(b.art.timestamp) - new Date(a.art.timestamp);
+        }))
+      }
     }
   };
 
@@ -52,6 +61,7 @@ export default function Filter(props) {
 
     console.log(result.data.data);
   }
+
   const handleClick = (props) => () => {
     searchByTags(props);
   }
@@ -64,13 +74,13 @@ export default function Filter(props) {
     console.log(event.target.value);
     setAge(event.target.value);
     switch(event.target.value){
-      case 10: searchByTags("plastic");
+      case 10: searchByTags("painting");
       break;
-      case 20: searchByTags("sculptures");
+      case 20: searchByTags("contemporary");
       break;
-      case 30: searchByTags("spraypainted");
+      case 30: searchByTags("modernart");
       break;
-      case 40: searchByTags("oldart");
+      case 40: searchByTags("sketch");
       break;
     }
   };
@@ -78,6 +88,14 @@ export default function Filter(props) {
   const handleprimary = (event) => {
     console.log(event.target.value);
     setPrimay(event.target.value);
+    switch(event.target.value){
+      case 10: fetchAllpostsAndSort("likes");
+      break;
+      case 20: fetchAllpostsAndSort("random");
+      break;
+      case 30: fetchAllpostsAndSort("time");
+      break;
+    }
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1001));
@@ -138,10 +156,10 @@ export default function Filter(props) {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>Plastic</MenuItem>
-                  <MenuItem value={20}>sculptures</MenuItem>
-                  <MenuItem value={30}>Spray-Painted</MenuItem>
-                  <MenuItem value={40}>Old Art</MenuItem>
+                <MenuItem value={10}>Painting</MenuItem>
+                <MenuItem value={20}>Contemporary</MenuItem>
+                <MenuItem value={30}>Modern art</MenuItem>
+                <MenuItem value={40}>sketch</MenuItem>
                 </Select>
               </FormControl>
             </Stack>
@@ -153,9 +171,9 @@ export default function Filter(props) {
               <Button variant="text" onClick={fetchAllPosts}>
                 All
               </Button>
-              <Button variant="text" onClick={handleClick("canvas")} >Canvas</Button>
+              <Button variant="text" onClick={handleClick("abstract")} >Abstract</Button>
               <Button variant="text" onClick={handleClick("graphic")} >Graphic</Button>
-              <Button variant="text" onClick={handleClick("animation")} >Animation</Button>
+              <Button variant="text" onClick={handleClick("art")} >Art</Button>
             </div>
           </>
         ) : (
@@ -188,9 +206,9 @@ export default function Filter(props) {
               <Button variant="text" onClick={fetchAllPosts}>
                 All
               </Button>
-              <Button variant="text" onClick={handleClick("canvas")} >Canvas</Button>
+              <Button variant="text" onClick={handleClick("abstract")} >Abstract</Button>
               <Button variant="text" onClick={handleClick("graphic")} >Graphic</Button>
-              <Button variant="text" onClick={handleClick("animation")} >Animation</Button>
+              <Button variant="text" onClick={handleClick("art")} >Art</Button>
             </div>
 
             <FormControl sm={6} sx={{ minWidth: 140 }}>
@@ -208,10 +226,10 @@ export default function Filter(props) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Plastic</MenuItem>
-                <MenuItem value={20}>sculptures</MenuItem>
-                <MenuItem value={30}>Spray-Painted</MenuItem>
-                <MenuItem value={40}>Old Art</MenuItem>
+                <MenuItem value={10}>Painting</MenuItem>
+                <MenuItem value={20}>Contemporary</MenuItem>
+                <MenuItem value={30}>Modern art</MenuItem>
+                <MenuItem value={40}>sketch</MenuItem>
               </Select>
             </FormControl>
           </Stack>

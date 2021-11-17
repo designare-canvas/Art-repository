@@ -32,7 +32,9 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
+        <Link to={`/profile/${row.user.username}`} >
           {row.user.username}
+        </Link>
         </TableCell>
         <TableCell align="center">{row.posts.length}</TableCell>
         <TableCell align="center">{row.user.timestamp.split('T')[0]}</TableCell>

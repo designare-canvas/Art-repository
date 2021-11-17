@@ -18,12 +18,11 @@ import CreateUpdateBtn from "./update/createbutton";
 export default function Profile() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const { user } = useContext(AuthContext);
+  const { user,isAdmin } = useContext(AuthContext);
   const [value, setValue] = React.useState("one");
   const [userData, setUserData] = useState(null);
   const [likedPosts, setLikedPosts] = useState([]);
   const { username } = useParams();
-  const {profileImgUrl, coverImgUrl, ...other} = user;
 
   const handleChange = (event, newValue) => {
     var element1 = document.getElementById("one");
@@ -50,6 +49,17 @@ export default function Profile() {
   // }
 
   const fetchData = async () => {
+    const result3 = await axios.get("http://localhost:8080/api/user/" + username, {
+      withCredentials: true
+    });
+    console.log(result3);
+
+  const {profileImgUrl, coverImgUrl, ...other} = result3.data.data;
+    if (result3.data.success) {
+      setUserData(result3.data.data);
+      console.log(userData);
+    }
+    
     const result = await axios.get("http://localhost:8080/api/posts/user/" + username, {
       params: other,
       withCredentials: true,
@@ -59,6 +69,7 @@ export default function Profile() {
     if (result.data.success) {
       setPosts(result.data.data);
     }
+
     const result2 = await axios.get("http://localhost:8080/api/posts/liked/" + username, {
       params: other,
       withCredentials: true,
@@ -66,15 +77,6 @@ export default function Profile() {
     console.log(result2);
     if (result2.data.success) {
       setLikedPosts(result2.data.data)
-    }
-
-    const result3 = await axios.get("http://localhost:8080/api/user/" + username, {
-      withCredentials: true
-    });
-    console.log(result3);
-    if (result3.data.success) {
-      setUserData(result3.data.data);
-      console.log(userData);
     }
 
     setLoading(false);
@@ -106,7 +108,7 @@ export default function Profile() {
             <div className="profileInfo">
               <h4 className="profileInfoName">{userData.username}</h4>
               <span className="profileInfoDesc">{userData.description}</span>
-              {username===user.username&&<CreateUpdateBtn/>}
+              {(user && (username===user.username || isAdmin)) &&<CreateUpdateBtn username={username} />}
             </div>
           </div>
           <div>
@@ -122,7 +124,7 @@ export default function Profile() {
             </Tabs>
           </div>
           <div id="one">
-          {(userData.username === user.username && !userData.isArtist) && <ApplyNow />}
+          {(user && (userData.username === user.username && !userData.isArtist)) && <ApplyNow />}
           {userData.isArtist && <ImageListShow posts={posts} />}
             
           </div>
