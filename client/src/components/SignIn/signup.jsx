@@ -274,7 +274,7 @@ export default function Login() {
                   format="dd/MM/yyyy"
                   label="Date of birth"
                   views={["year", "month", "day"]}
-                  value={selectedDate}
+                  value={values.DOB}
                   onChange={(e) => {
                     handleChange(e);
                     setDate(e);

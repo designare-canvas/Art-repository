@@ -147,7 +147,7 @@ export default function Profile() {
             </span>
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Date of Birth</Button>
-              <Button className="btn" variant="text" disabled>{userData.DOB}</Button>
+              <Button className="btn" variant="text" disabled>{userData.DOB.split("T")[0]}</Button>
             </span>
           </div>
           <div className="profileRightBottom">
