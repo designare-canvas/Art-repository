@@ -12,7 +12,7 @@ function CreateUpdateBtn(params) {
   const handleDelete = async () => {
     const result = await axios
       .delete(
-        "http://localhost:8080/api/user/" + user.username,
+        "http://localhost:8080/api/user/" + params.username,
         {data:{ user: user, isAdmin: isAdmin }},
         { withCredentials: true }
       )
@@ -40,7 +40,7 @@ function CreateUpdateBtn(params) {
           Create Post
         </Link>
       </Button>
-      <Button className="btn" variant="outlined">
+      {!isAdmin && <Button className="btn" variant="outlined">
         <Link
           href="/updateProfile"
           // style={{ color: "#22577A", marginLeft: "5px" }}
@@ -48,7 +48,7 @@ function CreateUpdateBtn(params) {
         >
           Update Profile
         </Link>
-      </Button>
+      </Button>}
       <Button style={{color:"red"}} className="btn" variant="outlined" onClick={handleDelete}>
         Delete Account
       </Button>
