@@ -126,9 +126,9 @@ export default function Filter(props) {
               <Button variant="text" onClick={fetchAllPosts}>
                 All
               </Button>
-              <Button variant="text">Canvas</Button>
+              <Button variant="text">Abstract</Button>
               <Button variant="text">Graphic</Button>
-              <Button variant="text">Animation</Button>
+              <Button variant="text">Art</Button>
             </div>
           </>
         ) : (
@@ -161,9 +161,9 @@ export default function Filter(props) {
               <Button variant="text" onClick={fetchAllPosts}>
                 All
               </Button>
-              <Button variant="text">Canvas</Button>
+              <Button variant="text">Abstract</Button>
               <Button variant="text">Graphic</Button>
-              <Button variant="text">Animation</Button>
+              <Button variant="text">Art</Button>
             </div>
 
             <FormControl sm={6} sx={{ minWidth: 140 }}>
