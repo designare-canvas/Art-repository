@@ -73,6 +73,7 @@ function Home() {
             alignItems: { xs: 'center', md: 'flex-start' },
             m: 3,
             minWidth: { md: 350 },
+            margin:"0% 20% 0% 30%"
           }}
         >
           <Typography
@@ -86,7 +87,7 @@ function Home() {
               color: "#22577A",
             }}
           >
-            <i style={{ fontSize: "4rem", fontFamily: "Allison" }}> Designare </i> is the go-to resource for discovering and <br />   connecting with designers
+            <i style={{ fontSize: "4.6rem", fontFamily: "Allison" }}> Designare </i> is the go-to resource for discovering and <br />   connecting with designers
             and creative talent  around<br />around the globe.
           </Typography>
           <Typography
@@ -98,27 +99,14 @@ function Home() {
               fontSize: "2.5rem",
               fontWeight: "800",
               lineHeight: 1.5,
-              color: "#22577A",
+              color: "#1F1D36",
               margin: "4% 0% 0% 10%"
             }}
           >
             Dream , Depict  , Develop
           </Typography>
                    
-        </Box>
-        <Box
-        // component="img"
-        // sx={{
-        //     height: 300,
-        //     width: "50%",
-        //     // maxHeight: { xs: 233, md: 167 },
-        //     // maxWidth: { xs: 350, md: 250 },
-        //     marginLeft:"20%"
-        // }}
-        // alt="Some design"
-        // src={} 
-        />
-               
+        </Box> 
       </Box>
       }
       <Filter shuffle={shuffle} setPosts={setPosts} />
