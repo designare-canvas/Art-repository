@@ -364,7 +364,7 @@ export default function ButtonAppBar() {
                   <Tab label="What'sNew" className={classes.tab} />
                 </Link>
               </Tabs>
-              <div className={classes.search}>
+              {/* <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
                 </div>
@@ -376,7 +376,7 @@ export default function ButtonAppBar() {
                   }}
                   inputProps={{ "aria-label": "search" }}
                 />
-              </div>
+              </div> */}
               {user ? (
                 <div className={classes.auth}>
                     <Stack direction="row" spacing={0.5}>
