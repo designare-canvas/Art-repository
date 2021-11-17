@@ -1,4 +1,4 @@
-import React,{useContext, useState} from "react";
+import React,{useContext, useState, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -45,13 +45,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Post(props) {
+  console.log(props);
   const { user } = useContext(AuthContext);
   const [likes,setLikes] = useState(props.likes);
   const classes = useStyles();
   var title = props.title.substr(0, 10);
   title += "...";
   let history = useHistory();
-
+  
+  // if(user.isArtist){
+  //   ele1.classList.toggle("mystyle");
+  // }else{
+  //   ele2.classList.toggle("mystyle");
+  // }
   const handleLikeChange= async(e) => {
 
     if(user){
@@ -68,6 +74,7 @@ function Post(props) {
       history.push("/Signin")
     }
   }
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>

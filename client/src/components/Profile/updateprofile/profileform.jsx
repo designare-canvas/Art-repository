@@ -137,7 +137,7 @@ export default function ProfileForm() {
                 />
               </div>
               <div style={{ height: "20px" }}></div>
-              <div style={{ textAlign: "center" }}>
+              {/* <div style={{ textAlign: "center" }}>
                 <Typography
                   variant="h2"
                   // className="heading"
@@ -232,8 +232,8 @@ export default function ProfileForm() {
                   >
                     Delete
                   </Button>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
             </div>
           </Grid>
           <Grid

@@ -79,6 +79,11 @@ export default function Login() {
 
   const [msg, setMsg] = React.useState("");
 
+  const validateEmail = async (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const keys = Object.keys(values);
@@ -87,6 +92,11 @@ export default function Login() {
         console.log(`${key} is empty`);
       }
     });
+    const test = await validateEmail(values["email"]);
+    if(!test){
+      alert("Email entered is invalid!");
+      return;
+    }
     console.log(selectedDate.toISOString().split("T")[0]);
     setValues({
       ...values,

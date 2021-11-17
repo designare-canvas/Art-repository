@@ -10,13 +10,34 @@ import axios from "axios";
 import './sidebar.scss';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from "../../Context/Authcontext";
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 
 function Sidebar(props) {
   console.log(props);
   const [comment, setComment] = useState(null);
   const { user, isAdmin } = useContext(AuthContext);
+  const [likes,setLikes] = useState(props.likes);
   const { id } = useParams();
   let history = useHistory();
+
+  const handleLikeChange= async(e) => {
+
+    if(user){
+      if(e.target.checked){
+        const result = await axios.post("http://localhost:8080/api/posts/like",{username:user.username,postId:props.id});
+        console.log(result);
+        setLikes((prev) => prev+1)
+      }else{
+        const result = await axios.delete("http://localhost:8080/api/posts/like",{data:{id:props.id, username:user.username}});
+        console.log(result);
+        setLikes((prev) => prev-1)
+      }
+    }else{
+      history.push("/Signin")
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,8 +66,13 @@ function Sidebar(props) {
             <IconButton aria-label="share">
               <ShareIcon />
             </IconButton>
-            <IconButton aria-label="favorite" disabled = {isAdmin}>
-              <FavoriteIcon />
+            
+            <IconButton
+              aria-label="add to favorites"
+              style={{ backgroundColor: "transparent" }}
+            >
+          <Checkbox className="favicon" onChange={handleLikeChange} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+              {likes} 
             </IconButton>
           </div>
           <div>
