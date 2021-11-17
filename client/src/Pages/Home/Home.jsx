@@ -41,6 +41,7 @@ function Home() {
     if (result.data.success) {
       setPosts(shuffle(result.data.data));
     }
+
   };
   useEffect(() => {
     fetchPosts();
@@ -83,7 +84,7 @@ function Home() {
               fontStyle: "cursive",
               fontSize: "1.75rem",
               fontWeight: "500",
-              color: "#22577A",
+              color: "#000",
             }}
           >
             <i style={{ fontSize: "4rem", fontFamily: "Allison" }}> Designare </i> is the go-to resource for discovering and <br />   connecting with designers
@@ -98,7 +99,7 @@ function Home() {
               fontSize: "2.5rem",
               fontWeight: "800",
               lineHeight: 1.5,
-              color: "#22577A",
+              color: "#000",
               margin: "4% 0% 0% 10%"
             }}
           >
