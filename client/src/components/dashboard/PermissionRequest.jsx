@@ -79,7 +79,7 @@ function Row(props) {
                       <TableCell align="center">{historyRow.Lname}</TableCell>
                       <TableCell align="center">{historyRow.country}</TableCell>
                       <TableCell align="center">
-                        {historyRow.DOB.split('T')[0]}
+                        {historyRow.dob.split('T')[0]}
                       </TableCell>
                     </TableRow>
                   ))}

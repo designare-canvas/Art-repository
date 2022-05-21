@@ -1,18 +1,18 @@
 const router = require("express").Router();
-const mysqlConnection = require("../database/dbConnect");
+const pgConnection = require("../database/dbConnect");
 const util = require("util");
 
-const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
+const query = util.promisify(pgConnection.query).bind(pgConnection);
 
 router.get("/:username", async (req, res) => {
-  const result = await query("SELECT * FROM users WHERE username = ?", [
+  const result = await query("SELECT * FROM users WHERE username = $1", [
     req.params.username,
   ]).catch((Err) => {
     const { sqlMessage, ...other } = Err;
     return res.json({ success: false, message: sqlMessage });
   });
-
-  res.json({ success: true, data: result[0] });
+  
+  res.json({ success: true, data: result.rows[0] });
 });
 
 router.get("/all", async (req, res) => {
@@ -21,13 +21,13 @@ router.get("/all", async (req, res) => {
     return res.json({ success: false, message: sqlMessage });
   });
 
-  res.json({ success: true, data: result });
+  res.json({ success: true, data: result.rows });
 });
 
 router.put("/:username",async (req,res) => {
   if(req.body.user.username === req.params.username || req.body.isAdmin){
     const res1 = await query(
-      "UPDATE users SET profileImgUrl = ?,coverImgUrl = ?,Fname = ?, Lname = ?, DOB = ?, country = ? WHERE username = ?",
+      "UPDATE users SET profileImgUrl = $1,coverImgUrl = $2,Fname = $3, Lname = $4, DOB = $5, country = $6 WHERE username = $7",
       [
         req.body.profileImgUrl,
         req.body.coverImgUrl,
@@ -53,7 +53,7 @@ router.delete("/:username", async (req,res) => {
 
   if(req.body.user.username === req.params.username || req.body.isAdmin){
     const res1 = await query(
-      "DELETE FROM users WHERE username = ?",
+      "DELETE FROM users WHERE username = $1",
       [
         req.params.username,
       ]

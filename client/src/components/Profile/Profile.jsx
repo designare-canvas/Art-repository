@@ -54,12 +54,12 @@ export default function Profile() {
     });
     console.log(result3);
 
-  const {profileImgUrl, coverImgUrl, ...other} = result3.data.data;
+  const {profileimgurl, coverimgurl, ...other} = result3.data.data;
     if (result3.data.success) {
       setUserData(result3.data.data);
       console.log(userData);
     }
-    
+    console.log(other);
     const result = await axios.get("http://localhost:8080/api/posts/user/" + username, {
       params: other,
       withCredentials: true,
@@ -95,12 +95,12 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={userData.coverImgUrl}
+                src={userData.coverimgurl}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={userData.profileImgUrl}
+                src={userData.profileimgurl}
                 alt=""
               />
             </div>
@@ -124,8 +124,8 @@ export default function Profile() {
             </Tabs>
           </div>
           <div id="one">
-          {(user && (userData.username === user.username && !userData.isArtist)) && <ApplyNow />}
-          {userData.isArtist && <ImageListShow posts={posts} />}
+          {(user && (userData.username === user.username && !userData.isartist)) && <ApplyNow />}
+          {userData.isartist && <ImageListShow posts={posts} />}
             
           </div>
           <div id="two" className="mystyle">
@@ -135,7 +135,7 @@ export default function Profile() {
           <div id="three" className="mystyle profileInfo">
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Name</Button>
-              <Button className="btn" variant="text" disabled>{userData.Fname} {userData.Lname}</Button>
+              <Button className="btn" variant="text" disabled>{userData.fname} {userData.lname}</Button>
             </span>
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Country of Origin</Button>
@@ -147,7 +147,7 @@ export default function Profile() {
             </span>
             <span className="profileInfoDesc">
               <Button className="btn" variant="text" disabled>Date of Birth</Button>
-              <Button className="btn" variant="text" disabled>{userData.DOB.split("T")[0]}</Button>
+              <Button className="btn" variant="text" disabled>{userData.dob.split("T")[0]}</Button>
             </span>
           </div>
           <div className="profileRightBottom">

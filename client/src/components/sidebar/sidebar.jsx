@@ -26,11 +26,11 @@ function Sidebar(props) {
 
     if(user){
       if(e.target.checked){
-        const result = await axios.post("http://localhost:8080/api/posts/like",{username:user.username,postId:props.id});
+        const result = await axios.post("http://localhost:8080/api/posts/like",{username:user.username,postId:id});
         console.log(result);
         setLikes((prev) => prev+1)
       }else{
-        const result = await axios.delete("http://localhost:8080/api/posts/like",{data:{id:props.id, username:user.username}});
+        const result = await axios.delete("http://localhost:8080/api/posts/like",{data:{id:id, username:user.username}});
         console.log(result);
         setLikes((prev) => prev-1)
       }
@@ -93,9 +93,10 @@ function Sidebar(props) {
         {props.comment.map((data) => {
           return (
             <Comment
-              imgUrl={data.commenterImg.profileImgUrl}
+              imgUrl={data.commenterImg.profileimgurl}
               name={data.commentData.username}
-              comment={data.commentData.commentData}
+              comment={data.commentData.commentdata}
+              timeAgo={data.commentData.timestamp}
             />
           );
         })}

@@ -12,15 +12,15 @@ export default function ProfileForm() {
   const [shake, setShake] = useState(false);
   const { user } = useContext(AuthContext);
   const [msg, setMsg] = React.useState("");
-  const [selectedDate, setDate] = React.useState(new Date(user.DOB));
+  const [selectedDate, setDate] = React.useState(new Date(user.dob));
   const [profileimg, setProfileImg] = useState(null);
   const [Coverimg, setCoverImg] = useState(user.coverImgUrl);
   const [values, setValues] = React.useState({
-    profileImgUrl: user.profileImgUrl,
-    coverImgUrl: user.coverImgUrl,
+    profileImgUrl: user.profileimgurl,
+    coverImgUrl: user.coverimgurl,
     user: user,
-    Fname: user.Fname,
-    Lname: user.Lname,
+    Fname: user.fname,
+    Lname: user.lname,
     email: user.email,
     city: user.city,
     country: user.country,
@@ -127,12 +127,12 @@ export default function ProfileForm() {
               <div className="profileCover">
                 <img
                   className="profileCoverImg"
-                  src={user.coverImgUrl}
+                  src={user.coverimgurl}
                   alt=""
                 />
                 <img
                   className="profileUserImg"
-                  src={user.profileImgUrl}
+                  src={user.profileimgurl}
                   alt=""
                 />
               </div>

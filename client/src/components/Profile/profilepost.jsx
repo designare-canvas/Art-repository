@@ -50,7 +50,7 @@ function Post(props) {
   const classes = useStyles();
   var title = props.title;
   title += "...";
-
+  
   const { user } = useContext(AuthContext);
   const [likes,setLikes] = useState(props.likes);
   let history = useHistory();

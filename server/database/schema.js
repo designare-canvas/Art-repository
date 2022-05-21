@@ -1,6 +1,6 @@
-const mysqlConnection = require("./dbConnect");
+const pgConnection = require("./dbConnect");
 
-mysqlConnection.connect((err) => {
+pgConnection.connect((err) => {
   if (err) {
     console.log("Connection Failed!" + JSON.stringify(err, undefined, 2));
     return;
@@ -8,18 +8,18 @@ mysqlConnection.connect((err) => {
   console.log("Connection Established Successfully");
 });
 
-mysqlConnection.query(
-  `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASENAME} DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;`,
-  function (err, result) {
-    if (err) {
-      throw err;
-      return;
-    }
-    console.log("Database created");
-  }
-);
+// pgConnection.query(
+//   `CREATE DATABASE ${process.env.DATABASENAME} ENCODING='UTF-8'`,
+//   function (err, result) {
+//     if (err) {
+//       throw err;
+//       return;
+//     }
+//     console.log("Database created");
+//   }
+// );
 
-mysqlConnection.query(`USE ${process.env.DATABASENAME}`);
+// pgConnection.query(`USE ${process.env.DATABASENAME}`);
 
 const admin = `Create TABLE IF NOT EXISTS admin(
     username VARCHAR(40) NOT NULL UNIQUE,
@@ -30,7 +30,7 @@ const admin = `Create TABLE IF NOT EXISTS admin(
     PRIMARY KEY (username)
 )`;
 
-const users = `Create TABLE IF NOT EXISTS users(
+const users = `Create TABLE IF NOT EXISTS "users"(
     username VARCHAR(40) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     Fname VARCHAR(255) NOT NULL,
@@ -38,23 +38,25 @@ const users = `Create TABLE IF NOT EXISTS users(
     DOB DATE NOT NULL,
     Description VARCHAR(255),
     password VARCHAR(255) NOT NULL,
-    profileImgUrl LONGTEXT,
-    coverImgUrl LONGTEXT,
+    profileImgUrl TEXT,
+    coverImgUrl TEXT,
     state VARCHAR(255),
     country VARCHAR(255),
-    pincode INT(16),
-    isArtist BOOLEAN NOT NULL DEFAULT 0,
-    timestamp DATETIME NOT NULL,
+    pincode INT,
+    isArtist BOOLEAN NOT NULL DEFAULT FALSE,
+    timestamp TIMESTAMP NOT NULL,
     admin_id VARCHAR(40) DEFAULT 'admin123',
     PRIMARY KEY (username),
-    FOREIGN KEY (admin_id) REFERENCES admin(username)
+    FOREIGN KEY (admin_id) REFERENCES admin(username),
+    constraint valid_pincode 
+      check (pincode <= 99999999)
 )`;
 
 const arts = `Create TABLE IF NOT EXISTS arts(
-    id INT AUTO_INCREMENT,
-    isPublished BOOLEAN NOT NULL DEFAULT 0,
-    dateOfPublish DATETIME,
-    timestamp DATETIME NOT NULL,
+    id SERIAL,
+    isPublished BOOLEAN NOT NULL DEFAULT FALSE,
+    dateOfPublish TIMESTAMP,
+    timestamp TIMESTAMP NOT NULL,
     title VARCHAR(255),
     description TEXT,
     username VARCHAR(40) NOT NULL,
@@ -72,7 +74,7 @@ const tags = `Create TABLE IF NOT EXISTS tags(
 )`;
 
 const likes = `Create TABLE IF NOT EXISTS likes(
-    timestamp DATETIME NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
     username VARCHAR(40),
     postId int,
     PRIMARY KEY (username, postId),
@@ -81,7 +83,7 @@ const likes = `Create TABLE IF NOT EXISTS likes(
 )`;
 
 const comments = `Create TABLE IF NOT EXISTS comments(
-    timestamp DATETIME NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
     username VARCHAR(40),
     commentData VARCHAR(255),
     postId int,
@@ -91,15 +93,15 @@ const comments = `Create TABLE IF NOT EXISTS comments(
 )`;
 
 const artImages = `Create TABLE IF NOT EXISTS artImages(
-    timestamp DATETIME NOT NULL,
-    imageUrl LONGTEXT,
+    timestamp TIMESTAMP NOT NULL,
+    imageUrl TEXT,
     postId int,
     PRIMARY KEY (timestamp, postId),
     FOREIGN KEY (postId) REFERENCES arts(id) ON DELETE CASCADE ON UPDATE CASCADE
 )`;
 
 const requests = `CREATE TABLE IF NOT EXISTS requests(
-  timestamp DATETIME NOT NULL,
+  timestamp TIMESTAMP NOT NULL,
   username VARCHAR(40) NOT NULL,
   admin_id VARCHAR(40) NOT NULL DEFAULT 'admin123',
   current_status VARCHAR(40),
@@ -109,51 +111,53 @@ const requests = `CREATE TABLE IF NOT EXISTS requests(
   FOREIGN KEY (admin_id) REFERENCES admin(username) ON DELETE CASCADE ON UPDATE CASCADE
 )`;
 
-mysqlConnection.query(admin, (err, result) => {
+pgConnection.query(admin, (err, result) => {
   if (err) throw err;
   else console.log(" Admin Table created");
 });
 
-mysqlConnection.query(users, (err, result) => {
+pgConnection.query(users, (err, result) => {
   if (err) throw err;
   else console.log(" Users Table created");
 });
 
-mysqlConnection.query(arts, (err, result) => {
+pgConnection.query(arts, (err, result) => {
   if (err) throw err;
   else console.log(" Arts Table created");
 });
 
-mysqlConnection.query(tags, (err, result) => {
+pgConnection.query(tags, (err, result) => {
   if (err) throw err;
   else console.log(" Tags Table created");
 });
 
-mysqlConnection.query(likes, (err, result) => {
+pgConnection.query(likes, (err, result) => {
   if (err) throw err;
   else console.log(" Likes Table created");
 });
 
-mysqlConnection.query(comments, (err, result) => {
+pgConnection.query(comments, (err, result) => {
   if (err) throw err;
   else console.log(" Commnets Table created");
 });
 
-mysqlConnection.query(artImages, (err, result) => {
+pgConnection.query(artImages, (err, result) => {
   if (err) throw err;
   else console.log(" Art Images Table created");
 });
 
-mysqlConnection.query(requests, (err, result) => {
+pgConnection.query(requests, (err, result) => {
   if (err) throw err;
   else console.log(" Requests Images Table created");
 });
 
-mysqlConnection.query("SELECT * FROM admin",(err,result) => {
-  if(result.length === 0){
-    mysqlConnection.query(
-      "INSERT INTO admin (`username`,`email`,`Fname`,`Lname`,`password`) VALUES (?,?,?,?,?)",["admin123","admin@mail.com","new","admin","pass2566"],
-      (err, result) => {
+pgConnection.query("SELECT * FROM admin",(err,result) => {
+  // console.log(result);
+  if(result.rows.length === 0){
+    pgConnection.query(
+      "INSERT INTO admin (username,email,Fname,Lname,password) VALUES ($1,$2,$3,$4,$5)",["admin123","admin@mail.com","new","admin","pass2566"],
+      (err, res) => {
+        // console.log(res);
         if (err)  console.log(err);
         else console.log("admin inserted");
       }

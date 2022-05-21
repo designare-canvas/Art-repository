@@ -6,7 +6,7 @@ function ImageListShow(props) {
   return (
     <Grid container spacing={5} className="container1">
       {props.posts.map((x) => {
-        return <Post title={x.art.title} artist={x.art.username} imgurl={x.image.imageUrl} likes={x.likes} id={x.art.id} />;
+        return <Post title={x.art.title} artist={x.art.username} imgurl={x.image.imageurl} likes={x.likes} id={x.art.id} />;
       })}
     </Grid>
   );

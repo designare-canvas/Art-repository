@@ -45,10 +45,10 @@ function Post() {
       <div className="Post-page">
         <PostArea
         id={posts.art.id}
-          imgUrl={posts.artistImg.profileImgUrl}
+          imgUrl={posts.artistImg.profileimgurl}
           postTitle={posts.art.title}
           authorName={posts.art.username}
-          postImgUrl={posts.image.imageUrl}
+          postImgUrl={posts.image.imageurl}
           postDescription={
            posts.art.description
           }
@@ -58,7 +58,7 @@ function Post() {
           <KeyboardArrowLeftIcon />
         </Divider>
         <div>
-          <Sidebar likes={posts.likes} artistImg={posts.artistImg} comment={posts.comments} fetchPosts={fetchPosts} />
+          <Sidebar likes={posts.likes} artistImg={posts.artistimg} comment={posts.comments} fetchPosts={fetchPosts} />
         </div>
       </div>
       <Footer />

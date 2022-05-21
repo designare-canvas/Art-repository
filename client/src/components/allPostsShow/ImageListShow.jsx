@@ -10,7 +10,7 @@ function ImageListShow(props){
         props.posts.map((x)=> {
 
          return (
-            <Post title={x.art.title} artist={x.art.username} artistImg={x.artistImg} likes={x.likes} imgSrc={x.image.imageUrl} id={x.art.id}/>    )
+            <Post title={x.art.title} artist={x.art.username} artistImg={x.artistImg} likes={x.likes} imgSrc={x.image.imageurl} id={x.art.id}/>    )
         })
     }
     </Grid>;
