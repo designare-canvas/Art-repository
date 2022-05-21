@@ -10,12 +10,24 @@
 
 const {Client} = require('pg');
 
-const pgConnection = new Client({
-    host:process.env.DATABASEURL,
-    user:process.env.DATABASEUSER,
-    port:5432,
+const env = process.env.NODE_ENV || 'development';
+
+let connectionString = {
+    host: process.env.DATABASEURL,
+    user: process.env.DATABASEUSER,
     password:process.env.DATABASEPASSWORD,
-    database:"designare"
-})
+    database: process.env.DATABASENAME
+};
+
+if (env === 'development') {
+    connectionString.database = process.env.DATABASENAME;
+} else {
+    connectionString = {
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+    };
+};
+
+const pgConnection = new Client(connectionString);
 
 module.exports = pgConnection;
