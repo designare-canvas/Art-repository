@@ -35,6 +35,7 @@ app.use(cors({
   }));
 
 app.use(bodyParser.json({limit: '50mb'}));
+app.set("trust proxy",1);
 
 const port = process.env.PORT || 8080;
 
