@@ -8,26 +8,18 @@
 
 // module.exports = mysqlConnection;
 
-const {Client} = require('pg');
+const {Pool} = require('pg');
 
-const env = process.env.NODE_ENV || 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 
-let connectionString = {
-    host: process.env.DATABASEURL,
-    user: process.env.DATABASEUSER,
-    password:process.env.DATABASEPASSWORD,
-    database: process.env.DATABASENAME
-};
+const connectionString=`postgresql://${process.env.DATABASEUSER}:${process.env.DATABASEPASSWORD}@${process.env.DATABASEHOST}:5432/${process.env.DATABASENAME}`
 
-if (env === 'development') {
-    connectionString.database = process.env.DATABASENAME;
-} else {
-    connectionString = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-    };
-};
 
-const pgConnection = new Client(connectionString);
+const pgConnection = new Pool({
+    connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
 
 module.exports = pgConnection;
