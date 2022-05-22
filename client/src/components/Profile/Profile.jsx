@@ -48,8 +48,11 @@ export default function Profile() {
   //   ele2.classList.toggle("mystyle");
   // }
 
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   const fetchData = async () => {
-    const result3 = await axios.get("http://localhost:8080/api/user/" + username, {
+    const result3 = await axios.get("/api/user/" + username, {
       withCredentials: true
     });
     console.log(result3);
@@ -60,7 +63,7 @@ export default function Profile() {
       console.log(userData);
     }
     console.log(other);
-    const result = await axios.get("http://localhost:8080/api/posts/user/" + username, {
+    const result = await axios.get("/api/posts/user/" + username, {
       params: other,
       withCredentials: true,
     });
@@ -70,7 +73,7 @@ export default function Profile() {
       setPosts(result.data.data);
     }
 
-    const result2 = await axios.get("http://localhost:8080/api/posts/liked/" + username, {
+    const result2 = await axios.get("/api/posts/liked/" + username, {
       params: other,
       withCredentials: true,
     });

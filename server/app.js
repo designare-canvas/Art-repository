@@ -19,16 +19,22 @@ app.use(session({
     saveUninitialized: false,
     secret: process.env.SESSIONSECRET,
     cookie: { maxAge: oneDay },
+    secure:true,
+    httpOnly:true,
+    sameSite:'none',
     resave: false 
 }));
 app.use(cookieParser());
 
 app.use(cors({
     origin: "http://localhost:3000",
-    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], 
+    credentials: true, 
+    maxAge: 600, 
+    exposedHeaders: ['*', 'Authorization' ] 
   }));
 
-  app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
 
 const port = process.env.PORT || 8080;
 

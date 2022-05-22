@@ -25,9 +25,12 @@ export default function Login() {
   axios.defaults.withCredentials = true;
   const { dispatch } = useContext(AuthContext);
 
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   const fetchAuthUser = async () => {
     const response = await axios
-      .get("http://localhost:8080/api/auth/user", { withCredentials: true })
+      .get("/api/auth/user", { withCredentials: true })
       .catch((err) => console.log("Authentication Not done"));
 
     if (response && response.data.user) {
@@ -103,7 +106,7 @@ export default function Login() {
       DOB: selectedDate.toISOString().split("T")[0],
     });
     const result = await axios
-      .post("http://localhost:8080/api/auth/signup", values, {
+      .post("/api/auth/signup", values, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

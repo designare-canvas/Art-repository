@@ -23,6 +23,10 @@ function Optionone(postdetails) {
     isPublished:0   
   });
   let history = useHistory();
+
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   useEffect(() => {
     setResult(postdetails.postImgUrl);
     console.log(result);
@@ -53,7 +57,7 @@ function Optionone(postdetails) {
     }
     console.log(values);
     const res = await axios
-      .put("http://localhost:8080/api/posts/post/"+postdetails.id, values, {
+      .put("/api/posts/post/"+postdetails.id, values, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

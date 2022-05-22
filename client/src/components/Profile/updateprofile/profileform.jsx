@@ -48,7 +48,10 @@ export default function ProfileForm() {
   // useEffect(() => {
   //   setValues({...values, "profileImgUrl": profileimg});
   //   console.log(values);
-  // }, [profileimg]);
+  // }, [profileimg]);  
+
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -69,7 +72,7 @@ export default function ProfileForm() {
     });
     console.log(values);
     const result = await axios
-      .put(`http://localhost:8080/api/user/${user.username}`, values)
+      .put(`/api/user/${user.username}`, values)
       .catch((err) => console.log(err));
     console.log(result);
     if (result) {

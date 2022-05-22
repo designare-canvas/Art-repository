@@ -159,10 +159,14 @@ export default function ButtonAppBar() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   const handleLogout = async () => {
     console.log(document.cookie);
 
-    const result = await axios.get("http://localhost:8080/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
+    const result = await axios.get("/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
     if(result.data.success){
       sessionStorage.removeItem("user");
       sessionStorage.removeItem("isAdmin");

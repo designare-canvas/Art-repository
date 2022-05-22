@@ -41,11 +41,13 @@ router.post("/adminLogin", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
+  console.log(req.session);
+  
   pgConnection.query(
     "SELECT * FROM admin WHERE username = $1 AND password = $2",
     [username, password],
     (err, result) => {
-      console.log(result);
+      
       if (result.rows.length) {
         const { password, ...other } = result.rows[0];
         req.session.user = other;

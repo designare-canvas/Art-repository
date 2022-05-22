@@ -32,8 +32,11 @@ function Home() {
     return array;
   }
 
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:8080/api/posts/all", {
+    const result = await axios.get("/api/posts/all", {
       withCredentials: true,
     });
 

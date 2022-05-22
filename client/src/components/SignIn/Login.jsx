@@ -25,9 +25,13 @@ export default function Login() {
 
   const { dispatch } = useContext(AuthContext);
 
+
+  // axios.defaults.baseURL = 'http://localhost:8080'; 
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   const fetchAuthUser = async () => {
     const response = await axios
-      .get("http://localhost:8080/api/auth/user", { withCredentials: true })
+      .get("/api/auth/user", { withCredentials: true })
       .catch((err) => console.log("Authentication Not done"));
     console.log(response);
 
@@ -69,7 +73,7 @@ export default function Login() {
     e.preventDefault();
     if(values.isAdmin){
       const result = await axios
-      .post("http://localhost:8080/api/auth/adminlogin", values, {
+      .post("/api/auth/adminlogin", values, {
           withCredentials: true,
         })
         .catch((err) => console.log(err));
@@ -88,7 +92,7 @@ export default function Login() {
       console.log(result);
     }else{
       const result = await axios
-      .post("http://localhost:8080/api/auth/login", values, {
+      .post("/api/auth/login", values, {
           withCredentials: true,
         })
         .catch((err) => console.log(err));

@@ -16,8 +16,11 @@ function Post() {
 
   const { id } = useParams();
 
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
+
   const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:8080/api/posts/post/"+id, {
+    const result = await axios.get("/api/posts/post/"+id, {
       withCredentials: true,
     });
 
