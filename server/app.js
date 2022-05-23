@@ -1,10 +1,10 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const schema = require('./database/schema');
+const schema = require("./database/schema");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const auth = require("./routes/auth");
@@ -14,36 +14,36 @@ const search = require("./routes/search");
 const admin = require("./routes/admin");
 
 const oneDay = 1000 * 60 * 60 * 24;
-app.use(session({
+app.set("trust proxy", 1);
+app.use(
+  session({
     key: "userId",
     saveUninitialized: false,
     secret: process.env.SESSIONSECRET,
-    cookie: { maxAge: oneDay },
-    secure:true,
-    httpOnly:true,
-    sameSite:'none',
-    resave: false 
-}));
+    cookie: { maxAge: oneDay, secure: true, httpOnly: true, sameSite: "none" },
+    resave: false,
+  })
+);
 app.use(cookieParser());
 
-app.use(cors({
+app.use(
+  cors({
     origin: "http://localhost:3000",
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], 
-    credentials: true, 
-    maxAge: 600, 
-    exposedHeaders: ['*', 'Authorization' ] 
-  }));
+    allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
+    credentials: true,
+    maxAge: 600,
+    exposedHeaders: ["*", "Authorization"],
+  })
+);
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.set("trust proxy",1);
+app.use(bodyParser.json({ limit: "50mb" }));
 
 const port = process.env.PORT || 8080;
 
-app.use("/api/auth",auth);
-app.use("/api/user",user);
-app.use("/api/posts",posts);
-app.use("/api/search",search);
-app.use("/api/admin",admin);
-
+app.use("/api/auth", auth);
+app.use("/api/user", user);
+app.use("/api/posts", posts);
+app.use("/api/search", search);
+app.use("/api/admin", admin);
 
 app.listen(port, () => console.log(`Listening on port ${port}..`));
