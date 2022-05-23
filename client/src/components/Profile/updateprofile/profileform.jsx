@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Grid, TextField, Typography, Button } from '@material-ui/core';
 import './form.scss';
 import DateFnsUtils from '@date-io/date-fns';
@@ -11,11 +11,9 @@ import { useHistory } from 'react-router-dom';
 export default function ProfileForm() {
   const [shake, setShake] = useState(false);
   const { user } = useContext(AuthContext);
-  const [msg, setMsg] = React.useState('');
-  const [selectedDate, setDate] = React.useState(new Date(user.dob));
-  const [profileimg, setProfileImg] = useState(null);
-  const [Coverimg, setCoverImg] = useState(user.coverImgUrl);
-  const [values, setValues] = React.useState({
+  // const [msg, setMsg] = useState('');
+  const [selectedDate, setDate] = useState(new Date(user.dob));
+  const [values, setValues] = useState({
     profileImgUrl: user.profileimgurl,
     coverImgUrl: user.coverimgurl,
     user: user,
@@ -39,8 +37,7 @@ export default function ProfileForm() {
         console.log(`${key} is empty`);
       }
     });
-    // const base64Image = profileimg.toDataURL("image/jpeg");
-    // console.log(base64Image)
+
     setValues({
       ...values,
       DOB: selectedDate.toISOString().split('T')[0],
@@ -55,7 +52,7 @@ export default function ProfileForm() {
         history.push(`/Profile/${user.username}`);
         window.location.reload();
       } else {
-        setMsg(result.data.message);
+        // setMsg(result.data.message);
         setShake(true);
         setTimeout(() => {
           setShake(false);

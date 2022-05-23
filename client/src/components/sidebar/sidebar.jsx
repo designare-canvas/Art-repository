@@ -4,7 +4,6 @@ import { Button, TextField } from '@material-ui/core';
 import Comment from '../../components/comment/comment.jsx';
 import { IconButton } from '@material-ui/core';
 import ShareIcon from '@mui/icons-material/Share';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './sidebar.scss';

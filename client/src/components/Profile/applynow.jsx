@@ -7,7 +7,7 @@ import axios from 'axios';
 import { AuthContext } from '../../Context/Authcontext';
 
 function ApplyNow() {
-  const { user, isAdmin } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [btnDisable, setBtnDisable] = React.useState(false);
 
   const postRequest = async () => {
@@ -29,7 +29,7 @@ function ApplyNow() {
 
     if (result.data.success) {
       console.log(result.data);
-      result.data.data.map((e) => {
+      result.data.data.forEach((e) => {
         if (e.req.username === user.username) setBtnDisable(true);
       });
     } else alert(result.data.message);
@@ -37,7 +37,7 @@ function ApplyNow() {
 
   useEffect(() => {
     checkApplyStatus();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div id="applynow" style={{ textAlign: 'center', margin: '2vw', width: '20vm' }}>

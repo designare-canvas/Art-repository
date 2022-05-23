@@ -4,14 +4,9 @@ import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ImageListShow from './profilepostlistshow';
-import Link from '@material-ui/core/Link';
 import axios from 'axios';
 import { AuthContext } from '../../Context/Authcontext';
 import { useParams } from 'react-router-dom';
-import { getThemeProps } from '@material-ui/styles';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CategoryIcon from '@mui/icons-material/Category';
 import ApplyNow from './applynow';
 import CreateUpdateBtn from './update/createbutton';
 
@@ -77,7 +72,7 @@ export default function Profile() {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

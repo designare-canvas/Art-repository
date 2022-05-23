@@ -88,6 +88,8 @@ export default function Filter(props) {
       case 40:
         searchByTags('sketch');
         break;
+      default:
+        break;
     }
   };
   const [primary, setPrimay] = useState('');
@@ -103,6 +105,8 @@ export default function Filter(props) {
         break;
       case 30:
         fetchAllpostsAndSort('time');
+        break;
+      default:
         break;
     }
   };

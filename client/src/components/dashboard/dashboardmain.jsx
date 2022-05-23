@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './dashboardmain.scss';
-import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import PermissionRequest from './PermissionRequest';
 import EditUserPost from './EditUserPost';
 
 function Dashboard(props) {
-  const [value, setValue] = React.useState('one');
+  const [value, setValue] = useState('one');
   const handleChange = (event, newValue) => {
     var element1 = document.getElementById('one');
     var element2 = document.getElementById('two');
