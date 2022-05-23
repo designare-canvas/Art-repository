@@ -1,9 +1,9 @@
-import React,{useContext} from "react";
-import Link from "@material-ui/core/Link";
-import Button from "@mui/material/Button";
-import axios from "axios";
-import { AuthContext } from "../../../Context/Authcontext";
-import { useHistory } from "react-router-dom";
+import React, { useContext } from 'react';
+import Link from '@material-ui/core/Link';
+import Button from '@mui/material/Button';
+import axios from 'axios';
+import { AuthContext } from '../../../Context/Authcontext';
+import { useHistory } from 'react-router-dom';
 
 function CreateUpdateBtn(params) {
   const { user, isAdmin } = useContext(AuthContext);
@@ -12,21 +12,23 @@ function CreateUpdateBtn(params) {
   const handleDelete = async () => {
     const result = await axios
       .delete(
-        "http://localhost:8080/api/user/" + params.username,
-        {data:{ user: user, isAdmin: isAdmin }},
-        { withCredentials: true }
+        '/api/user/' + params.username,
+        { data: { user: user, isAdmin: isAdmin } },
+        { withCredentials: true },
       )
       .catch((err) => console.log(err));
-    if(result){
-      if(result.data.success){
-        const result = await axios.get("http://localhost:8080/api/auth/logout",{withCredentials:true}).catch(Err => console.log(Err));
-        if(result.data.success){
-          sessionStorage.removeItem("user");
-          sessionStorage.removeItem("isAdmin");
-          history.push("/");
-          window.location.reload(); 
+    if (result) {
+      if (result.data.success) {
+        const result = await axios
+          .get('/api/auth/logout', { withCredentials: true })
+          .catch((Err) => console.log(Err));
+        if (result.data.success) {
+          sessionStorage.removeItem('user');
+          sessionStorage.removeItem('isAdmin');
+          history.push('/');
+          window.location.reload();
         }
-      }else alert(result.data.messsage);
+      } else alert(result.data.messsage);
     }
   };
   return (
@@ -40,16 +42,18 @@ function CreateUpdateBtn(params) {
           Create Post
         </Link>
       </Button>
-      {!isAdmin && <Button className="btn" variant="outlined">
-        <Link
-          href="/updateProfile"
-          // style={{ color: "#22577A", marginLeft: "5px" }}
-          underline="none"
-        >
-          Update Profile
-        </Link>
-      </Button>}
-      <Button style={{color:"red"}} className="btn" variant="outlined" onClick={handleDelete}>
+      {!isAdmin && (
+        <Button className="btn" variant="outlined">
+          <Link
+            href="/updateProfile"
+            // style={{ color: "#22577A", marginLeft: "5px" }}
+            underline="none"
+          >
+            Update Profile
+          </Link>
+        </Button>
+      )}
+      <Button style={{ color: 'red' }} className="btn" variant="outlined" onClick={handleDelete}>
         Delete Account
       </Button>
     </div>

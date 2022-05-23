@@ -1,24 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Ubuntu+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Ubuntu+Mono&display=swap');
 
-.shake{
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+.shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
   perspective: 1000px;
 }
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
-  
-  20%, 80% {
+
+  20%,
+  80% {
     transform: translate3d(2px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-4px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(4px, 0, 0);
   }
 }
@@ -30,7 +35,7 @@
   overflow-y: hidden;
 
   hr.divider:after {
-    content: "Or";
+    content: 'Or';
     display: inline-block;
     position: relative;
     top: -11px;
@@ -47,7 +52,7 @@
     text-align: center;
   }
   .Grid_top {
-    background-image: url("../../public/3860709.jpg");
+    background-image: url('../../public/3860709.jpg');
     background-size: cover;
   }
   @media (min-width: 600px) and (max-width: 700px) {
@@ -90,16 +95,14 @@
     }
   }
 }
-.display-msg{
+.display-msg {
+  width: auto;
+  margin: auto;
+  color: red;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
 
-  width:auto;
-  margin:auto;
-  color:red;
-  font-size:20px;
-  margin-bottom:30px;
-  
-  }
-  
 .Register {
   margin: 0 !important;
   padding: 0 !important;
@@ -107,7 +110,7 @@
   overflow-y: hidden;
 
   hr.divider:after {
-    content: "Or";
+    content: 'Or';
     display: inline-block;
     position: relative;
     top: -11px;
@@ -124,7 +127,7 @@
     text-align: center;
   }
   .Grid_top_signup {
-    background-image: url("../../public/5570173.jpg");
+    background-image: url('../../public/5570173.jpg');
     background-size: cover;
   }
   .addOn {

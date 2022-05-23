@@ -1,25 +1,12 @@
-const pgConnection = require("./dbConnect");
+const pgConnection = require('./dbConnect');
 
 pgConnection.connect((err) => {
-  if (err) {
-    console.log("Connection Failed!" + JSON.stringify(err, undefined, 2));
-    return;
-  }
-  console.log("Connection Established Successfully");
+    if (err) {
+        console.log('Connection Failed!' + JSON.stringify(err, undefined, 2));
+        return;
+    }
+    console.log('Connection Established Successfully');
 });
-
-// pgConnection.query(
-//   `CREATE DATABASE ${process.env.DATABASENAME} ENCODING='UTF-8'`,
-//   function (err, result) {
-//     if (err) {
-//       throw err;
-//       return;
-//     }
-//     console.log("Database created");
-//   }
-// );
-
-// pgConnection.query(`USE ${process.env.DATABASENAME}`);
 
 const admin = `Create TABLE IF NOT EXISTS admin(
     username VARCHAR(40) NOT NULL UNIQUE,
@@ -112,55 +99,56 @@ const requests = `CREATE TABLE IF NOT EXISTS requests(
 )`;
 
 pgConnection.query(admin, (err, result) => {
-  if (err) throw err;
-  else console.log(" Admin Table created");
+    if (err) throw err;
+    else console.log(' Admin Table created');
 });
 
 pgConnection.query(users, (err, result) => {
-  if (err) throw err;
-  else console.log(" Users Table created");
+    if (err) throw err;
+    else console.log(' Users Table created');
 });
 
 pgConnection.query(arts, (err, result) => {
-  if (err) throw err;
-  else console.log(" Arts Table created");
+    if (err) throw err;
+    else console.log(' Arts Table created');
 });
 
 pgConnection.query(tags, (err, result) => {
-  if (err) throw err;
-  else console.log(" Tags Table created");
+    if (err) throw err;
+    else console.log(' Tags Table created');
 });
 
 pgConnection.query(likes, (err, result) => {
-  if (err) throw err;
-  else console.log(" Likes Table created");
+    if (err) throw err;
+    else console.log(' Likes Table created');
 });
 
 pgConnection.query(comments, (err, result) => {
-  if (err) throw err;
-  else console.log(" Commnets Table created");
+    if (err) throw err;
+    else console.log(' Commnets Table created');
 });
 
 pgConnection.query(artImages, (err, result) => {
-  if (err) throw err;
-  else console.log(" Art Images Table created");
+    if (err) throw err;
+    else console.log(' Art Images Table created');
 });
 
 pgConnection.query(requests, (err, result) => {
-  if (err) throw err;
-  else console.log(" Requests Images Table created");
+    if (err) throw err;
+    else console.log(' Requests Images Table created');
 });
 
-pgConnection.query("SELECT * FROM admin",(err,result) => {
-  // console.log(result);
-  if(result.rows.length === 0){
-    pgConnection.query(
-      "INSERT INTO admin (username,email,Fname,Lname,password) VALUES ($1,$2,$3,$4,$5)",["admin123","admin@mail.com","new","admin","pass2566"],
-      (err, res) => {
-        // console.log(res);
-        if (err)  console.log(err);
-        else console.log("admin inserted");
-      }
-    );
+pgConnection.query('SELECT * FROM admin', (err, result) => {
+    // console.log(result);
+    if (result.rows.length === 0) {
+        pgConnection.query(
+            'INSERT INTO admin (username,email,Fname,Lname,password) VALUES ($1,$2,$3,$4,$5)',
+            ['admin123', 'admin@mail.com', 'new', 'admin', 'pass2566'],
+            (err, res) => {
+                // console.log(res);
+                if (err) console.log(err);
+                else console.log('admin inserted');
+            }
+        );
     }
 });

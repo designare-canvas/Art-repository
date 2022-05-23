@@ -1,17 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Grid, TextField, Typography, Button } from "@material-ui/core";
-import "./form.scss";
-import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import FormControl from "@material-ui/core/FormControl";
-import { AuthContext } from "../../../Context/Authcontext";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState, useEffect } from 'react';
+import { Grid, TextField, Typography, Button } from '@material-ui/core';
+import './form.scss';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import FormControl from '@material-ui/core/FormControl';
+import { AuthContext } from '../../../Context/Authcontext';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 export default function ProfileForm() {
   const [shake, setShake] = useState(false);
   const { user } = useContext(AuthContext);
-  const [msg, setMsg] = React.useState("");
+  const [msg, setMsg] = React.useState('');
   const [selectedDate, setDate] = React.useState(new Date(user.dob));
   const [profileimg, setProfileImg] = useState(null);
   const [Coverimg, setCoverImg] = useState(user.coverImgUrl);
@@ -24,34 +24,9 @@ export default function ProfileForm() {
     email: user.email,
     city: user.city,
     country: user.country,
-    DOB: selectedDate.toISOString().split("T")[0],
+    DOB: selectedDate.toISOString().split('T')[0],
   });
   let history = useHistory();
-
-  //  onChange = (e) =>{
-  //   let file=e.target.files[0]
-  //   if(file){
-  //     const reader= new FileReader()
-  //     reader.onload= this._handleReaderLoaded.bind(this)
-  //     reader.readAsBinaryString(file)
-  //   }
-  //   // setProfileImg({profileimg : URL.createObjectURL(event.target.files[0] )});
-
-  // }
-  //  _handleReaderLoaded = (readerEvt)=>{
-  //   let binaryString=readerEvt.target.result
-  //   this.setState({
-  //     base64String:btoa(binaryString)
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   setValues({...values, "profileImgUrl": profileimg});
-  //   console.log(values);
-  // }, [profileimg]);  
-
-  // axios.defaults.baseURL = 'http://localhost:8080';
-  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -60,7 +35,7 @@ export default function ProfileForm() {
     event.preventDefault();
     const keys = Object.keys(values);
     keys.forEach((key, index) => {
-      if (values[key] === "") {
+      if (values[key] === '') {
         console.log(`${key} is empty`);
       }
     });
@@ -68,7 +43,7 @@ export default function ProfileForm() {
     // console.log(base64Image)
     setValues({
       ...values,
-      DOB: selectedDate.toISOString().split("T")[0],
+      DOB: selectedDate.toISOString().split('T')[0],
     });
     console.log(values);
     const result = await axios
@@ -76,11 +51,10 @@ export default function ProfileForm() {
       .catch((err) => console.log(err));
     console.log(result);
     if (result) {
-      if (result.data.success){
+      if (result.data.success) {
         history.push(`/Profile/${user.username}`);
         window.location.reload();
-      } 
-      else {
+      } else {
         setMsg(result.data.message);
         setShake(true);
         setTimeout(() => {
@@ -94,15 +68,15 @@ export default function ProfileForm() {
   return (
     <div>
       <div className="profileform">
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: 'center' }}>
           <h1
             // className="heading"
             style={{
-              margin: "30px",
-              fontFamily: "Josefin Sans",
-              fontSize: "3rem",
-              fontWeight: "700",
-              color: "#22577A",
+              margin: '30px',
+              fontFamily: 'Josefin Sans',
+              fontSize: '3rem',
+              fontWeight: '700',
+              color: '#22577A',
             }}
           >
             Edit Profile
@@ -123,23 +97,15 @@ export default function ProfileForm() {
             xs={12}
             sm={12}
             md={12}
-            style={{ backgroundColor: "" }}
+            style={{ backgroundColor: '' }}
             className="Grid_top_signup"
           >
             <div>
               <div className="profileCover">
-                <img
-                  className="profileCoverImg"
-                  src={user.coverimgurl}
-                  alt=""
-                />
-                <img
-                  className="profileUserImg"
-                  src={user.profileimgurl}
-                  alt=""
-                />
+                <img className="profileCoverImg" src={user.coverimgurl} alt="" />
+                <img className="profileUserImg" src={user.profileimgurl} alt="" />
               </div>
-              <div style={{ height: "20px" }}></div>
+              <div style={{ height: '20px' }}></div>
               {/* <div style={{ textAlign: "center" }}>
                 <Typography
                   variant="h2"
@@ -250,25 +216,25 @@ export default function ProfileForm() {
             alignItems="center"
             direction="column"
           >
-            <div style={{ height: "20px" }} />
+            <div style={{ height: '20px' }} />
 
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
                 minWidth: 500,
                 maxWidth: 500,
               }}
             >
-              <Grid container justify="center" style={{ marginBottom: "5%" }}>
+              <Grid container justify="center" style={{ marginBottom: '5%' }}>
                 <Typography
                   variant="h2"
                   // className="heading"
                   style={{
-                    fontFamily: "Josefin Sans",
-                    fontSize: "2rem",
-                    fontWeight: "700",
-                    color: "#22577A",
+                    fontFamily: 'Josefin Sans',
+                    fontSize: '2rem',
+                    fontWeight: '700',
+                    color: '#22577A',
                   }}
                 >
                   Update Profile Data
@@ -284,8 +250,8 @@ export default function ProfileForm() {
                   className="name"
                   variant="standard"
                   value={values.Fname}
-                  onChange={handleChange("Fname")}
-                  style={{ marginTop: "10px" }}
+                  onChange={handleChange('Fname')}
+                  style={{ marginTop: '10px' }}
                 />
                 <TextField
                   required
@@ -295,15 +261,15 @@ export default function ProfileForm() {
                   className="name"
                   variant="standard"
                   value={values.Lname}
-                  onChange={handleChange("Lname")}
-                  style={{ marginTop: "10px" }}
+                  onChange={handleChange('Lname')}
+                  style={{ marginTop: '10px' }}
                 />
               </div>
               {/* <TextField label="Username" margin="none" /> */}
               <FormControl
-                sx={{ m: 1, width: "25ch" }}
+                sx={{ m: 1, width: '25ch' }}
                 variant="standard"
-                style={{ marginTop: "10px" }}
+                style={{ marginTop: '10px' }}
               >
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <DatePicker
@@ -311,9 +277,9 @@ export default function ProfileForm() {
                     openTo="year"
                     format="dd/MM/yyyy"
                     label="Date of birth"
-                    views={["year", "month", "date"]}
+                    views={['year', 'month', 'date']}
                     value={selectedDate}
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: '10px' }}
                     // value={values.DOB}
                     onChange={(e) => {
                       handleChange(e);
@@ -324,35 +290,35 @@ export default function ProfileForm() {
                 <TextField
                   label="City"
                   margin="none"
-                  style={{ marginTop: "10px" }}
+                  style={{ marginTop: '10px' }}
                   value={values.city}
-                  onChange={handleChange("city")}
+                  onChange={handleChange('city')}
                 />
                 <TextField
                   label="Country"
                   margin="none"
-                  style={{ marginTop: "10px" }}
+                  style={{ marginTop: '10px' }}
                   value={values.country}
-                  onChange={handleChange("country")}
+                  onChange={handleChange('country')}
                 />
               </FormControl>
 
-              <div style={{ height: "20px" }}></div>
+              <div style={{ height: '20px' }}></div>
               <Button
                 style={{
-                  backgroundColor: "#22577A",
-                  textTransform: "none",
-                  fontSize: "2.5vh",
-                  color: "white",
+                  backgroundColor: '#22577A',
+                  textTransform: 'none',
+                  fontSize: '2.5vh',
+                  color: 'white',
                 }}
                 variant="contained"
                 onClick={handleSubmit}
               >
                 Save
               </Button>
-              <div style={{ height: "20px" }}></div>
+              <div style={{ height: '20px' }}></div>
             </div>
-            <div style={{ height: "20px" }} />
+            <div style={{ height: '20px' }} />
           </Grid>
         </Grid>
       </div>

@@ -1,34 +1,33 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar/Navbar";
-import Posts from "../../components/WhatsNew/WhatsNew.jsx";
-import Filter from "../../components/filter/filter";
-import Footer from "../../components/footer/footer";
-import axios from "axios";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState } from 'react';
+import Navbar from '../../components/navbar/Navbar';
+import Posts from '../../components/WhatsNew/WhatsNew.jsx';
+import Filter from '../../components/filter/filter';
+import Footer from '../../components/footer/footer';
+import axios from 'axios';
+import Box from '@mui/material/Box';
 // import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   hero: {
     // backgroundImage: `url(${Background})`,
-    backgroundColor: "#F9F9F9",
-    height: "100px",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#22577A",
-    fontSize: "3.8rem",
-    fontFamily: "Josefin Sans",
-    [theme.breakpoints.down("sm")]: {
+    backgroundColor: '#F9F9F9',
+    height: '100px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#22577A',
+    fontSize: '3.8rem',
+    fontFamily: 'Josefin Sans',
+    [theme.breakpoints.down('sm')]: {
       height: 80,
-      fontSize: "2.5em",
+      fontSize: '2.5em',
     },
   },
 }));
-
 
 function WhatsNew() {
   const [posts, setPosts] = useState([]);
@@ -44,20 +43,14 @@ function WhatsNew() {
       currentIndex--;
 
       // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
 
     return array;
   }
 
-  // axios.defaults.baseURL = 'http://localhost:8080';
-  axios.defaults.baseURL = 'https://designare.herokuapp.com/';
-
   const fetchPosts = async () => {
-    const result = await axios.get("/api/posts/all", {
+    const result = await axios.get('/api/posts/all', {
       withCredentials: true,
     });
 
@@ -72,13 +65,13 @@ function WhatsNew() {
 
   return (
     <div className="home">
-        <Navbar />
-        <Box className={classes.hero}>
-            <Box>Nouveau Designs</Box>
-        </Box>
-        <Filter shuffle={shuffle} setPosts={setPosts} />
-        <Posts posts={posts} />
-        <Footer />
+      <Navbar />
+      <Box className={classes.hero}>
+        <Box>Nouveau Designs</Box>
+      </Box>
+      <Filter shuffle={shuffle} setPosts={setPosts} />
+      <Posts posts={posts} />
+      <Footer />
     </div>
   );
 }

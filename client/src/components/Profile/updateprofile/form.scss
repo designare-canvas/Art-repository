@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Ubuntu+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Ubuntu+Mono&display=swap');
 
 .profileform {
   text-align: center !important;
@@ -8,7 +8,7 @@
   overflow-y: hidden;
 
   hr.divider:after {
-    content: "Or";
+    content: 'Or';
     display: inline-block;
     position: relative;
     top: -11px;
@@ -81,21 +81,21 @@
       font-size: 1.2rem !important;
     }
   }
-  .profileCover{
-    margin:auto;
+  .profileCover {
+    margin: auto;
     height: 320px;
     position: relative;
-}
+  }
 
-.profileCoverImg{
+  .profileCoverImg {
     /* background-color: blue; */
 
     width: 50%;
     height: 250px;
     object-fit: cover;
-}
+  }
 
-.profileUserImg{
+  .profileUserImg {
     /* background-color: red; */
     width: 170px;
     height: 170px;
@@ -107,8 +107,7 @@
     margin: auto;
     top: 150px;
     border: 3px solid white;
-}
-
+  }
 }
 /*1018*/
 /*719*/

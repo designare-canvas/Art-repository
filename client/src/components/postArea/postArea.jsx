@@ -1,25 +1,26 @@
-import React, { useContext } from "react";
-import "./postArea.scss";
-import Button from "@mui/material/Button";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import React, { useContext } from 'react';
+import './postArea.scss';
+import Button from '@mui/material/Button';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {Link, useHistory } from "react-router-dom";
-import { AuthContext } from "../../Context/Authcontext";
-import axios from "axios";
+import { Link, useHistory } from 'react-router-dom';
+import { AuthContext } from '../../Context/Authcontext';
+import axios from 'axios';
 
 function PostArea(props) {
-
-  const { user,isAdmin } = useContext(AuthContext);
+  const { user, isAdmin } = useContext(AuthContext);
   let history = useHistory();
 
   const handleDelete = async () => {
-    const result = await axios.delete("http://localhost:8080/api/posts/post/"+props.id,{data:{user:user, isAdmin:isAdmin}})
+    const result = await axios.delete('/api/posts/post/' + props.id, {
+      data: { user: user, isAdmin: isAdmin },
+    });
     console.log(result);
-    if(result.data.success){
-      history.push("/")
+    if (result.data.success) {
+      history.push('/');
     }
-  }
+  };
 
   return (
     <div className="postArea">
@@ -31,77 +32,77 @@ function PostArea(props) {
           <div className="postBody">
             <h4>{props.postTitle}</h4>
             <div className="authorLinks">
-              <Link to={`/Profile/${props.authorName}`} >
-              <p>{props.authorName}</p>
+              <Link to={`/Profile/${props.authorName}`}>
+                <p>{props.authorName}</p>
               </Link>
             </div>
           </div>
         </div>
         <div>
-          {((user && user.username === props.authorName) || isAdmin)? (
+          {(user && user.username === props.authorName) || isAdmin ? (
             <>
-              <Link to={{
-                pathname: "/upload",
-                state: props
-              }}
-              style={{ textDecoration: "none" }}>
-              <Button
-              variant="contained"
-              style={{
-                color: "#000",
-                backgroundColor: "#f3f3f4",
-                border: "none",
-                marginRight: "20px",
-                zIndex:"0"
-              }}
-              size="small"
-              startIcon={<EditIcon />}
-            >
-              Edit
+              <Link
+                to={{
+                  pathname: '/upload',
+                  state: props,
+                }}
+                style={{ textDecoration: 'none' }}
+              >
+                <Button
+                  variant="contained"
+                  style={{
+                    color: '#000',
+                    backgroundColor: '#f3f3f4',
+                    border: 'none',
+                    marginRight: '20px',
+                    zIndex: '0',
+                  }}
+                  size="small"
+                  startIcon={<EditIcon />}
+                >
+                  Edit
                 </Button>
-                </Link>
+              </Link>
               <Button
-              variant="contained"
-              style={{
-                color: "#000",
-                backgroundColor: "#f3f3f4",
-                border: "none",
-                marginRight: "20px",
-                zIndex:"0"
-              }}
-              size="small"
-              startIcon={<DeleteIcon />}
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
+                variant="contained"
+                style={{
+                  color: '#000',
+                  backgroundColor: '#f3f3f4',
+                  border: 'none',
+                  marginRight: '20px',
+                  zIndex: '0',
+                }}
+                size="small"
+                startIcon={<DeleteIcon />}
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
             </>
-          ) : ( 
-            <>
-          </>)}
-         
+          ) : (
+            <></>
+          )}
+
           <Button
             variant="contained"
             style={{
-              color: "#000",
-              backgroundColor: "#f3f3f4",
-              border: "none",
-              zIndex:"0"
+              color: '#000',
+              backgroundColor: '#f3f3f4',
+              border: 'none',
+              zIndex: '0',
             }}
             size="small"
             startIcon={<FavoriteIcon />}
-            disabled = {isAdmin}
+            disabled={isAdmin}
           >
             Like
           </Button>
         </div>
       </div>
       <div className="postImg">
-          <img src={props.postImgUrl} alt="posts" style={{width:"63.8vw", borderRadius:"10px"}} />
+        <img src={props.postImgUrl} alt="posts" style={{ width: '63.8vw', borderRadius: '10px' }} />
       </div>
-      <div className="postDescription">
-          {props.postDescription}
-      </div>
+      <div className="postDescription">{props.postDescription}</div>
     </div>
   );
 }
