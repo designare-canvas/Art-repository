@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: ['http://localhost:3000','https://designareapp.netlify.app/'],
+        origin: 'https://designareapp.netlify.app/',
         allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
         credentials: true,
         maxAge: 600,
