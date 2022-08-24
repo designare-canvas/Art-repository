@@ -1,28 +1,27 @@
-import React,{useContext, useState, useEffect} from "react";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import ShareIcon from "@material-ui/icons/Share";
-import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
-import { makeStyles } from "@material-ui/core/styles";
-import "./post.scss";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import {Link} from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import React, { useContext, useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import ShareIcon from '@material-ui/icons/Share';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
+import './post.scss';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { AuthContext } from "../../Context/Authcontext";
-import ReactTimeAgo from "react-time-ago";
-
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../Context/Authcontext';
+import ReactTimeAgo from 'react-time-ago';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    "& > *": {
+    display: 'flex',
+    '& > *': {
       margin: theme.spacing(1),
     },
   },
@@ -32,86 +31,82 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(2.5),
   },
   left: {
-    justifyContent: "space-evenly",
-    padding: "0px",
-    marginTop: "8px",
+    justifyContent: 'space-evenly',
+    padding: '0px',
+    marginTop: '8px',
   },
   noshadow: {
-    boxShadow: "none",
+    boxShadow: 'none',
   },
   shadow: {
     // boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    borderRadius: "10px",
+    borderRadius: '10px',
   },
 }));
 function Post(props) {
   console.log(props);
   const { user } = useContext(AuthContext);
-  const [likes,setLikes] = useState(props.likes);
+  const [likes, setLikes] = useState(props.likes);
   const classes = useStyles();
   var title = props.title.substr(0, 10);
-  title += "...";
+  title += '...';
   let history = useHistory();
-  
-  // if(user.isArtist){
-  //   ele1.classList.toggle("mystyle");
-  // }else{
-  //   ele2.classList.toggle("mystyle");
-  // }
-  const handleLikeChange= async(e) => {
 
-    if(user){
-      if(e.target.checked){
-        const result = await axios.post("http://localhost:8080/api/posts/like",{username:user.username,postId:props.id});
+  const handleLikeChange = async (e) => {
+    if (user) {
+      if (e.target.checked) {
+        const result = await axios.post('/api/posts/like', {
+          username: user.username,
+          postId: props.id,
+        });
         console.log(result);
-        setLikes((prev) => prev+1)
-      }else{
-        const result = await axios.delete("http://localhost:8080/api/posts/like",{data:{id:props.id, username:user.username}});
+        setLikes((prev) => prev + 1);
+      } else {
+        const result = await axios.delete('/api/posts/like', {
+          data: { id: props.id, username: user.username },
+        });
         console.log(result);
-        setLikes((prev) => prev-1)
+        setLikes((prev) => prev - 1);
       }
-    }else{
-      history.push("/Signin")
+    } else {
+      history.push('/Signin');
     }
-  }
+  };
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} className="post">
       <Card className={classes.noshadow} id={props.id}>
-      <Link to={`/Post/${props.id}`} style={{ textDecoration: "none" }}>
-        <div className="container">
-          <img
-            className="image skeleton"
-            src={props.imgSrc}
-            alt="post_img"
-          />
-          <div className="middle">
-            {/* <div className="text"> */}
-            <CardActions style={{ justifyContent: "space-evenly" }}>
-              <span
-                style={{ color: "white", fontSize: "20px", marginLeft: "10px",  fontFamily: "Josefin Sans" }}
-              >
-                {title}
+        <Link to={`/Post/${props.id}`} style={{ textDecoration: 'none' }}>
+          <div className="container">
+            <img className="image skeleton" src={props.imgSrc} alt="post_img" />
+            <div className="middle">
+              {/* <div className="text"> */}
+              <CardActions style={{ justifyContent: 'space-evenly' }}>
+                <span
+                  style={{
+                    color: 'white',
+                    fontSize: '20px',
+                    marginLeft: '10px',
+                    fontFamily: 'Josefin Sans',
+                  }}
+                >
+                  {title}
                 </span>
-              
-              <ButtonGroup className="left" size="medium">
-                <div></div>
-                <IconButton
-                  aria-label="add to favorites"
-                  style={{ backgroundColor: "transparent" }}
-                >
-                </IconButton>
-                <IconButton
-                  aria-label="share"
-                  style={{ backgroundColor: "transparent" }}
-                >
-                  <ShareIcon fontSize="middle" color="white" className="favicon" />
-                </IconButton>
-              </ButtonGroup>
-            </CardActions>
-            {/* </div> */}
-            {/* <div className="text">John Doe</div> */}
-          </div>
+
+                <ButtonGroup className="left" size="medium">
+                  <div></div>
+                  <IconButton
+                    aria-label="add to favorites"
+                    style={{ backgroundColor: 'transparent' }}
+                  ></IconButton>
+                  <IconButton aria-label="share" style={{ backgroundColor: 'transparent' }}>
+                    <ShareIcon fontSize="middle" color="white" className="favicon" />
+                  </IconButton>
+                </ButtonGroup>
+              </CardActions>
+              {/* </div> */}
+              {/* <div className="text">John Doe</div> */}
+            </div>
           </div>
         </Link>
 
@@ -120,37 +115,38 @@ function Post(props) {
           <Typography
             size="small"
             variant="h7"
-            style={{ marginRight: "auto", fontFamily: "Josefin Sans", }}
+            style={{ marginRight: 'auto', fontFamily: 'Josefin Sans' }}
           >
             {props.artist}
           </Typography>
-          {props.where === "whatsnew" ? (<>
-                <span style={{ display: "inline-block" }}>
-                  <ReactTimeAgo
-                    date={props.time}
-                    locale="en-US"
-                    style={{
-                      fontSize: "small",
-                      marginLeft: 0,
-                      fontFamily: "Verdana",
-                    }}
-                  />
-                </span>
-                </>) :
-                  (<></>)
-           }
+          {props.where === 'whatsnew' ? (
+            <>
+              <span style={{ display: 'inline-block' }}>
+                <ReactTimeAgo
+                  date={props.time}
+                  locale="en-US"
+                  style={{
+                    fontSize: 'small',
+                    marginLeft: 0,
+                    fontFamily: 'Verdana',
+                  }}
+                />
+              </span>
+            </>
+          ) : (
+            <></>
+          )}
           <ButtonGroup size="small">
-          <IconButton
-              aria-label="add to favorites"
-              style={{ backgroundColor: "transparent" }}
-            >
-          <Checkbox className="favicon" onChange={handleLikeChange} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-              {likes} 
+            <IconButton aria-label="add to favorites" style={{ backgroundColor: 'transparent' }}>
+              <Checkbox
+                className="favicon"
+                onChange={handleLikeChange}
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite />}
+              />
+              {likes}
             </IconButton>
-            <IconButton
-              aria-label="share"
-              style={{ backgroundColor: "transparent" }}
-            >
+            <IconButton aria-label="share" style={{ backgroundColor: 'transparent' }}>
               <ShareIcon fontSize="small" className="favicon" />
             </IconButton>
           </ButtonGroup>

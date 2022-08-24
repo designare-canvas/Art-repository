@@ -1,22 +1,22 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Grid, TextField, Typography, Button } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
-import "./Login.scss";
-import Checkbox from "@mui/material/Checkbox";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
-import FormControl from "@material-ui/core/FormControl";
-import Visibility from "@material-ui/icons/Visibility";
-import { AuthContext } from "../../Context/Authcontext";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import axios from "axios";
+import React, { useState, useContext, useEffect } from 'react';
+import { Grid, TextField, Typography, Button } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import './Login.scss';
+import Checkbox from '@mui/material/Checkbox';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import { AuthContext } from '../../Context/Authcontext';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import axios from 'axios';
 
 export default function Login() {
   const [values, setValues] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
     showPassword: false,
     isAdmin: false,
   });
@@ -27,14 +27,14 @@ export default function Login() {
 
   const fetchAuthUser = async () => {
     const response = await axios
-      .get("http://localhost:8080/api/auth/user", { withCredentials: true })
-      .catch((err) => console.log("Authentication Not done"));
+      .get('/api/auth/user', { withCredentials: true })
+      .catch((err) => console.log('Authentication Not done'));
     console.log(response);
 
     if (response && response.data.loggedIn) {
-      console.log("User:", response.data.user);
+      console.log('User:', response.data.user);
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: 'LOGIN_SUCCESS',
         payload: response.data.user,
         adminState: response.data.isAdmin,
       });
@@ -46,7 +46,7 @@ export default function Login() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (prop) => (event) => {
-    if (prop === "isAdmin") {
+    if (prop === 'isAdmin') {
       setValues({ ...values, [prop]: event.target.checked });
       return;
     }
@@ -67,13 +67,13 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(values.isAdmin){
+    if (values.isAdmin) {
       const result = await axios
-      .post("http://localhost:8080/api/auth/adminlogin", values, {
+        .post('/api/auth/adminlogin', values, {
           withCredentials: true,
         })
         .catch((err) => console.log(err));
-  
+
       if (result) {
         if (result.data.success) window.location.reload();
         else {
@@ -86,13 +86,13 @@ export default function Login() {
         }
       }
       console.log(result);
-    }else{
+    } else {
       const result = await axios
-      .post("http://localhost:8080/api/auth/login", values, {
+        .post('/api/auth/login', values, {
           withCredentials: true,
         })
         .catch((err) => console.log(err));
-  
+
       if (result) {
         if (result.data.success) window.location.reload();
         else {
@@ -114,27 +114,21 @@ export default function Login() {
       <Grid
         container
         style={{
-          minHeight: "100vh",
-          maxWidth: "150vh",
+          minHeight: '100vh',
+          maxWidth: '150vh',
         }}
       >
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          style={{ backgroundColor: "#22577A" }}
-          className="Grid_top"
-        >
+        <Grid item xs={12} sm={6} style={{ backgroundColor: '#22577A' }} className="Grid_top">
           <Typography
             variant="h2"
             className="addOn"
             style={{
-              fontFamily: "Allison",
-              fontStyle: "cursive",
-              fontSize: "18vh",
-              color: "#152D35",
-              textAlign: "center",
-              marginTop: "50%",
+              fontFamily: 'Allison',
+              fontStyle: 'cursive',
+              fontSize: '18vh',
+              color: '#152D35',
+              textAlign: 'center',
+              marginTop: '50%',
             }}
           >
             designare
@@ -151,31 +145,30 @@ export default function Login() {
           direction="column"
           className="Grid_mid"
         >
-          <div style={{ height: "20px" }} />
+          <div style={{ height: '20px' }} />
 
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               minWidth: 300,
               maxWidth: 400,
             }}
           >
-            <div className={`display-msg ${shake ? "shake" : ""}`}>{msg}</div>
-            <Grid container justify="center" style={{ marginBottom: "5%" }}>
+            <div className={`display-msg ${shake ? 'shake' : ''}`}>{msg}</div>
+            <Grid container justify="center" style={{ marginBottom: '5%' }}>
               <Typography
                 variant="h2"
                 className="heading"
                 style={{
-                  fontFamily: "Josefin Sans",
-                  fontSize: "2.75rem",
-                  fontWeight: "700",
-                  color: "#22577A",
+                  fontFamily: 'Josefin Sans',
+                  fontSize: '2.75rem',
+                  fontWeight: '700',
+                  color: '#22577A',
                 }}
               >
                 Sign in to Designare
               </Typography>
-             
             </Grid>
             <form onSubmit={handleSubmit}>
               <TextField
@@ -183,21 +176,17 @@ export default function Login() {
                 required
                 label="Username"
                 margin="normal"
-                onChange={handleChange("username")}
+                onChange={handleChange('username')}
               />
-              <FormControl
-                sx={{ m: 1, width: "25ch" }}
-                variant="standard"
-                fullWidth
-              >
+              <FormControl sx={{ m: 1, width: '25ch' }} variant="standard" fullWidth>
                 <InputLabel required htmlFor="standard-adornment-password">
                   Password
                 </InputLabel>
                 <Input
                   id="standard-adornment-password"
-                  type={values.showPassword ? "text" : "password"}
+                  type={values.showPassword ? 'text' : 'password'}
                   value={values.password}
-                  onChange={handleChange("password")}
+                  onChange={handleChange('password')}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -205,40 +194,33 @@ export default function Login() {
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
-                        {values.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
+                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
               </FormControl>
-              <div style={{ height: "20px" }}></div>
+              <div style={{ height: '20px' }}></div>
               <div>
-                <Checkbox
-                  onChange={handleChange("isAdmin")}
-                  style={{ textAlign: "center" }}
-                />
+                <Checkbox onChange={handleChange('isAdmin')} style={{ textAlign: 'center' }} />
                 <label
                   style={{
-                    fontFamily: "Rajdhani",
-                    fontSize: "1rem",
-                    fontWeight: "550",
-                    color: "#22577A",
+                    fontFamily: 'Rajdhani',
+                    fontSize: '1rem',
+                    fontWeight: '550',
+                    color: '#22577A',
                   }}
                 >
                   Signin as Admin
                 </label>
               </div>
-              <div style={{ height: "20px" }}></div>
+              <div style={{ height: '20px' }}></div>
               <Button
                 style={{
-                  backgroundColor: "#22577A",
-                  textTransform: "none",
-                  fontSize: "2.5vh",
-                  color: "white",
+                  backgroundColor: '#22577A',
+                  textTransform: 'none',
+                  fontSize: '2.5vh',
+                  color: 'white',
                 }}
                 variant="contained"
                 type="submit"
@@ -247,30 +229,26 @@ export default function Login() {
                 Sign In
               </Button>
             </form>
-            <div style={{ height: "20px" }}></div>
+            <div style={{ height: '20px' }}></div>
             <Typography
               variant="paragraph"
               className="bottom"
               style={{
-                fontFamily: "Josefin Sans",
-                fontSize: "3vh",
-                fontWeight: "500",
-                color: "black",
-                marginBottom: "5%",
-                textAlign: "center",
+                fontFamily: 'Josefin Sans',
+                fontSize: '3vh',
+                fontWeight: '500',
+                color: 'black',
+                marginBottom: '5%',
+                textAlign: 'center',
               }}
             >
               Want to Design?
-              <Link
-                href="/Signup"
-                style={{ color: "#22577A", marginLeft: "5px" }}
-                underline="none"
-              >
+              <Link href="/Signup" style={{ color: '#22577A', marginLeft: '5px' }} underline="none">
                 Join us Now
               </Link>
             </Typography>
           </div>
-          <div style={{ height: "20px" }} />
+          <div style={{ height: '20px' }} />
         </Grid>
       </Grid>
     </div>

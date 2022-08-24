@@ -1,19 +1,19 @@
-import React from "react";
-import "./footer.scss";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import './footer.scss';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   const useStyles = makeStyles((theme) => ({
     title: {
-      fontFamily: "Allison",
-      fontStyle: "cursive",
-      fontSize: "2.6rem",
-      color: "#FEFBF3",
+      fontFamily: 'Allison',
+      fontStyle: 'cursive',
+      fontSize: '2.6rem',
+      color: '#FEFBF3',
       marginRight: theme.spacing(2),
     },
   }));
@@ -30,17 +30,18 @@ function Footer() {
               variant="h2"
               className={classes.title}
               style={{
-                fontFamily: "Allison",
-                fontStyle: "cursive",
-                fontSize: "7vh",
-                marginTop:"0"
+                fontFamily: 'Allison',
+                fontStyle: 'cursive',
+                fontSize: '7vh',
+                marginTop: '0',
               }}
             >
               designare
             </Typography>
           </Link>
           <p className="tagline">
-            Creative fuels design. Design fuels creativity. Be here for more. Are you in love with a creative? It’s never too early to show it. 
+            Creative fuels design. Design fuels creativity. Be here for more. Are you in love with a
+            creative? It’s never too early to show it.
           </p>
           <div className="icons">
             <Link to="https://facebook.com/">
@@ -118,7 +119,7 @@ function Footer() {
         </div>
       </div>
       <hr />
-      <p style={{ color: "rgba(256,256,256,0.56)" }}>
+      <p style={{ color: 'rgba(256,256,256,0.56)' }}>
         &#9400; &ensp; {dateToday.getFullYear()} Designare. All rights reserved.
       </p>
     </div>

@@ -1,50 +1,50 @@
-.postArea{
-    width: calc(100% - 25rem);
-    padding: 20px;
-    font-family: "Lato";
-    box-sizing: border-box;
+.postArea {
+  width: calc(100% - 25rem);
+  padding: 20px;
+  font-family: 'Lato';
+  box-sizing: border-box;
 
-    .postHeader{
-        display: flex;
-        justify-content: space-between;
-        padding:0 8vw;
-        
-        .profileImg{
-            height: 48px;
-            width:48px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+  .postHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8vw;
 
-        .leftItems{
-            display: flex;
-        }
-
-        .postBody h4{
-            margin:0 10px;
-            font-size:16px;
-        }
-
-        .authorLinks{
-            display: flex;
-
-            p{
-                margin: 5px 10px;
-            }
-        }
+    .profileImg {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      margin-right: 10px;
     }
 
-    .postImg{
-        text-align: center;
-        margin:5vh 0;
+    .leftItems {
+      display: flex;
     }
 
-    .postDescription{
-        display: flex;
-        font-size: 18px;
-        align-items: center;
-        justify-content: center;
-        text-align: left;
-        white-space: pre-wrap;
+    .postBody h4 {
+      margin: 0 10px;
+      font-size: 16px;
     }
+
+    .authorLinks {
+      display: flex;
+
+      p {
+        margin: 5px 10px;
+      }
+    }
+  }
+
+  .postImg {
+    text-align: center;
+    margin: 5vh 0;
+  }
+
+  .postDescription {
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    white-space: pre-wrap;
+  }
 }
